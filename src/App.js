@@ -4,7 +4,7 @@ import {
   LandingPage,
   DiaryPage,
   SettingPage,
-  SigninPage,
+  SignupPage,
   LoginPage,
 } from "./components/index";
 import { Route, Routes } from "react-router-dom";

@@ -2,7 +2,7 @@ import MonthlyPage from "./MonthlyPage/MonthlyPage";
 import LandingPage from "./LandingPage/LandingPage";
 import DiaryPage from "./DiaryPage/DiaryPage";
 import SettingPage from "./SettingPage/SettingPage";
-import SigninPage from "./SigninPage/SigninPage";
+import SignupPage from "./SignupPage/SignupPage";
 import LoginPage from "./LoginPage/LoginPage";
 import SideBar from "./SideBar/SideBar";
 
@@ -12,6 +12,6 @@ export {
   LandingPage,
   DiaryPage,
   SettingPage,
-  SigninPage,
+  SignupPage,
   LoginPage,
 };
