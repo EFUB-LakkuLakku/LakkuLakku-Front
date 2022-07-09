@@ -12,9 +12,10 @@ import { Route, Routes } from "react-router-dom";
 function App() {
   return (
     <div className="App">
-      <SideBar />
       <Routes>
         <Route path="/" element={<MonthlyPage />} />
+        <Route path="/register" element={<SignupPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </div>
   );
