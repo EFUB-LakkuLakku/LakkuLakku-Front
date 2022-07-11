@@ -1,0 +1,75 @@
+.content_inner-updatedNews {
+  flex: 0.3;
+}
+.content_inner-miniroom {
+  display: flex;
+  flex-direction: column;
+  flex: 0.7;
+}
+.content_inner-updatedNews-contents {
+  display: flex;
+}
+.news {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  font-size: 0.8em;
+}
+
+/*콘텐츠 내용제목*/
+.content_name {
+  color: rgb(255, 199, 74);
+  font-weight: 700;
+  font-size: 1.1em;
+}
+/*updated news 사진첩, 게시판*/
+.news-l {
+  flex: 0.25;
+  margin: 0.4em 0px;
+}
+.news-l > .e1 {
+  color: white;
+  padding: 4px 8px;
+  background-color: rgb(245, 0, 230);
+  border-radius: 3px;
+}
+.news-l > .e2 {
+  color: white;
+  padding: 4px 8px;
+  background-color: rgb(7, 204, 184);
+  border-radius: 3px;
+}
+/*updated news 다이어리, 사진첩, 게시판, 방명록*/
+.new-r {
+  display: flex;
+}
+.new-r > div {
+  flex: 1;
+  margin-top: 0.2em;
+}
+.new-r > div > span {
+  font-family: "NeoDunggeunmo";
+  color: blue;
+  font-weight: 400;
+  margin-left: 0.5em;
+}
+/*점선*/
+.hr-dash {
+  border: none;
+  border: 0.5px dashed gray;
+  margin-bottom: 5px;
+}
+/*구분선*/
+.hr-solid {
+  display: block;
+  border: none;
+  border: 0.1px solid #c9d4da;
+  margin: 5px 0px;
+}
+/*미니룸*/
+.miniroom {
+  flex: auto;
+  background-image: url("../static/images/miniroom.gif");
+  background-size: cover;
+  border: 0.5px solid #c9d4da;
+}
