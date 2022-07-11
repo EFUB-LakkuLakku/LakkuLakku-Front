@@ -39,8 +39,12 @@ const StyledButton = styled.button`
   }
 `;
 
-function YellowButton({ children, onClick }) {
-  return <StyledButton onClick={onClick}>{children}</StyledButton>;
+function YellowButton({ children, type, onClick }) {
+  return (
+    <StyledButton type={type} onClick={onClick}>
+      {children}
+    </StyledButton>
+  );
 }
 
 export default YellowButton;

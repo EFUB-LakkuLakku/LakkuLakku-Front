@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useReducer, useRef } from "react";
 import styled from "styled-components";
 import { YellowButton, BgRect, Bg, Title, Input, GrayButton } from "./index";
 
@@ -17,29 +17,166 @@ const GrayButtonWrapper = styled.div`
   margin-bottom: 50px;
 `;
 
+const initialState = {
+  emailAlert: { msg: " ", status: " " },
+  passwordAlert: { msg: " ", status: " " },
+  confirmPasswordAlert: { msg: " ", status: " " },
+};
+
+const actions = {
+  EmailCheck: "EmailCheck",
+  PasswordCheck: "PasswordCheck",
+  confirmPasswordCheck: "confirmPasswordCheck",
+};
+
+const reducer = (alert, action) => {
+  const { EmailCheck, PasswordCheck, confirmPasswordCheck } = actions;
+  switch (action.type) {
+    case EmailCheck:
+      return {
+        ...alert,
+        emailAlert: action.emailAlert,
+      };
+    case PasswordCheck:
+      return {
+        ...alert,
+        passwordAlert: action.passwordAlert,
+      };
+    case confirmPasswordCheck:
+      return {
+        ...alert,
+        confirmPasswordAlert: action.confirmPasswordAlert,
+      };
+    default:
+      return {
+        ...alert,
+      };
+  }
+};
+
+const regEmail =
+  /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+const regPw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+
 function SignupPage() {
+  const [alert, dispatch] = useReducer(reducer, initialState);
+  const [email, SetEmail] = useState("");
+  const [password, SetPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [nickname, SetNickname] = useState("");
+
+  useEffect(() => {
+    regEmail.test(email)
+      ? dispatch({
+          type: "EmailCheck",
+          emailAlert: { msg: "유효한 이메일입니다.", status: "success" },
+        })
+      : dispatch({
+          type: "EmailCheck",
+          emailAlert: {
+            msg: "유효한 이메일을 입력해주세요.",
+            status: "success",
+          },
+        });
+    regPw.test(password) && password.length >= 8 && password.length <= 16
+      ? dispatch({
+          type: "PasswordCheck",
+          passwordAlert: { msg: "유효한 비밀번호입니다.", status: "success" },
+        })
+      : dispatch({
+          type: "PasswordCheck",
+          passwordAlert: {
+            msg: "8자 이상, 16자 이내의 영문자 및 숫자와 특수문자(!@#$%^*+=-)로 입력해주세요.",
+            status: "warning",
+          },
+        });
+    password !== confirmPassword
+      ? null
+      : dispatch({
+          type: "confirmPasswordCheck",
+          confirmPasswordAlert: {
+            msg: " ",
+            status: "success",
+          },
+        });
+  }, [email, password, confirmPassword]);
+
+  const onClick = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      dispatch({
+        type: "confirmPasswordCheck",
+        confirmPasswordAlert: {
+          msg: "비밀번호가 일치하지 않습니다.",
+          status: "warning",
+        },
+      });
+      return;
+    }
+  };
+  const onEmailHandler = (e) => {
+    SetEmail(e.currentTarget.value);
+  };
+
+  const onPasswordHandler = (e) => {
+    SetPassword(e.currentTarget.value);
+  };
+
+  const onConfirmPasswordHandler = (e) => {
+    setConfirmPassword(e.currentTarget.value);
+  };
+
+  const onNicknameHandler = (e) => {
+    SetNickname(e.currentTarget.value);
+  };
+
   return (
     <div>
       <Bg>
         <BgRect>
           <Wrapper>
             <Title>SIGN UP</Title>
-            <Input placeholder="이메일을 입력해 주세요" type="text">
+            <Input
+              placeholder="이메일을 입력해 주세요"
+              type="text"
+              value={email}
+              onChange={onEmailHandler}
+            >
               이메일
             </Input>
-            <Input placeholder="비밀번호를 입력해 주세요" type="password">
+            <p>{alert.emailAlert.msg}</p>
+            <Input
+              placeholder="비밀번호를 입력해 주세요"
+              type="password"
+              value={password}
+              onChange={onPasswordHandler}
+            >
               비밀번호
             </Input>
-            <Input placeholder="비밀번호를 입력해 주세요" type="password">
+            <p>{alert.passwordAlert.msg}</p>
+            <Input
+              placeholder="비밀번호를 입력해 주세요"
+              type="password"
+              value={confirmPassword}
+              onChange={onConfirmPasswordHandler}
+            >
               비밀번호 확인
             </Input>
+            <p>{alert.confirmPasswordAlert.msg}</p>
             <GrayButtonWrapper>
-              <Input placeholder="6자 이내 닉네임을 입력해주세요" type="text">
+              <Input
+                placeholder="6자 이내 닉네임을 입력해주세요"
+                type="text"
+                value={nickname}
+                onChange={onNicknameHandler}
+              >
                 닉네임
               </Input>
               <GrayButton>확인</GrayButton>
             </GrayButtonWrapper>
-            <YellowButton>회원 가입</YellowButton>
+            <YellowButton type="submit" onClick={onClick}>
+              회원 가입
+            </YellowButton>
           </Wrapper>
         </BgRect>
       </Bg>

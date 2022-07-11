@@ -42,11 +42,16 @@ const divStyle = {
   "flex-direction": "column",
 };
 
-function InputField({ children, type, placeholder }) {
+function InputField({ children, type, placeholder, value, onChange }) {
   return (
     <div style={divStyle}>
       <Styledlabel>{children}</Styledlabel>
-      <StyledInput type={type} placeholder={placeholder} />
+      <StyledInput
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      />
     </div>
   );
 }

@@ -6,7 +6,7 @@ const StyledRectangle = styled.div`
   margin: 14.1px 100px;
   padding: 100px 200px 100px 200px;
   border-radius: 30px;
-  background-color: #fffbf2;
+  background-color: var(--background);
 
   /* 크기 */
   width: 70%;
