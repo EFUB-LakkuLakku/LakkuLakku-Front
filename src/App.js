@@ -1,28 +1,24 @@
-import {
-  SideBar,
-  MonthlyPage,
-  LandingPage,
-  DiaryPage,
-  SettingPage,
-  SignupPage,
-  LoginPage,
-} from "./components/index";
+import { LandingPage, MainPage } from "./components/index";
 import { Route, Routes } from "react-router-dom";
 import Background from "./components/common/Background";
-import Wrapper from "./components/common/Wrapper";
+import Logo from "./components/common/Logo";
 import "./App.css";
+import styled from "styled-components";
 
+const LogoContainer = styled.div`
+  width: 1380rem;
+  margin-top: 30rem;
+`;
 function App() {
   return (
     <Background>
-      <Wrapper>
-        <SideBar />
-
-        <Routes>
-          <Route path="/setting" element={<SettingPage />} />
-          <Route path="/main" element={<MonthlyPage />} />
-        </Routes>
-      </Wrapper>
+      <LogoContainer>
+        <Logo />
+      </LogoContainer>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/main/*" element={<MainPage />} />
+      </Routes>
     </Background>
   );
 }
