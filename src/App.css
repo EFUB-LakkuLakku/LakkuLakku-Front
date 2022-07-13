@@ -1,0 +1,30 @@
+/*아래 폰트*/
+@font-face {
+  font-family: "NotoSansKR";
+  src: url("./fonts/NotoSansKR-Black.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "NotoSansKR-Bold";
+  src: url("./fonts/NotoSansKR-Bold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "NotoSansKR-Light";
+  src: url("./fonts/NotoSansKR-Light.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "NotoSansKR-Medium";
+  src: url("./fonts/NotoSansKR-Medium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "NotoSansKR-Regular";
+  src: url("./fonts/NotoSansKR-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "NotoSansKR-Thin";
+  src: url("./fonts/NotoSansKR-Thin.otf") format("opentype");
+}
