@@ -90,15 +90,6 @@ function SignupPage() {
             status: "warning",
           },
         });
-    password !== confirmPassword
-      ? null
-      : dispatch({
-          type: "confirmPasswordCheck",
-          confirmPasswordAlert: {
-            msg: " ",
-            status: "success",
-          },
-        });
   }, [email, password, confirmPassword]);
 
   const onClick = (e) => {
