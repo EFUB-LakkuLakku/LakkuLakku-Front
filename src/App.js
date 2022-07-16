@@ -10,6 +10,7 @@ import {
 import { Route, Routes } from "react-router-dom";
 import Background from "./components/common/Background";
 import Wrapper from "./components/common/Wrapper";
+import "./App.css";
 
 function App() {
   return (
