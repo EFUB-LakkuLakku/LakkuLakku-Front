@@ -11,7 +11,7 @@ const StyledSmallText = styled.div`
   height: 27px;
 
   /* 폰트 */
-  font-family: AppleSDGothicNeo;
+  font-family: "NotoSansKR-Light";
   font-size: 12px;
   font-stretch: normal;
   font-style: normal;

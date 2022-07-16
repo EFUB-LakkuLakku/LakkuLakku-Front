@@ -7,39 +7,39 @@ const StyledButton = styled.button`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 0 32px;
+  gap: 10rem;
+  padding: 0 25rem;
   border-radius: 6px;
-  background-color: #a39e93;
+  background-color: var(--400);
   border: 0;
-  margin-top: 30px;
-  margin-left: 30px;
+  margin-top: 30rem;
+  margin-left: 30rem;
 
   /* 크기 */
-  width: 95px;
-  height: 48px;
+  width: 95rem;
+  height: 60rem;
 
   /* 폰트 */
   flex-grow: 0;
-  font-family: AppleSDGothicNeo;
-  font-size: 15px;
+  font-family: "NotoSansKR-Light";
+  font-size: 18rem;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 2.67;
-  letter-spacing: -0.36px;
+  letter-spacing: -0.36rem;
   text-align: center;
   color: white;
 
   /* 기타 */
   &:hover {
     background-color: white;
-    color: #a39e93;
+    color: var(--400);
   }
 
   &:active {
     background-color: white;
-    color: #a39e93;
+    color: var(--400);
   }
 `;
 

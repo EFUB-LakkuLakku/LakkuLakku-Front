@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useReducer, useRef } from "react";
 import styled from "styled-components";
-import { YellowButton, BgRect, Bg, Title, Input, GrayButton } from "./index";
+import { YellowButton, Title, Input, GrayButton } from "./index";
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,8 +13,13 @@ const GrayButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 120px;
-  margin-bottom: 50px;
+  margin-left: 120rem;
+  margin-bottom: 20rem;
+`;
+
+const WarningTag = styled.p`
+  font-family: "NotoSansKR-Light";
+  color: var(--nickname);
 `;
 
 const initialState = {
@@ -123,54 +128,54 @@ function SignupPage() {
 
   return (
     <div>
-      <Bg>
-        <BgRect>
-          <Wrapper>
-            <Title>SIGN UP</Title>
-            <Input
-              placeholder="이메일을 입력해 주세요"
-              type="text"
-              value={email}
-              onChange={onEmailHandler}
-            >
-              이메일
-            </Input>
-            <p>{alert.emailAlert.msg}</p>
-            <Input
-              placeholder="비밀번호를 입력해 주세요"
-              type="password"
-              value={password}
-              onChange={onPasswordHandler}
-            >
-              비밀번호
-            </Input>
-            <p>{alert.passwordAlert.msg}</p>
-            <Input
-              placeholder="비밀번호를 입력해 주세요"
-              type="password"
-              value={confirmPassword}
-              onChange={onConfirmPasswordHandler}
-            >
-              비밀번호 확인
-            </Input>
-            <p>{alert.confirmPasswordAlert.msg}</p>
-            <GrayButtonWrapper>
-              <Input
-                placeholder="6자 이내 닉네임을 입력해주세요"
-                type="text"
-                value={nickname}
-                onChange={onNicknameHandler}
-              >
-                닉네임
-              </Input>
-              <GrayButton>확인</GrayButton>
-            </GrayButtonWrapper>
-            <YellowButton type="submit" onClick={onClick}>
-              회원 가입
-            </YellowButton>
-          </Wrapper>
-        </BgRect>
-      </Bg>
+      <Wrapper>
+        <Title>SIGN UP</Title>
+        <Input
+          placeholder="이메일을 입력해 주세요"
+          type="text"
+          value={email}
+          onChange={onEmailHandler}
+          width="563rem"
+        >
+          이메일
+        </Input>
+        <WarningTag>{alert.emailAlert.msg}</WarningTag>
+        <Input
+          placeholder="비밀번호를 입력해 주세요"
+          type="password"
+          value={password}
+          onChange={onPasswordHandler}
+          width="563rem"
+        >
+          비밀번호
+        </Input>
+        <WarningTag>{alert.passwordAlert.msg}</WarningTag>
+        <Input
+          placeholder="비밀번호를 입력해 주세요"
+          type="password"
+          value={confirmPassword}
+          onChange={onConfirmPasswordHandler}
+          width="563rem"
+        >
+          비밀번호 확인
+        </Input>
+        <WarningTag>{alert.confirmPasswordAlert.msg}</WarningTag>
+        <GrayButtonWrapper>
+          <Input
+            placeholder="6자 이내 닉네임을 입력해주세요"
+            type="text"
+            value={nickname}
+            onChange={onNicknameHandler}
+            width="563rem"
+          >
+            닉네임
+          </Input>
+          <GrayButton>확인</GrayButton>
+        </GrayButtonWrapper>
+        <YellowButton type="submit" onClick={onClick}>
+          회원 가입
+        </YellowButton>
+      </Wrapper>
     </div>
   );
 }

@@ -8,34 +8,34 @@ const StyledButton = styled.button`
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  background-color: #ffe898;
+  background-color: var(--main);
   border: 0;
-  margin-top: 50px;
+  margin-top: 0rem;
 
   /* 크기 */
-  width: 213px;
-  height: 49px;
+  width: 213rem;
+  height: 49rem;
 
   /* 폰트 */
   flex-grow: 0;
-  font-family: AppleSDGothicNeo;
-  font-size: 15px;
+  font-family: "NotoSansKR-Bold";
+  font-size: 18rem;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.63;
   letter-spacing: normal;
   text-align: center;
-  color: #212529;
+  color: var(-900);
 
   /* 기타 */
   &:hover {
-    background-color: #8b681a;
-    color: white;
+    background-color: white;
+    color: var(--main);
   }
 
   &:active {
-    background-color: #8b681a;
+    background-color: var(--main);
   }
 `;
 

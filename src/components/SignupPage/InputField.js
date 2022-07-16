@@ -1,48 +1,52 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const StyledInput = styled.input`
   /* 공통 스타일 */
   align-self: stretch;
   flex-grow: 0;
   border-radius: 6px;
-  padding: 13px 200px 13px 20px;
-  border: solid 1px #504a40;
+  padding: 13rem 200rem 13rem 20rem;
+  border: solid 1px var(--700);
   background-color: #fff;
 
   /* 크기 */
-  height: 20px;
-  width: 300px;
+  height: 35rem;
+  ${(props) => {
+    return css`
+      width: ${props.width};
+    `;
+  }}
 `;
 
 const Styledlabel = styled.label`
   /* 공통 스타일 */
-  margin-bottom: 10px;
+  margin-bottom: 10rem;
   flex-grow: 0;
 
   /* 크기 */
-  height: 22px;
+  height: 22rem;
 
   /* 폰트 */
-  font-family: AppleSDGothicNeo;
-  font-size: 14px;
+  font-family: "NotoSansKR-Medium";
+  font-size: 14rem;
   font-weight: bold;
   font-stretch: normal;
   font-style: normal;
   line-height: 1.57;
-  letter-spacing: -0.28px;
+  letter-spacing: -0.28rem;
   text-align: left;
-  color: #423d33;
+  color: var(--font);
 `;
 
 const divStyle = {
-  "margin-bottom": "30px",
-  "margin-top": "30px",
+  "margin-bottom": "30rem",
+  "margin-top": "30rem",
   display: "flex",
   "flex-direction": "column",
 };
 
-function InputField({ children, type, placeholder, value, onChange }) {
+function InputField({ children, type, placeholder, value, onChange, width }) {
   return (
     <div style={divStyle}>
       <Styledlabel>{children}</Styledlabel>
@@ -51,6 +55,7 @@ function InputField({ children, type, placeholder, value, onChange }) {
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        width={width}
       />
     </div>
   );
