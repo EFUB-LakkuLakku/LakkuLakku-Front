@@ -30,6 +30,7 @@ function App() {
         <Routes>
           <Route path="/register" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/diary" element={<DiaryPage />} />
         </Routes>
       </BackRectangle>
     </Background>
