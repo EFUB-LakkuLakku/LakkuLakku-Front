@@ -3,6 +3,8 @@ import Background from "../common/Background";
 import Wrapper from "../common/Wrapper";
 import styled from "styled-components";
 import DateBar from "./DateBar";
+import SideBar from "../SideBar/SideBar";
+import Calendar from "./Calendar";
 
 const Box = styled.div`
   flex: 0.75;
@@ -13,9 +15,7 @@ const Box = styled.div`
 function MonthlyPage() {
   return (
     <Box>
-      <DateBar />
-      {/*<Calendar/> 달력 */}
-      MonthlyPage
+      <Calendar/>    
     </Box>
   );
 }
