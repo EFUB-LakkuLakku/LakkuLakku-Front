@@ -1,4 +1,12 @@
-import { LandingPage, MainPage, MonthlyPage, SideBar } from "./components/index";
+import {
+  SideBar,
+  MonthlyPage,
+  LandingPage,
+  DiaryPage,
+  SettingPage,
+  SignupPage,
+  LoginPage,
+} from "./components/index";
 import { Route, Routes } from "react-router-dom";
 import Background from "./components/common/Background";
 
@@ -20,6 +28,7 @@ function App() {
         <Logo />
       </LogoContainer>
       <BackRectangle>
+        <LandingPage/>
         <Routes>
           <Route path="/register" element={<SignupPage />} />
           <Route path="/login" element={<LoginPage />} />

@@ -13,7 +13,7 @@ const BackRectangle = styled.div`
 
   width: 1380rem;
   height: 905rem;
-  margin: 60rem 30rem;
+  margin: 30rem;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
