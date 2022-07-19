@@ -1,7 +1,8 @@
 import React from "react";
+import Setting from "./Setting";
 
 function SettingPage() {
-  return <div>SettingPage</div>;
+  return <div><Setting /></div>;
 }
 
 export default SettingPage;
