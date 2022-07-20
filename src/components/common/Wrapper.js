@@ -1,11 +1,10 @@
 import styled from "styled-components";
 
+//크기만 지정
 const Wrapper = styled.div`
   box-sizing: border-box;
-  display: flex;
 
-  flex-direction: row;
-  // background-color: var(--background);
+  background-color: var(--background);
   border-radius: 30px;
   border: 1px solid var(--border);
 
