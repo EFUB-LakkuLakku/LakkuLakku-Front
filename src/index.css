@@ -48,3 +48,8 @@ code {
 }
 
 
+input::placeholder {
+  font-family: "NotoSansKR-Medium";
+  color: var(--500);
+}
+
