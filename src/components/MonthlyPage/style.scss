@@ -70,7 +70,7 @@
                 border-left: 1px solid rgba(0, 0, 0, 0.5) !important;
                 border-width: 0.01px;
                 &:hover {
-                    background: var(--border);
+                    background: var(--background);
                     opacity: 0.5;
                 }
                 
@@ -83,7 +83,7 @@
             }
             .valid { 
                 &:hover {
-                    background: var(--border);
+                    background: var(--background);
                 }
             }
            
@@ -118,7 +118,7 @@
 
             .col.cell.weekEnd{
                 &:hover {
-                    background: var(--border);
+                    background: var(--background);
                     opacity: 0.5;
                 }
                 background: var(--sub-2);

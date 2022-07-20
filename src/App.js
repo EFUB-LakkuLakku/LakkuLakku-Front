@@ -6,6 +6,7 @@ import {
   SettingPage,
   SignupPage,
   LoginPage,
+  SocialPage
 } from "./components/index";
 import { Route, Routes } from "react-router-dom";
 import Background from "./components/common/Background";
@@ -27,13 +28,15 @@ function App() {
       <LogoContainer>
         <Logo />
       </LogoContainer>
-      <BackRectangle>
-        <LandingPage/>
-        <Routes>
-          <Route path="/register" element={<SignupPage />} />
-          <Route path="/login" element={<LoginPage />} />
-        </Routes>
-      </BackRectangle>
+      <Wrapper>
+        <SideBar/>
+        <SocialPage/>
+      </Wrapper>
+      
+      {/* <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/main/*" element={<MainPage />} />
+      </Routes> */}
     </Background>
   );
 }
