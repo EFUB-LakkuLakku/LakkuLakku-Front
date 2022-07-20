@@ -1,4 +1,5 @@
 import React from "react";
+import Setting from "./Setting";
 import styled from "styled-components";
 
 const Box = styled.div`
@@ -7,7 +8,9 @@ const Box = styled.div`
   flex-direction: column;
 `;
 function SettingPage() {
-  return <Box>SettingPage</Box>;
+
+  return <div><Setting /></div>;
+
 }
 
 export default SettingPage;
