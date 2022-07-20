@@ -1,18 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 import Icon from "../../assets/icon.svg";
+import TextLogo from "../../assets/lakkulakku.svg";
 
 const Container = styled.div`
   width: 110px;
   height: 29px;
+  display: flex;
+  align-items: center;
 `;
 
-const Text = styled.text``;
 function Logo() {
   return (
     <Container>
-      <img src={Icon} width={111 * 0.7} height={29 * 0.7} />
-      라꾸라꾸
+      <img src={Icon} width={"26rem"} height={"26rem"} />
+      <img src={TextLogo} width={"73rem"} height={"17rem"} />
     </Container>
   );
 }

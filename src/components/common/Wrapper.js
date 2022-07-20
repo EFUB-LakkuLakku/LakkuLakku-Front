@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import theme from "../../styles/theme";
 
 //크기만 지정
 const Wrapper = styled.div`
   box-sizing: border-box;
+
   background-color: var(--background);
   border-radius: 30px;
   border: 1px solid var(--border);
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   /*비율은 유지하면서 최대한 화면을 크게 만들기 */
   width: 1380rem;
   height: 905rem;
-  margin: 60rem 30rem;
+  margin: 15rem 30rem;
   /* 그림자 효과 */
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;

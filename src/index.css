@@ -22,7 +22,7 @@
 }
 
 html {
-  font-size: calc(6.25% * 0.8); /*1rem = 0.7px 이 되도록 맞춤*/
+  font-size: calc(6.25% * 0.9); /*1rem = 0.7px 이 되도록 맞춤*/
 }
 
 body {
