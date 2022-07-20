@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import styled from "styled-components";
 import searchIcon from "./search.png";
+
+const View = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 0.365;
+`;
 
 const Container = styled.div`
   width: 1050rem;
@@ -16,13 +22,13 @@ const MenuText = styled.span`
   font-weight: 400;
   font-size: 20px;
   line-height: 163.02%;
- 
+
   display: flex;
   margin-left: 20rem;
   align-items: center;
   letter-spacing: -0.05em;
 
-  color: #27241D;
+  color: #27241d;
 `;
 
 const SearchBar = styled.div`
@@ -32,14 +38,13 @@ const SearchBar = styled.div`
   height: 65.01rem;
   border-top: 1px solid var(--black);
   border-bottom: 1px solid var(--black);
-`
+`;
 
 const SearchIcon = styled.div`
   display: inline-block;
   vertical-align: middle;
   margin-top: 20rem;
   margin-left: 40rem;
-  
 `;
 
 const SearchText = styled.div`
@@ -49,32 +54,27 @@ const SearchText = styled.div`
   font-weight: 700;
   font-size: 16px;
   line-height: 163.02%;
- 
+
   vertical-align: middle;
   margin-top: 15rem;
   margin-left: 40rem;
 
-
   color: var(--400);
-
-`
+`;
 
 function Search() {
-    
-    return (
-        <div>
-            <Container>
-                <MenuText>친구 추가</MenuText>
-            </Container>
-            <SearchBar>
-                <SearchIcon><img src={searchIcon}/></SearchIcon>
-                <SearchText>UID 번호 검색하기</SearchText>
-            </SearchBar>
-
-
- 
-
-        </div>
-    );
+  return (
+    <View>
+      <Container>
+        <MenuText>친구 추가</MenuText>
+      </Container>
+      <SearchBar>
+        <SearchIcon>
+          <img src={searchIcon} />
+        </SearchIcon>
+        <SearchText>UID 번호 검색하기</SearchText>
+      </SearchBar>
+    </View>
+  );
 }
 export default Search;

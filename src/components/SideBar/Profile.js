@@ -54,7 +54,6 @@ const ProfileBox = styled.div`
   flex: 0.635;
   background-color: #fffbf2;
   border-top-left-radius: 30rem;
-  border: 1rem solid #d3cec4;
   border-bottom: none;
 
   display: flex;

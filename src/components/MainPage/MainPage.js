@@ -3,7 +3,7 @@ import { SideBar } from "../index";
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 
-import { MonthlyPage, SettingPage } from "../index";
+import { MonthlyPage, SettingPage, SocialPage, Tabbar } from "../index";
 
 // flex 레이아웃 설정용 전체 View
 const View = styled.div`
@@ -15,13 +15,15 @@ const View = styled.div`
 
 //사이드바 포함된 페이지
 export default function MainPage() {
+  const [currentTab, setCurrentTab] = React.useState(0); // 다이어리탭을 기본으로
   return (
     <View>
+      <Tabbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
       {/**사이드바는 고정, 우측 박스 부분만 갈아끼우기 */}
       <SideBar />
       <Routes>
         <Route path="/" element={<MonthlyPage />} />
-        {/*<Route path="/social" element={<SocialPage/>}/>*/}
+        <Route path="/social" element={<SocialPage />} />
         <Route path="/setting" element={<SettingPage />} />
       </Routes>
     </View>

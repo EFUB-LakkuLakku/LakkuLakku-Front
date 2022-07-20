@@ -4,8 +4,8 @@ import Icon from "../../assets/icon.svg";
 import TextLogo from "../../assets/lakkulakku.svg";
 
 const Container = styled.div`
-  width: 110px;
-  height: 29px;
+  width: 110rem;
+  height: 29rem;
   display: flex;
   align-items: center;
 `;

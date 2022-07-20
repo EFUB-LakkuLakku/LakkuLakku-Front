@@ -7,9 +7,9 @@ const Container = styled.div`
   flex: 0.25;
   display: flex;
   flex-direction: column;
-  background-color: red;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
+  border: 1px solid #d3cec4;
 `;
 function SideBar() {
   return (
