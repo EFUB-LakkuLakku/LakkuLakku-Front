@@ -1,14 +1,12 @@
 import styled from "styled-components";
 import theme from "../../styles/theme";
 
+//크기만 지정
 const Wrapper = styled.div`
   box-sizing: border-box;
-  display: flex;
-
-  flex-direction: row;
-  background-color: ${theme.background};
+  background-color: var(--background);
   border-radius: 30px;
-  border: 1px solid ${theme.border};
+  border: 1px solid var(--border);
 
   /** 기본 너비, 높이 지정 (반응형 X) */
   /*비율은 유지하면서 최대한 화면을 크게 만들기 */
