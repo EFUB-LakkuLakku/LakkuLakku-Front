@@ -1,0 +1,51 @@
+// 넓게 통용되는 것들
+
+@mixin size($width: 14px, $height: 14px) {
+    width: $width;
+    height: $height;
+}
+
+@mixin shape(
+    $background: transparent,
+    $border: transparent,
+    $border-radius: 0
+) {
+    background: $background;
+    border: $border;
+    border-radius: $border-radius;
+}
+
+@mixin shadow($size: 3px, $color: black, $amount: 0.5) {
+    box-shadow: $size $size 0px 0px transparentize($color, $amount);
+}
+
+@mixin font(
+    $color: black,
+    $font-family: theme.$description-font,
+    $font-size: 1em,
+    $font-weight: 500
+) {
+    color: $color;
+    font-family: $font-family;
+    font-size: $font-size;
+    font-weight: $font-weight;
+}
+
+@mixin hover-event {
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+@mixin flex-column($justify-content: center, $align-items: center) {
+    display: flex;
+    flex-direction: column;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+
+@mixin flex-row($justify-content: center, $align-items: center) {
+    display: flex;
+    flex-direction: row;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
