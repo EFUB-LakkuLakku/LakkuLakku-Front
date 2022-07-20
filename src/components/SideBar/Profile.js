@@ -1,13 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import DefaultImg from "../../assets/DefaultImg.png";
 import styled from "styled-components";
 
-
 const Profile = () => {
-  const [info, setInfo] = useState({ "image": DefaultImg, "bio":'나는 오늘도 내일을 산다..' }); //초깃값에 여러개 넣기 //나중에 초깃값에 '' 넣기!
-  const [nickname, setNickname] = useState('발발이'); //나중에 초깃값에 '' 넣기!
+  const [info, setInfo] = useState({
+    image: DefaultImg,
+    bio: "나는 오늘도 내일을 산다..",
+  }); //초깃값에 여러개 넣기 //나중에 초깃값에 '' 넣기!
+  const [nickname, setNickname] = useState("발발이"); //나중에 초깃값에 '' 넣기!
   const [showModal, setShowModal] = useState(false);
-
 
   /*
   const editedInfo = async () => {
@@ -24,43 +25,36 @@ const Profile = () => {
   //nickname 백엔드에서 get해오기
 
   const openModal = () => {
-  setShowModal(true);
-  }
-  
+    setShowModal(true);
+  };
 
   return (
-          <>
-              <ProfileBox>
-                
-                  <ProfileImg src={info.image} />
-                  
-                  <Nickname> <span style={{color: '#8b681a'}}>{nickname}</span>의 먼슬리 다이어리</Nickname>
+    <ProfileBox>
+      <ProfileImg src={info.image} />
 
-                  <BioBox>
-                      <BioHeader>자기소개</BioHeader>
-                      <Bio> {info.bio} </Bio>
-                  </BioBox>
+      <Nickname>
+        {" "}
+        <span style={{ color: "#8b681a" }}>{nickname}</span>의 먼슬리 다이어리
+      </Nickname>
 
-                  <BtnBox onClick={e => e.stopPropagation()}>
-                      <ProfileEditBtn onClick={openModal}>
-                      프로필 수정
-                      </ProfileEditBtn>
-                  </BtnBox>
-                  {/* {showModal && <ProfileEditModal imageInfo={info.image} bioInfo={info.bio} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} */}
+      <BioBox>
+        <BioHeader>자기소개</BioHeader>
+        <Bio> {info.bio} </Bio>
+      </BioBox>
 
-              </ProfileBox>
-
-      </>
+      <BtnBox onClick={(e) => e.stopPropagation()}>
+        <ProfileEditBtn onClick={openModal}>프로필 수정</ProfileEditBtn>
+      </BtnBox>
+      {/* {showModal && <ProfileEditModal imageInfo={info.image} bioInfo={info.bio} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} */}
+    </ProfileBox>
   );
 };
 
-
 const ProfileBox = styled.div`
-  width: 330rem;
-  height: 575rem;
-  background-color: #FFFBF2;
+  flex: 0.635;
+  background-color: #fffbf2;
   border-top-left-radius: 30rem;
-  border: 1rem solid #D3CEC4;
+  border: 1rem solid #d3cec4;
   border-bottom: none;
 
   display: flex;
@@ -68,7 +62,6 @@ const ProfileBox = styled.div`
   align-items: center;
 
   padding-top: 62rem;
-
 `;
 
 const ProfileImg = styled.img`
@@ -89,7 +82,7 @@ const Nickname = styled.div`
 const BioBox = styled.div`
   width: 270rem;
 
-  margin-bottom: 14rem; 
+  margin-bottom: 14rem;
 `;
 
 const BioHeader = styled.div`
@@ -104,12 +97,12 @@ const BioHeader = styled.div`
 
 const Bio = styled.div`
   font-size: 14rem;
-  font-family: "NotoSansKR-Regular";    
-  color: #625D52;
+  font-family: "NotoSansKR-Regular";
+  color: #625d52;
 
   width: 270rem;
   height: 39rem;
-  background-color: #F6F5EC;
+  background-color: #f6f5ec;
   border-radius: 10rem;
 
   line-height: 39rem;
@@ -126,18 +119,16 @@ const BtnBox = styled.div`
   justify-content: flex-end;
 `;
 
-
 const ProfileEditBtn = styled.button`
   width: 84rem;
   height: 24rem;
 
-  background-color: #FFE898;
+  background-color: #ffe898;
   border-radius: 17rem;
   border: none;
 
   font-size: 10rem;
   font-family: "NotoSansKR-Bold";
-
-
+`;
 
 export default Profile;

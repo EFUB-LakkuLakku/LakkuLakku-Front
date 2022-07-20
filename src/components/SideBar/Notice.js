@@ -95,7 +95,7 @@ function Notice() {
       </TextWrapper>
       <LinkWrapper>
         <StyledLink to={"/logout"}>로그아웃 </StyledLink> |
-        <StyledLink to={"/setting"}>설정</StyledLink>
+        <StyledLink to={"setting"}>설정</StyledLink>
       </LinkWrapper>
     </Container>
   );

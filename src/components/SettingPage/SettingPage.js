@@ -8,9 +8,11 @@ const Box = styled.div`
   flex-direction: column;
 `;
 function SettingPage() {
-
-  return <div><Setting /></div>;
-
+  return (
+    <Box>
+      <Setting />
+    </Box>
+  );
 }
 
 export default SettingPage;
