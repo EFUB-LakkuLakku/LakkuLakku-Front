@@ -25,6 +25,14 @@ html {
   font-size: calc(6.25% * 0.9); /*1rem = 0.7px 이 되도록 맞춤*/
 }
 
+* {
+  box-sizing: border-box;
+}
+
+button {
+  cursor: pointer;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -39,7 +47,9 @@ code {
     monospace;
 }
 
+
 input::placeholder {
   font-family: "NotoSansKR-Medium";
   color: var(--500);
 }
+

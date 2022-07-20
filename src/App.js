@@ -1,13 +1,7 @@
-import {
-  SideBar,
-  MonthlyPage,
-  LandingPage,
-  DiaryPage,
-  SettingPage,
-  SignupPage,
-  LoginPage,
-  SocialPage
-} from "./components/index";
+
+import { SideBar, LandingPage, LoginPage, MainPage } from "./components/index";
+
+
 import { Route, Routes } from "react-router-dom";
 import Background from "./components/common/Background";
 
@@ -29,14 +23,15 @@ function App() {
         <Logo />
       </LogoContainer>
       <Wrapper>
-        <SideBar/>
-        <SocialPage/>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          {/** <Route path="/register" element={<RegisterPage />} /> */}
+          <Route path="/main/*" element={<MainPage />} />
+          {/**MainPage는 사이드바 사용하는 페이지 */}
+        </Routes>
       </Wrapper>
-      
-      {/* <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/main/*" element={<MainPage />} />
-      </Routes> */}
+
     </Background>
   );
 }
