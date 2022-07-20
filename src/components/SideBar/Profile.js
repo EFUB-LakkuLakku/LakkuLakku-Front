@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import DefaultImg from "../../assets/DefaultImg.png";
 import styled from "styled-components";
-import theme from "../../styles/theme";
+
 
 const Profile = () => {
   const [info, setInfo] = useState({ "image": DefaultImg, "bio":'나는 오늘도 내일을 산다..' }); //초깃값에 여러개 넣기 //나중에 초깃값에 '' 넣기!
@@ -137,7 +137,7 @@ const ProfileEditBtn = styled.button`
 
   font-size: 10rem;
   font-family: "NotoSansKR-Bold";
-`;
+
 
 
 export default Profile;
