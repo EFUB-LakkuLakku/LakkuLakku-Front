@@ -7,6 +7,11 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
+`;
+
+const Gap = styled.div`
+  height: 50rem;
 `;
 
 const GrayButtonWrapper = styled.div`
@@ -14,7 +19,6 @@ const GrayButtonWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   margin-left: 120rem;
-  margin-bottom: 20rem;
 `;
 
 const WarningTag = styled.p`
@@ -127,9 +131,9 @@ function SignupPage() {
   };
 
   return (
-    <div>
-      <Wrapper>
-        <Title>SIGN UP</Title>
+    <Wrapper>
+      <Title>SIGN UP</Title>
+      <GrayButtonWrapper>
         <Input
           placeholder="이메일을 입력해 주세요"
           type="text"
@@ -139,44 +143,46 @@ function SignupPage() {
         >
           이메일
         </Input>
-        <WarningTag>{alert.emailAlert.msg}</WarningTag>
+        <GrayButton>확인</GrayButton>
+      </GrayButtonWrapper>
+      <WarningTag>{alert.emailAlert.msg}</WarningTag>
+      <Input
+        placeholder="비밀번호를 입력해 주세요"
+        type="password"
+        value={password}
+        onChange={onPasswordHandler}
+        width="563rem"
+      >
+        비밀번호
+      </Input>
+      <WarningTag>{alert.passwordAlert.msg}</WarningTag>
+      <Input
+        placeholder="비밀번호를 입력해 주세요"
+        type="password"
+        value={confirmPassword}
+        onChange={onConfirmPasswordHandler}
+        width="563rem"
+      >
+        비밀번호 확인
+      </Input>
+      <WarningTag>{alert.confirmPasswordAlert.msg}</WarningTag>
+      <GrayButtonWrapper>
         <Input
-          placeholder="비밀번호를 입력해 주세요"
-          type="password"
-          value={password}
-          onChange={onPasswordHandler}
+          placeholder="6자 이내 닉네임을 입력해주세요"
+          type="text"
+          value={nickname}
+          onChange={onNicknameHandler}
           width="563rem"
         >
-          비밀번호
+          닉네임
         </Input>
-        <WarningTag>{alert.passwordAlert.msg}</WarningTag>
-        <Input
-          placeholder="비밀번호를 입력해 주세요"
-          type="password"
-          value={confirmPassword}
-          onChange={onConfirmPasswordHandler}
-          width="563rem"
-        >
-          비밀번호 확인
-        </Input>
-        <WarningTag>{alert.confirmPasswordAlert.msg}</WarningTag>
-        <GrayButtonWrapper>
-          <Input
-            placeholder="6자 이내 닉네임을 입력해주세요"
-            type="text"
-            value={nickname}
-            onChange={onNicknameHandler}
-            width="563rem"
-          >
-            닉네임
-          </Input>
-          <GrayButton>확인</GrayButton>
-        </GrayButtonWrapper>
-        <YellowButton type="submit" onClick={onClick}>
-          회원 가입
-        </YellowButton>
-      </Wrapper>
-    </div>
+        <GrayButton>확인</GrayButton>
+      </GrayButtonWrapper>
+      <Gap />
+      <YellowButton type="submit" onClick={onClick}>
+        회원 가입
+      </YellowButton>
+    </Wrapper>
   );
 }
 

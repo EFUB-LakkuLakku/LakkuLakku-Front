@@ -6,12 +6,12 @@ const StyledInput = styled.input`
   align-self: stretch;
   flex-grow: 0;
   border-radius: 6px;
-  padding: 13rem 200rem 13rem 20rem;
-  border: solid 1px var(--700);
+  padding: 13rem 150rem 13rem 20rem;
+  border: solid 1px var(--b700);
   background-color: #fff;
 
   /* 크기 */
-  height: 35rem;
+  height: 48rem;
   ${(props) => {
     return css`
       width: ${props.width};

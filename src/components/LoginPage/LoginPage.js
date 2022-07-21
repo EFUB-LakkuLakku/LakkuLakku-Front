@@ -12,34 +12,33 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
 `;
 
 const Gap = styled.div`
-  height: 100rem;
+  height: 80rem;
 `;
 
 function LoginPage() {
   return (
-    <div>
+    <Wrapper>
       <Gap />
-      <Wrapper>
-        <Title>LOG IN</Title>
-        <Input placeholder="이메일을 입력해 주세요" type="text" width="345rem">
-          이메일
-        </Input>
-        <Input
-          placeholder="비밀번호를 입력해 주세요"
-          type="password"
-          width="345rem"
-        >
-          비밀번호
-        </Input>
-        <Gap />
-        <YellowButton>로그인</YellowButton>
-        <SmallText weight="bold">비밀번호 찾기</SmallText>
-      </Wrapper>
+      <Title>LOG IN</Title>
+      <Input placeholder="이메일을 입력해 주세요" type="text" width="345rem">
+        이메일
+      </Input>
+      <Input
+        placeholder="비밀번호를 입력해 주세요"
+        type="password"
+        width="345rem"
+      >
+        비밀번호
+      </Input>
       <Gap />
-    </div>
+      <YellowButton>로그인</YellowButton>
+      <SmallText weight="bold">비밀번호 찾기</SmallText>
+      <Gap />
+    </Wrapper>
   );
 }
 

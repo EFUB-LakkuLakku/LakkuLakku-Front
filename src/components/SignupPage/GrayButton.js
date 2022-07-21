@@ -10,14 +10,14 @@ const StyledButton = styled.button`
   gap: 10rem;
   padding: 0 25rem;
   border-radius: 6px;
-  background-color: var(--400);
+  background-color: var(--w400);
   border: 0;
   margin-top: 30rem;
   margin-left: 30rem;
 
   /* 크기 */
   width: 95rem;
-  height: 60rem;
+  height: 48rem;
 
   /* 폰트 */
   flex-grow: 0;
