@@ -1,10 +1,11 @@
 import {
   SideBar,
   LandingPage,
+  SignupPage,
   LoginPage,
   MainPage,
-  SignupPage,
   Tabbar,
+  DiaryPage,
 } from "./components/index";
 import React from "react";
 import { Route, Routes, Link } from "react-router-dom";
@@ -20,8 +21,6 @@ const LogoContainer = styled.div`
 `;
 
 function App() {
-  // 0번 : 다이어리 탭, 1번: 친구탭
-
   return (
     <Background>
       <LogoContainer>

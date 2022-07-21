@@ -7,7 +7,8 @@ import PaperClipIcon from "../../assets/paperclip.svg";
 const Wrapper = styled.div`
   width: 100%;
   height: 85rem;
-
+  border-bottom-left-radius: 30px;
+  border-bottom-left-radius: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;

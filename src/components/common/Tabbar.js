@@ -26,7 +26,7 @@ const TabContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  margin-top: -37rem;
+  margin-top: -38rem;
   margin-right: 30rem;
 `;
 
@@ -36,6 +36,7 @@ const TabName = styled.text`
   font-weight: 600;
   font-size: 18rem;
   line-height: 27rem;
+  color: var(--font);
 
   /* identical to box height, or 150% */
 
