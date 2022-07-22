@@ -1,23 +1,15 @@
 import React from "react";
+import Plus from "../../assets/plus-square.svg";
 import styled from "styled-components";
-import Right from "../../assets/right-arrow.svg";
-import Left from "../../assets/left-arrow.svg";
-import Edit from "../../assets/edit.svg";
-import Trash from "../../assets/trash.svg";
-import Close from "../../assets/close.svg";
-import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
-  height: 61rem;
+  height: 70rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  border-top-left-radius: 30px;
-  border-top-right-radius: 30px;
-  border-bottom: 1px solid var(--border);
-  background-color: var(--sub-2);
 `;
+
 const ImgBox = styled.img.attrs(({ src, alt, onClick }) => ({
   src: src,
   alt: alt,
@@ -25,44 +17,72 @@ const ImgBox = styled.img.attrs(({ src, alt, onClick }) => ({
 }))`
   width: 24rem;
   height: 24rem;
-  margin: 25rem;
+  margin-left: 38rem;
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
 `;
 
-const ImgContainer = styled.div``;
+const Title = styled.input.attrs({
+  placeholder: "다이어리의 제목을 입력해 주세요",
+})`
+  width: 650rem;
+  height: 40rem;
+  border-radius: 5px;
+  border-width: 0.5px;
+  border-color: var(--b600);
+  font-family: "NotoSansKR-Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14rem;
+  line-height: 22rem;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.02em;
+  font-feature-settings: "calt" off;
+  padding: 15rem;
+  color: black;
 
-export default function DiaryHeader({ history }) {
-  const navigate = useNavigate();
-  const editDiary = () => {
-    alert("다이어리 수정모드 진입");
-  };
-  const deleteDiary = () => {
-    // 1. 다이어리 정말 삭제할건지 묻는 경고 모달창
-    // 2. 다이어리 삭제 요청
-    // 3. 먼슬리 페이지로 리다이렉트
-    alert("정말로 삭제하시겠습니까?");
-  };
+  &::placeholder {
+    font-family: "NotoSansKR-Light";
+    color: var(--font);
+  }
+`;
 
-  const closeDiary = () => {
-    //사용자가 본래 보고 있던 사람의 먼슬리 페이지로 이동
-    const user = "flowersayo";
-    const BASE_URL = "http://localhost:3000/"; //나중에 도메인 생기면 바꾸기
-    const link = BASE_URL + "main/" + user;
-    window.location.href = link;
-  };
+export default function DiaryHeader() {
   return (
     <Container>
-      <ImgContainer>
-        <ImgBox src={Left} alt="left" onClick={() => navigate(-1)} />
-        <ImgBox src={Right} alt="right" onClick={() => navigate(1)} />
-      </ImgContainer>
-      <ImgContainer>
-        <ImgBox src={Edit} alt="edit" onClick={editDiary} />
-        <ImgBox src={Trash} alt="trash" onClick={deleteDiary} />
-        <ImgBox src={Close} alt="close" onClick={closeDiary} />
-      </ImgContainer>
+      <ImgBox src={Plus} alt="plus" />
+      <DateBar />
+      <Title />
     </Container>
+  );
+}
+
+const Text = styled.text`
+  font-size: 24rem;
+  font-family: "SF Pro";
+  font-style: normal;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 29rem;
+  /* identical to box height */
+  text-align: center;
+  letter-spacing: -0.02em;
+  margin: 19rem;
+`;
+
+function DateBar() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month =
+    today.getMonth() + 1; /*getMonth()는 0~11까지의 값 반환하므로 1더함*/
+  const day = today.getDay();
+
+  return (
+    <Text>
+      {year}년 {month}월 {day}일
+    </Text>
   );
 }
