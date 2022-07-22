@@ -71,7 +71,6 @@ const Comments = ({ currentUserId }) => {
 
   return (
     <div className="comments">
-      <h3 className="comments-title">Comments</h3>
       <CommentForm
         submitLabel="등록"
         handleSubmit={addComment}

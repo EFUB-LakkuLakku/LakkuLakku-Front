@@ -43,7 +43,7 @@
   height: 250rem;
   border-radius: 6px;
   border: solid 1px var(--border);
-  background-color: var(--200);
+  background-color: var(--w200);
 }
 
 .comment-wrapper-reply {
@@ -51,14 +51,16 @@
   height: 250rem;
   border-radius: 6px;
   border: solid 1px var(--border);
-  background-color: var(--100);
+  background-color: var(--w100);
+  padding-left: 70rem; /*답글 컨테이너는 좌측 padding 추가*/
+  position: relative; /* 하위 요소에서 absolute 값을 사용하기 위해 position 설정 변경*/
 }
 
 .form-wrapper {
   width: 913rem;
   height: 232rem;
   border-radius: 6px;
-  border: solid 1px var(--700);
+  border: solid 1px var(--b700);
   background-color: white;
 }
 
@@ -96,7 +98,7 @@
   width: 869rem;
   height: 80rem;
   border: none;
-  border-bottom: solid 2px var(--400);
+  border-bottom: solid 2px var(--w400);
   resize: none;
 }
 
@@ -124,14 +126,14 @@
 .cnt-text {
   margin-left: 22rem;
   font-size: 14rem;
-  color: var(--400);
+  color: var(--w400);
   font-family: "NotoSansKR-Light";
 }
 
 .text-cnt-warning {
   margin-left: 22rem;
   font-size: 14rem;
-  color: var(--400);
+  color: var(--w400);
   font-family: "NotoSansKR-Light";
 }
 
@@ -155,7 +157,7 @@
   margin-right: 10rem;
   margin-top: 5rem;
   border-radius: 24px;
-  background-color: var(--400);
+  background-color: var(--w400);
   color: white;
   border: none;
   font-size: 14rem;
@@ -273,4 +275,10 @@
 
 .comment-action:hover {
   text-decoration: underline;
+}
+
+.comment-reply-icon {
+  margin: 20rem;
+  margin-left: -20rem;
+  position: absolute;
 }

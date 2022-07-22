@@ -1,6 +1,7 @@
 import CommentForm from "./CommentForm";
 import "./comment.css";
 import { useState } from "react";
+import Reply from "../../../assets/reply.svg";
 
 const Comment = ({
   comment,
@@ -65,6 +66,14 @@ const Comment = ({
         <div className={parentId ? "comment-wrapper-reply" : "comment-wrapper"}>
           <div className="profile-container">
             <div className="profile-leftside-container">
+              {parentId && (
+                <img
+                  src={Reply}
+                  className="comment-reply-icon"
+                  width={"16rem"}
+                  height={"16rem"}
+                />
+              )}
               <div className="profile-image-container">
                 <img src={comment.avatar} />
               </div>
