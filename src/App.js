@@ -1,16 +1,16 @@
 import {
   SideBar,
-  MonthlyPage,
   LandingPage,
-  DiaryPage,
-  SettingPage,
   SignupPage,
   LoginPage,
+  MainPage,
+  Tabbar,
+  DiaryPage,
 } from "./components/index";
-import { Route, Routes } from "react-router-dom";
+import React from "react";
+import { Route, Routes, Link } from "react-router-dom";
 import Background from "./components/common/Background";
 import Wrapper from "./components/common/Wrapper";
-import BackRectangle from "./components/common/BackRectangle";
 import Logo from "./components/common/Logo";
 import "./App.css";
 import styled from "styled-components";
@@ -26,13 +26,18 @@ function App() {
       <LogoContainer>
         <Logo />
       </LogoContainer>
-      <BackRectangle>
+
+      <Wrapper>
         <Routes>
-          <Route path="/register" element={<SignupPage />} />
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/diary" element={<DiaryPage />} />
+
+          <Route path="/register" element={<SignupPage />} />
+          <Route path="/main/*" element={<MainPage />} />
+          {/**MainPage는 사이드바 사용하는 페이지 */}
+
         </Routes>
-      </BackRectangle>
+      </Wrapper>
     </Background>
   );
 }

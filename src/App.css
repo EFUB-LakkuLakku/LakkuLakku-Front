@@ -28,3 +28,14 @@
   font-family: "NotoSansKR-Thin";
   src: url("./fonts/NotoSansKR-Thin.otf") format("opentype");
 }
+
+
+@font-face {
+  font-family: "NotoSans-Bold";
+  src: url("./fonts/NotoSans-Bold.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "NotoSans-Regular";
+  src: url("./fonts/NotoSans-Regular.ttf") format("opentype");
+}

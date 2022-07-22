@@ -1,18 +1,21 @@
 import React from "react";
-import Setting from "./Setting";
 import styled from "styled-components";
+import FriendList from "./FriendList";
+import Search from "./Search";
 
 const Box = styled.div`
   flex: 0.75;
   display: flex;
   flex-direction: column;
 `;
-function SettingPage() {
+
+function SocialPage() {
   return (
     <Box>
-      <Setting />
+      <FriendList/>
+      <Search/>    
     </Box>
   );
 }
 
-export default SettingPage;
+export default SocialPage;
