@@ -7,7 +7,6 @@ import LoginPage from "./LoginPage/LoginPage";
 import SideBar from "./SideBar/SideBar";
 import Tabbar from "./common/Tabbar";
 import SocialPage from "./SocialPage/SocialPage";
-
 import MainPage from "./MainPage/MainPage";
 
 export {
