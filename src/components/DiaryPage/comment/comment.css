@@ -1,0 +1,276 @@
+.comments {
+  height: 700rem;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comments-title {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.comments-container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.comment-form-title {
+  font-size: 22px;
+}
+
+.modal-space {
+  display: flex;
+}
+
+.edit-modal {
+  margin-left: 10rem;
+  width: 153rem;
+  height: 120rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  border: solid 1px var(--border);
+  background-color: var(--white);
+}
+.comment-wrapper {
+  width: 913rem;
+  height: 250rem;
+  border-radius: 6px;
+  border: solid 1px var(--border);
+  background-color: var(--200);
+}
+
+.comment-wrapper-reply {
+  width: 913rem;
+  height: 250rem;
+  border-radius: 6px;
+  border: solid 1px var(--border);
+  background-color: var(--100);
+}
+
+.form-wrapper {
+  width: 913rem;
+  height: 232rem;
+  border-radius: 6px;
+  border: solid 1px var(--700);
+  background-color: white;
+}
+
+.profile-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-leftside-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.profile-image-container {
+  width: 35rem;
+  height: 35rem;
+  margin: 22rem;
+}
+
+.profile-image-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50rem;
+}
+
+.profile-rightside-container {
+  width: 50rem;
+  height: 35rem;
+  margin-top: 22rem;
+}
+
+.comment-form-textarea {
+  font-family: "NotoSansKR-Medium";
+  padding: 10rem 22rem 10rem 22rem;
+  width: 869rem;
+  height: 80rem;
+  border: none;
+  border-bottom: solid 2px var(--400);
+  resize: none;
+}
+
+.comment-form-textarea:focus {
+  outline: none;
+}
+
+.comment-form-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment-form-bottom-right {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.text-counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cnt-text {
+  margin-left: 22rem;
+  font-size: 14rem;
+  color: var(--400);
+  font-family: "NotoSansKR-Light";
+}
+
+.text-cnt-warning {
+  margin-left: 22rem;
+  font-size: 14rem;
+  color: var(--400);
+  font-family: "NotoSansKR-Light";
+}
+
+.button-wrapper {
+  height: 35rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.comment-form-button {
+  width: 78rem;
+  height: 31rem;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 3rem 10rem;
+  margin-right: 10rem;
+  margin-top: 5rem;
+  border-radius: 24px;
+  background-color: var(--400);
+  color: white;
+  border: none;
+  font-size: 14rem;
+  font-family: "NotoSansKR-Light";
+}
+
+.comment-form-button:hover:enabled {
+  cursor: pointer;
+}
+
+.comment-form-button:disabled {
+  cursor: default;
+  background-color: var(--border);
+}
+
+.comment-form-cancel-button {
+  margin-left: 10px;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 28rem;
+}
+
+.comment-reply {
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-image-container {
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+}
+
+.comment-image-container img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50px;
+}
+
+.comment-content-part {
+  width: 100%;
+  font-family: "NotoSansKR-Medium";
+  padding: 10rem 22rem 10rem 22rem;
+  height: 80rem;
+}
+
+.comment-content {
+  display: flex;
+}
+
+.comment-author {
+  display: flex;
+  align-items: center;
+}
+
+.comment-author-text {
+  font-family: "NotoSansKR-Medium";
+  font-size: 16rem;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.63;
+  letter-spacing: -0.8rem;
+  text-align: left;
+  margin: 7rem 5rem 7rem 5rem;
+  color: black;
+}
+
+.comment-text {
+  width: 869rem;
+  font-size: 16rem;
+  height: 100rem;
+}
+
+.comment-bottom-part {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 22rem;
+  margin-bottom: 22rem;
+}
+
+.comment-bottom-left {
+  display: flex;
+  justify-content: start;
+}
+
+.comment-bottom-right {
+  display: flex;
+  justify-content: end;
+}
+
+.comment-time-text {
+  margin-right: 22rem;
+  font-family: "NotoSansKR-Light";
+  font-size: 14rem;
+}
+
+.comment-actions {
+  display: flex;
+  font-size: 12px;
+  color: rgb(51, 51, 51);
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.comment-action {
+  cursor: pointer;
+  margin-left: 22rem;
+  font-size: 14rem;
+  font-family: "NotoSansKR-Medium";
+}
+
+.comment-action:hover {
+  text-decoration: underline;
+}

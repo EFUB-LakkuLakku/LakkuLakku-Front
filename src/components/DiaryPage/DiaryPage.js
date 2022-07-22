@@ -41,6 +41,7 @@ function DiaryPage() {
         <DiaryTabbar />
       </Container>
     </View>
+
   );
 }
 

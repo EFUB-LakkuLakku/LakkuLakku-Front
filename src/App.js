@@ -31,9 +31,11 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
+
           <Route path="/register" element={<SignupPage />} />
           <Route path="/main/*" element={<MainPage />} />
           {/**MainPage는 사이드바 사용하는 페이지 */}
+
         </Routes>
       </Wrapper>
     </Background>
