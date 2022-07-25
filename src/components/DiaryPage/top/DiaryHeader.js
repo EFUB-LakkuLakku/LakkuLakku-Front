@@ -74,10 +74,16 @@ export default function DiaryHeader() {
     margin-left: 38rem;
   `;
 
+  const date = {
+    year: 2022,
+    month: 7,
+    day: 25,
+  };
+
   return (
     <Container>
       <EmojiPicker disabled={false} />
-      <DateBar />
+      <DateBar date={date} />
       <Title />
     </Container>
   );
@@ -97,12 +103,10 @@ const Text = styled.text`
   margin-left: 15rem;
 `;
 
-function DateBar() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month =
-    today.getMonth() + 1; /*getMonth()는 0~11까지의 값 반환하므로 1더함*/
-  const day = today.getDay();
+function DateBar({ date }) {
+  const year = date.year;
+  const month = date.month;
+  const day = date.day;
 
   return (
     <Text>

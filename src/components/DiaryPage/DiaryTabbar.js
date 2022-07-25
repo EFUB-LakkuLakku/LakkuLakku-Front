@@ -14,9 +14,12 @@ const Wrapper = styled.div`
   align-items: center;
   background-color: #fffae7;
   justify-content: space-around;
+  border-top: 1px solid var(--border);
 `;
 
-const BtnWrapper = styled.button`
+const BtnWrapper = styled.button.attrs(({ onClick }) => ({
+  onClick: onClick,
+}))`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,10 +50,12 @@ const ImgBox = styled.img.attrs(({ src }) => ({
   height: 24rem;
 `;
 
-export default function DiaryTabbar() {
+export default function DiaryTabbar({ setsideBarType }) {
   return (
     <Wrapper>
-      <BtnWrapper>
+      <BtnWrapper
+        onClick={() => setsideBarType((prev) => (prev ? null : "paper"))}
+      >
         <ImgBox src={FileIcon} />
         <BtnName>속지</BtnName>
       </BtnWrapper>
@@ -65,7 +70,9 @@ export default function DiaryTabbar() {
         <BtnName>사진</BtnName>
       </BtnWrapper>
 
-      <BtnWrapper>
+      <BtnWrapper
+        onClick={() => setsideBarType((prev) => (prev ? null : "sticker"))}
+      >
         <ImgBox src={PaperClipIcon} />
         <BtnName>스티커</BtnName>
       </BtnWrapper>

@@ -42,7 +42,7 @@ export default function MainPage() {
         <Route path="/:nickname" element={<MonthlyPage />} />
         <Route path="/social" element={<SocialPage />} />
         <Route path="/setting" element={<SettingPage />} />
-        <Route path="/diary/:nickname" element={<DiaryPage />} />
+        <Route path="/diary/:date" element={<DiaryPage />} />
       </Routes>
     </View>
   );

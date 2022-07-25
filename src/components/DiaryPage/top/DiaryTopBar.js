@@ -25,11 +25,14 @@ const ImgBox = styled.img.attrs(({ src, alt, onClick }) => ({
   alt: alt,
   onClick: onClick,
 }))`
-  width: 24rem;
-  height: 24rem;
+  width: 24px;
+  height: 24px;
   margin: 25rem;
+  cursor: pointer;
+
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
   }
 `;
 
