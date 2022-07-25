@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import Right from "../../assets/right-arrow.svg";
-import Left from "../../assets/left-arrow.svg";
-import Edit from "../../assets/edit.svg";
-import Trash from "../../assets/trash.svg";
-import Close from "../../assets/close.svg";
-import Save from "../../assets/save.svg";
+import Right from "../../../assets/right-arrow.svg";
+import Left from "../../../assets/left-arrow.svg";
+import Edit from "../../../assets/edit.svg";
+import Trash from "../../../assets/trash.svg";
+import Close from "../../../assets/close.svg";
+import Save from "../../../assets/save.svg";
 
 import { useNavigate } from "react-router-dom";
 

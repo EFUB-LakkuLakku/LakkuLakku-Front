@@ -1,7 +1,7 @@
-import React from "react";
-import Plus from "../../assets/plus-square.svg";
+import React, { useState } from "react";
+import Plus from "../../../assets/plus-square.svg";
 import styled from "styled-components";
-
+import { EmojiPicker } from "./EmojiPicker";
 const Container = styled.div`
   width: 100%;
   height: 70rem;
@@ -51,9 +51,32 @@ const Title = styled.input.attrs({
 `;
 
 export default function DiaryHeader() {
+  const [chosenEmoji, setChosenEmoji] = useState();
+  const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
+
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject);
+    emojiPickerVisible(false);
+  };
+  const emojiContainer = styled.button.attrs(({ onClick }) => ({
+    onClick: onClick,
+  }))`
+    width: 24rem;
+    height: 24rem;
+    margin-left: 38rem;
+    background-color: yellow;
+  `;
+
+  const emojiPickerContainer = styled.div`
+    background-color: red;
+    width: 24rem;
+    height: 24rem;
+    margin-left: 38rem;
+  `;
+
   return (
     <Container>
-      <ImgBox src={Plus} alt="plus" />
+      <EmojiPicker disabled={false} />
       <DateBar />
       <Title />
     </Container>
@@ -71,6 +94,7 @@ const Text = styled.text`
   text-align: center;
   letter-spacing: -0.02em;
   margin: 19rem;
+  margin-left: 15rem;
 `;
 
 function DateBar() {
