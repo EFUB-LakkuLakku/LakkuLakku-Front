@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import DefaultImg from "../../assets/DefaultImg.png";
+//import { ReactComponent as DefaultImg } from '../assets/default_img.svg'
+import ProfileEditModal from './ProfileEditModal';
 import styled from "styled-components";
 import theme from "../../styles/theme";
 
@@ -23,44 +25,36 @@ const Profile = () => {
 
   //nickname 백엔드에서 get해오기
 
-  const openModal = () => {
-  setShowModal(true);
-  }
-  
 
   return (
-          <>
-              <ProfileBox>
-                
-                  <ProfileImg src={info.image} />
-                  
-                  <Nickname> <span style={{color: '#8b681a'}}>{nickname}</span>의 먼슬리 다이어리</Nickname>
+    <ProfileBox>
+      
+        <ProfileImg src={info.image} />
+        
+        <Nickname> <span style={{color: '#8b681a'}}>{nickname}</span>의 먼슬리 다이어리</Nickname>
 
-                  <BioBox>
-                      <BioHeader>자기소개</BioHeader>
-                      <Bio> {info.bio} </Bio>
-                  </BioBox>
+        <BioBox>
+            <BioHeader>자기소개</BioHeader>
+            <Bio> {info.bio} </Bio>
+        </BioBox>
 
-                  <BtnBox onClick={e => e.stopPropagation()}>
-                      <ProfileEditBtn onClick={openModal}>
-                      프로필 수정
-                      </ProfileEditBtn>
-                  </BtnBox>
-                  {/* {showModal && <ProfileEditModal imageInfo={info.image} bioInfo={info.bio} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} */}
+        <BtnBox onClick={e => e.stopPropagation()}>
+            <ProfileEditBtn onClick={() => setShowModal(true)}>
+            프로필 수정
+            </ProfileEditBtn>
+        </BtnBox>
+        {showModal && <ProfileEditModal imageInfo={info.image} bioInfo={info.bio} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} 
 
-              </ProfileBox>
+    </ProfileBox>
 
-      </>
   );
 };
 
 
 const ProfileBox = styled.div`
-  width: 330rem;
-  height: 575rem;
-  background-color: #FFFBF2;
+  flex: 0.635;
+  background-color: ${theme.background};
   border-top-left-radius: 30rem;
-  border: 1rem solid #D3CEC4;
   border-bottom: none;
 
   display: flex;
@@ -131,7 +125,7 @@ const ProfileEditBtn = styled.button`
   width: 84rem;
   height: 24rem;
 
-  background-color: #FFE898;
+  background-color: ${theme.main};
   border-radius: 17rem;
   border: none;
 
