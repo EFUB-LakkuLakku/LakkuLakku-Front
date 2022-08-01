@@ -2,47 +2,30 @@ import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import ClockOnSVG from "../../../assets/clock.svg";
 import ListOnSVG from "../../../assets/list.svg";
-
 import ListOffSVG from "../../../assets/list-off.svg";
 import ClockOffSVG from "../../../assets/clock-off.svg";
 import Stickers from "../../../db/stickers.json";
+import { addStickerToPanel } from "../../../modules/sticker";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   width: 330rem;
   display: flex;
   flex-direction: column;
   border-top-left-radius: 30px;
+  width: 0px;
+  visibility: hidden;
 
-   {
-    /** sideBarType
-    undefined ->초기상태
-     null값-> 닫힌상태
-     
-     string값 -> 열린 상태
-   sideBarType에 null이 아닌값이 담겨있다 = 열린 상태*/
-  }
   ${({ sideBarType }) =>
     css`
       animation: 0.7s
         ${({ sideBarType }) => {
           console.log(sideBarType);
-          if (sideBarType === undefined) return "default";
-          else if (sideBarType === null) return "showOut";
+          if (sideBarType === null) return "showOut";
           else return "showUp";
         }}
         forwards;
     `}
-
-  @keyframes default {
-    0% {
-      width: 0;
-    }
-
-    100% {
-      width: 0;
-      visibility: hidden;
-    }
-  }
 
   @keyframes showUp {
     0% {
@@ -58,7 +41,6 @@ const Container = styled.div`
 
   @keyframes showOut {
     0% {
-      width: 330rem;
     }
 
     100% {
@@ -116,6 +98,7 @@ const Category = styled.div`
 function DiarySideBar({ sideBarType }) {
   // 0번 : 최근에 사용한 것, 1번 : 카테고리별 스티커 목록
   const [currentTab, setCurrentTab] = useState(0);
+  const ditpatch = useDispatch();
 
   return (
     <Container sideBarType={sideBarType}>
@@ -146,14 +129,24 @@ function DiarySideBar({ sideBarType }) {
         </ImgWrapper>
       </Tab>
       <StickerList>
-        {Stickers.map((item) => {
+        {Stickers.map((sticker) => {
           return (
             <StickerContainer>
               <ImgBox
-                id={item.id}
-                src={item.url}
+                id={sticker.id}
+                src={sticker.url}
                 width="78rem"
                 height="78rem"
+                onClick={() =>
+                  ditpatch(
+                    addStickerToPanel({
+                      id: sticker.id,
+                      x: 100,
+                      y: 100,
+                      url: sticker.url,
+                    })
+                  )
+                }
               />
             </StickerContainer>
           );
