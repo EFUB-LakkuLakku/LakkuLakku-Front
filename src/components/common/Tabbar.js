@@ -47,18 +47,18 @@ const TabName = styled.text`
   font-feature-settings: "calt" off;
 `;
 
-const Tabbar = ({ currentTab, setCurrentTab }) => {
+const Tabbar = ({ currentTab, setCurrentTab, userNickName }) => {
   return (
     <TabContainer>
       <Tab
-        to={"/main"}
+        to={`/main/${userNickName}`}
         focus={currentTab == 0 ? true : false}
         onClick={() => setCurrentTab(0)}
       >
         <TabName>다이어리</TabName>
       </Tab>
       <Tab
-        to={"/main/social"}
+        to={`/main/${userNickName}/social`}
         focus={currentTab == 1 ? true : false}
         onClick={() => setCurrentTab(1)}
       >

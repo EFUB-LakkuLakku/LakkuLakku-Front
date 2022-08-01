@@ -26,14 +26,18 @@ export default function MainPage() {
   const params = pathname.split("/");
   //console.log(params);
   const isDiaryPage = params[3] === "diary" ? true : false;
-
+  const userNickName = params[2];
   // 0번 : 다이어리 탭, 1번: 친구탭
   const [currentTab, setCurrentTab] = React.useState(0); // 다이어리탭을 기본으로
   return (
     <View>
       {/** 다이어리 페이지가 아닐 경우에만 탭바 보이기 */}
       {!isDiaryPage && (
-        <Tabbar currentTab={currentTab} setCurrentTab={setCurrentTab} />
+        <Tabbar
+          currentTab={currentTab}
+          setCurrentTab={setCurrentTab}
+          userNickName={userNickName}
+        />
       )}
 
       {/**사이드바는 고정, 우측 박스 부분만 갈아끼우기 */}
