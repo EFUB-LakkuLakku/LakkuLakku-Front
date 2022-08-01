@@ -9,17 +9,17 @@ import "./canvas.css";
 import { Image as KonvaImage, Layer, Stage } from "react-konva";
 import useImage from "use-image";
 import { IndividualSticker } from "./individualSticker";
-
 import { useSelector, useDispatch } from "react-redux";
-
 import { deleteStickerOnPanel } from "../../../modules/sticker";
+import { deleteImageOnPanel } from "../../../modules/image";
 import SampleImg from "../../../assets/sample-img.svg";
 
-export default function Canvas() {
+export default function Canvas({ type }) {
   // 다이어리 요소들 조회하는 api 요청을 Canvas 내부에서 보내기.
 
   const dispatch = useDispatch();
   const stickers = useSelector((state) => state.sticker);
+  const images = useSelector((state) => state.image);
 
   const [background] = useImage(SampleImg); // 속지
 
@@ -84,6 +84,25 @@ export default function Canvas() {
                   }}
                   key={i}
                   image={sticker}
+                  width={100}
+                  height={100}
+                />
+              );
+            })}
+
+          {images &&
+            images.map((image, i) => {
+              return (
+                <IndividualSticker
+                  onDelete={() => dispatch(deleteImageOnPanel(i))}
+                  onDragEnd={(event) => {
+                    image.x = event.target.x();
+                    image.y = event.target.y();
+                  }}
+                  key={i}
+                  image={image}
+                  width={300}
+                  height={150}
                 />
               );
             })}

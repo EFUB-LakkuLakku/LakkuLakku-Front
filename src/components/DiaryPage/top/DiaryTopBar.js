@@ -114,7 +114,7 @@ export default function DiaryTopBar({ setIsEditing, isEditing }) {
           alt="right"
           onClick={() => {
             const tomorrow = getDay(date, 1);
-            const link = BASE_URL + "/main/" + nickname + "/diary/" + tomorrow;
+            const link = BASE_URL + "main/" + nickname + "/diary/" + tomorrow;
             window.location.href = link;
           }}
         />

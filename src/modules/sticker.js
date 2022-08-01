@@ -18,22 +18,7 @@ export const deleteStickerOnPanel = (remove_idx) => ({
 });
 
 //초기상태 -> 특정사용자의 다이어리 요소들 조회하는 api 요청 보내기
-const initialState = [
-  {
-    id: "fox1",
-    x: 100,
-    y: 100,
-    category: "cute",
-    url: "https://pbs.twimg.com/media/E6J1AVpVkAE5JT0?format=png&name=small",
-  },
-  {
-    id: "fox2",
-    x: 500,
-    y: 500,
-    category: "cute",
-    url: "https://pbs.twimg.com/media/E6J1AVpVkAE5JT0?format=png&name=small",
-  },
-];
+const initialState = [];
 
 //3.리듀서 함수
 function sticker(state = initialState, action) {

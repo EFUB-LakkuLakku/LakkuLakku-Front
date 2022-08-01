@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import FileIcon from "../../assets/file.svg";
 import TypeIcon from "../../assets/type.svg";
 import ImageIcon from "../../assets/image.svg";
 import PaperClipIcon from "../../assets/paperclip.svg";
+import { addImageToPanel } from "../../modules/image";
+import { useDispatch } from "react-redux";
+
 const Wrapper = styled.div`
   width: 100%;
   height: 85rem;
@@ -51,6 +54,13 @@ const ImgBox = styled.img.attrs(({ src }) => ({
 `;
 
 export default function DiaryTabbar({ setsideBarType }) {
+  const ImgInput = React.useRef();
+  const dispatch = useDispatch();
+  const onImgUploadBtnClick = (event) => {
+    //event.preventDefault();
+    ImgInput.current.click();
+  };
+
   return (
     <Wrapper>
       <BtnWrapper
@@ -65,9 +75,43 @@ export default function DiaryTabbar({ setsideBarType }) {
         <BtnName>텍스트</BtnName>
       </BtnWrapper>
 
-      <BtnWrapper>
+      <BtnWrapper
+        onClick={() => {
+          console.log("file click");
+          onImgUploadBtnClick();
+        }}
+      >
         <ImgBox src={ImageIcon} />
         <BtnName>사진</BtnName>
+        <input
+          ref={ImgInput}
+          type="file"
+          id="img"
+          accept="image/*"
+          name="file"
+          style={{ display: "none" }}
+          onChange={(e) => {
+            const files = e.target.files;
+
+            const reader = new FileReader();
+            console.log(files[0]);
+            reader.onload = () => {
+              // 로드가 끝나면
+              console.log(reader.result);
+
+              dispatch(
+                addImageToPanel({
+                  id: files[0].name,
+                  x: 100,
+                  y: 100,
+
+                  url: reader.result,
+                })
+              );
+            };
+            reader.readAsDataURL(files[0]);
+          }}
+        />
       </BtnWrapper>
 
       <BtnWrapper
