@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useReducer, useRef } from "react";
 import styled from "styled-components";
 import { YellowButton, Title, Input, GrayButton } from "./index";
+import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -30,35 +32,43 @@ const initialState = {
   emailAlert: { msg: " ", status: " " },
   passwordAlert: { msg: " ", status: " " },
   confirmPasswordAlert: { msg: " ", status: " " },
+  nicknameAlert: { msg: " ", status: " " },
 };
 
 const actions = {
   EmailCheck: "EmailCheck",
   PasswordCheck: "PasswordCheck",
   confirmPasswordCheck: "confirmPasswordCheck",
+  nicknameCheck: "nicknameCheck",
 };
 
-const reducer = (alert, action) => {
-  const { EmailCheck, PasswordCheck, confirmPasswordCheck } = actions;
+const reducer = (warningAlert, action) => {
+  const { EmailCheck, PasswordCheck, confirmPasswordCheck, nicknameCheck } =
+    actions;
   switch (action.type) {
     case EmailCheck:
       return {
-        ...alert,
+        ...warningAlert,
         emailAlert: action.emailAlert,
       };
     case PasswordCheck:
       return {
-        ...alert,
+        ...warningAlert,
         passwordAlert: action.passwordAlert,
       };
     case confirmPasswordCheck:
       return {
-        ...alert,
+        ...warningAlert,
         confirmPasswordAlert: action.confirmPasswordAlert,
+      };
+    case nicknameCheck:
+      return {
+        ...warningAlert,
+        nicknameAlert: action.nicknameAlert,
       };
     default:
       return {
-        ...alert,
+        ...warningAlert,
       };
   }
 };
@@ -68,11 +78,12 @@ const regEmail =
 const regPw = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 
 function SignupPage() {
-  const [alert, dispatch] = useReducer(reducer, initialState);
+  const [warningAlert, dispatch] = useReducer(reducer, initialState);
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [nickname, SetNickname] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     regEmail.test(email)
@@ -101,8 +112,25 @@ function SignupPage() {
         });
   }, [email, password, confirmPassword]);
 
+  async function getPostUser() {
+    try {
+      const response = await axios.post(
+        "https://lakku-lakku.com/api/v1/users/signup",
+        {
+          email: email,
+          password: password,
+          nickname: nickname,
+        }
+      );
+      await navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   const onClick = (e) => {
     e.preventDefault();
+    if (!email || !nickname || !password || !confirmPassword) return;
     if (password !== confirmPassword) {
       dispatch({
         type: "confirmPasswordCheck",
@@ -113,7 +141,65 @@ function SignupPage() {
       });
       return;
     }
+    getPostUser();
   };
+
+  async function getDuplicateEmail() {
+    try {
+      const response = await axios.get(
+        `https://lakku-lakku.com/api/v1/users/signup/email?email=${email}`
+      );
+      console.log(response);
+      alert("사용 가능한 이메일입니다.");
+    } catch (err) {
+      console.error(err);
+      alert("이미 사용중인 이메일입니다.");
+    }
+  }
+
+  const CheckEmail = (e) => {
+    e.preventDefault();
+    if (!email) return;
+    getDuplicateEmail();
+  };
+
+  async function getDuplicateNickname() {
+    try {
+      const response = await axios.get(
+        `https://lakku-lakku.com/api/v1/users/signup/nickname?nickname=${nickname}`
+      );
+      console.log(response);
+      alert("사용 가능한 닉네임입니다.");
+    } catch (err) {
+      console.error(err);
+      alert("이미 사용중인 닉네임입니다.");
+    }
+  }
+
+  const CheckNickname = (e) => {
+    e.preventDefault();
+    if (!nickname) return;
+    if (nickname.length < 2 || nickname.length > 10) {
+      dispatch({
+        type: "nicknameCheck",
+        nicknameAlert: {
+          msg: "잘못된 형식의 닉네임입니다. 2자 이상 10자 이내로 작성해주세요.",
+          status: "warning",
+        },
+      });
+      return;
+    } else {
+      dispatch({
+        type: "nicknameCheck",
+        nicknameAlert: {
+          msg: " ",
+          status: "success",
+        },
+      });
+    }
+    getDuplicateNickname();
+  };
+
   const onEmailHandler = (e) => {
     SetEmail(e.currentTarget.value);
   };
@@ -143,9 +229,9 @@ function SignupPage() {
         >
           이메일
         </Input>
-        <GrayButton>확인</GrayButton>
+        <GrayButton onClick={CheckEmail}>확인</GrayButton>
       </GrayButtonWrapper>
-      <WarningTag>{alert.emailAlert.msg}</WarningTag>
+      <WarningTag>{warningAlert.emailAlert.msg}</WarningTag>
       <Input
         placeholder="비밀번호를 입력해 주세요"
         type="password"
@@ -155,7 +241,7 @@ function SignupPage() {
       >
         비밀번호
       </Input>
-      <WarningTag>{alert.passwordAlert.msg}</WarningTag>
+      <WarningTag>{warningAlert.passwordAlert.msg}</WarningTag>
       <Input
         placeholder="비밀번호를 입력해 주세요"
         type="password"
@@ -165,10 +251,10 @@ function SignupPage() {
       >
         비밀번호 확인
       </Input>
-      <WarningTag>{alert.confirmPasswordAlert.msg}</WarningTag>
+      <WarningTag>{warningAlert.confirmPasswordAlert.msg}</WarningTag>
       <GrayButtonWrapper>
         <Input
-          placeholder="6자 이내 닉네임을 입력해주세요"
+          placeholder="2자 이상 6자 이내 닉네임을 입력해주세요"
           type="text"
           value={nickname}
           onChange={onNicknameHandler}
@@ -176,8 +262,9 @@ function SignupPage() {
         >
           닉네임
         </Input>
-        <GrayButton>확인</GrayButton>
+        <GrayButton onClick={CheckNickname}>확인</GrayButton>
       </GrayButtonWrapper>
+      <WarningTag>{warningAlert.nicknameAlert.msg}</WarningTag>
       <Gap />
       <YellowButton type="submit" onClick={onClick}>
         회원 가입
