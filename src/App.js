@@ -33,9 +33,8 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/register" element={<SignupPage />} />
-          <Route path="/main/*" element={<MainPage />} />
+          <Route path="/main/:nickname/*" element={<MainPage />} />
           {/**MainPage는 사이드바 사용하는 페이지 */}
-
         </Routes>
       </Wrapper>
     </Background>

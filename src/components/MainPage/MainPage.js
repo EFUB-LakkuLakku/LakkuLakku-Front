@@ -25,7 +25,7 @@ export default function MainPage() {
   const { pathname } = useLocation();
   const params = pathname.split("/");
   //console.log(params);
-  const isDiaryPage = params[2] === "diary" ? true : false;
+  const isDiaryPage = params[3] === "diary" ? true : false;
 
   // 0번 : 다이어리 탭, 1번: 친구탭
   const [currentTab, setCurrentTab] = React.useState(0); // 다이어리탭을 기본으로
@@ -39,7 +39,7 @@ export default function MainPage() {
       {/**사이드바는 고정, 우측 박스 부분만 갈아끼우기 */}
       {!isDiaryPage && <SideBar />}
       <Routes>
-        <Route path="/:nickname" element={<MonthlyPage />} />
+        <Route path="/" element={<MonthlyPage />} />
         <Route path="/social" element={<SocialPage />} />
         <Route path="/setting" element={<SettingPage />} />
         <Route path="/diary/:date" element={<DiaryPage />} />
