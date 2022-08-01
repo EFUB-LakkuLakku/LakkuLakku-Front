@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Plus from "../../../assets/plus-square.svg";
 import styled from "styled-components";
 import { EmojiPicker } from "./EmojiPicker";
+import { useLocation } from "react-router-dom";
 const Container = styled.div`
   width: 100%;
   height: 70rem;
@@ -53,7 +54,10 @@ const Title = styled.input.attrs({
 export default function DiaryHeader() {
   const [chosenEmoji, setChosenEmoji] = useState();
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
-
+  const { pathname } = useLocation();
+  const params = pathname.split("/");
+  const dates = params[4]; // 다이어리 날짜 정보
+  const ymd = dates.split("-");
   const onEmojiClick = (event, emojiObject) => {
     setChosenEmoji(emojiObject);
     emojiPickerVisible(false);
@@ -75,9 +79,9 @@ export default function DiaryHeader() {
   `;
 
   const date = {
-    year: 2022,
-    month: 7,
-    day: 25,
+    year: ymd[0],
+    month: ymd[1],
+    day: ymd[2],
   };
 
   return (

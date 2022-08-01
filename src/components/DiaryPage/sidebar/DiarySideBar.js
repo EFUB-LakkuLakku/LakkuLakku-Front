@@ -74,7 +74,7 @@ const ImgWrapper = styled.div`
 `;
 
 //스티커 목록
-const StickerList = styled.div`
+const ListWrapper = styled.div`
   flex: 1; // 탭바 제외한 나머지부분
   overflow: auto; // 스크롤 영역 생성
   display: flex;
@@ -128,30 +128,36 @@ function DiarySideBar({ sideBarType }) {
           )}
         </ImgWrapper>
       </Tab>
-      <StickerList>
-        {Stickers.map((sticker) => {
-          return (
-            <StickerContainer>
-              <ImgBox
-                id={sticker.id}
-                src={sticker.url}
-                width="78rem"
-                height="78rem"
-                onClick={() =>
-                  ditpatch(
-                    addStickerToPanel({
-                      id: sticker.id,
-                      x: 100,
-                      y: 100,
-                      url: sticker.url,
-                    })
-                  )
-                }
-              />
-            </StickerContainer>
-          );
-        })}
-      </StickerList>
+      {sideBarType == "paper" ? (
+        <ListWrapper>
+          <div>속지{/*속지 리스트 렌더링*/}</div>
+        </ListWrapper>
+      ) : (
+        <ListWrapper>
+          {Stickers.map((sticker) => {
+            return (
+              <StickerContainer>
+                <ImgBox
+                  id={sticker.id}
+                  src={sticker.url}
+                  width="78rem"
+                  height="78rem"
+                  onClick={() =>
+                    ditpatch(
+                      addStickerToPanel({
+                        id: sticker.id,
+                        x: 100,
+                        y: 100,
+                        url: sticker.url,
+                      })
+                    )
+                  }
+                />
+              </StickerContainer>
+            );
+          })}
+        </ListWrapper>
+      )}
     </Container>
   );
 }
