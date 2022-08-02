@@ -45,8 +45,8 @@ const Container = styled.div`
 function DiaryEditPage({ setIsEditing, isEditing }) {
   const { nickname } = useParams(); // 현재 유저 닉네임 정보
 
-  // null : 사이드바 닫힌상태, sticker : 스티커용 사이드바 오픈된 상태, paper : 속지용 사이드바 오픈된 상태
-  const [sideBarType, setsideBarType] = useState(null);
+  // undefined: 맨 처음 상태, null : 사이드바 닫힌상태, sticker : 스티커용 사이드바 오픈된 상태, paper : 속지용 사이드바 오픈된 상태
+  const [sideBarType, setsideBarType] = useState(undefined);
 
   return (
     <View>

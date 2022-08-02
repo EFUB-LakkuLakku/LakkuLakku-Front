@@ -8,6 +8,7 @@
   --sub-2: #fffae7;
   --sub-3: #fff6d6;
   --w100: #e8e6e1;
+
   --b600: #625d52;
   --b500: #857f72;
   --b700: #504a40;
@@ -52,4 +53,15 @@ code {
 input::placeholder {
   font-family: "NotoSansKR-Medium";
   color: var(--b500);
+}
+
+/*커스텀 스크롤바*/
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+}
+::-webkit-scrollbar-track {
+  background: var(--white);
 }

@@ -7,13 +7,12 @@ import ClockOffSVG from "../../../assets/clock-off.svg";
 import Stickers from "../../../db/stickers.json";
 import { addStickerToPanel } from "../../../modules/sticker";
 import { useDispatch } from "react-redux";
-
+import DropdownMenu from "./DropdownMenu";
 const Container = styled.div`
-  width: 330rem;
   display: flex;
   flex-direction: column;
   border-top-left-radius: 30px;
-  width: 0px;
+  width: 0;
   visibility: hidden;
 
   ${({ sideBarType }) =>
@@ -21,11 +20,21 @@ const Container = styled.div`
       animation: 0.7s
         ${({ sideBarType }) => {
           console.log(sideBarType);
-          if (sideBarType === null) return "showOut";
+          if (sideBarType === undefined) return "default";
+          else if (sideBarType === null) return "showOut";
           else return "showUp";
         }}
         forwards;
     `}
+  @keyframes default {
+    0% {
+      width: 0%;
+    }
+
+    100% {
+      width: 0;
+    }
+  }
 
   @keyframes showUp {
     0% {
@@ -41,6 +50,7 @@ const Container = styled.div`
 
   @keyframes showOut {
     0% {
+      width: 330rem;
     }
 
     100% {
@@ -51,6 +61,7 @@ const Container = styled.div`
 `;
 
 const Tab = styled.div`
+  width: 100%;
   height: 70rem;
   display: flex;
   background-color: var(--w100);
@@ -71,6 +82,7 @@ const ImgWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 5px;
 `;
 
 //스티커 목록
@@ -79,6 +91,7 @@ const ListWrapper = styled.div`
   overflow: auto; // 스크롤 영역 생성
   display: flex;
   flex-wrap: wrap; // 넘치면 줄바꿈
+  justify-content: space-around;
 `;
 
 const StickerContainer = styled.div`
@@ -88,17 +101,47 @@ const StickerContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: var(--w50);
-  margin: 22rem;
+  margin: 25rem;
 `;
 
-const Category = styled.div`
-  width: 278rem;
-  height: 48rem;
+const CategoryContainer = styled.div`
+  flex: 1; // 탭바 제외한 나머지부분
+  width: 327rem; //330- 스크롤바(5px)
+  padding: 25rem;
+  overflow: auto; // 스크롤 영역 생성
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 `;
+
+const CategoryText = styled.text`
+  font-family: "NotoSansKR-Medium";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16rem;
+  line-height: 22rem;
+  letter-spacing: -0.02em;
+  font-feature-settings: "calt" off;
+  align-self: flex-start;
+  color: #000000;
+`;
+
 function DiarySideBar({ sideBarType }) {
+  return <StickerSideBar sideBarType={sideBarType} />;
+}
+
+function StickerSideBar({ sideBarType }) {
   // 0번 : 최근에 사용한 것, 1번 : 카테고리별 스티커 목록
   const [currentTab, setCurrentTab] = useState(0);
-  const ditpatch = useDispatch();
+  const dispatch = useDispatch();
+  const categories = ["베이직", "큐트", "키치", "보테니컬"];
+
+  const [categoryOpen, setCategoryOpen] = useState([
+    false,
+    false,
+    false,
+    false,
+  ]);
 
   return (
     <Container sideBarType={sideBarType}>
@@ -128,11 +171,7 @@ function DiarySideBar({ sideBarType }) {
           )}
         </ImgWrapper>
       </Tab>
-      {sideBarType == "paper" ? (
-        <ListWrapper>
-          <div>속지{/*속지 리스트 렌더링*/}</div>
-        </ListWrapper>
-      ) : (
+      {currentTab == 0 ? (
         <ListWrapper>
           {Stickers.map((sticker) => {
             return (
@@ -143,7 +182,7 @@ function DiarySideBar({ sideBarType }) {
                   width="78rem"
                   height="78rem"
                   onClick={() =>
-                    ditpatch(
+                    dispatch(
                       addStickerToPanel({
                         id: sticker.id,
                         x: 100,
@@ -157,9 +196,30 @@ function DiarySideBar({ sideBarType }) {
             );
           })}
         </ListWrapper>
+      ) : (
+        <CategoryContainer>
+          <CategoryText>테마</CategoryText>
+          {categories.map((category, idx) => {
+            return (
+              <DropdownMenu
+                selected={categoryOpen[idx]}
+                onClick={() => {
+                  //idx번째 dropdown 메뉴 toggle
+                  setCategoryOpen((prev) => {
+                    const new_state = [...prev];
+                    new_state[idx] = !new_state[idx];
+                    return new_state;
+                  });
+                }}
+                stickers={Stickers}
+              >
+                {category}
+              </DropdownMenu>
+            );
+          })}
+        </CategoryContainer>
       )}
     </Container>
   );
 }
-
 export default DiarySideBar;

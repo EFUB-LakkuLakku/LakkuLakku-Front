@@ -19,10 +19,13 @@ export const deleteImageOnPanel = (remove_idx) => ({
 
 //초기상태 -> 특정사용자의 다이어리 요소들 조회하는 api 요청 보내기
 const initialState = [
+  /*
   {
     id: "fox1",
     x: 100,
     y: 100,
+    width:200,
+    height:100,
     category: "cute",
     url: "https://d20aeo683mqd6t.cloudfront.net/ko/articles/title_images/000/039/143/original/IMG_5649%E3%81%AE%E3%82%B3%E3%83%92%E3%82%9A%E3%83%BC.jpg?2019&d=750x400",
   },
@@ -30,9 +33,12 @@ const initialState = [
     id: "fox2",
     x: 28,
     y: 176,
+    width:200,
+    height:100,
     category: "cute",
     url: "https://d20aeo683mqd6t.cloudfront.net/ko/articles/title_images/000/039/143/original/IMG_5649%E3%81%AE%E3%82%B3%E3%83%92%E3%82%9A%E3%83%BC.jpg?2019&d=750x400",
   },
+  */
 ];
 
 //3.리듀서 함수
