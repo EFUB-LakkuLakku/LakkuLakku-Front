@@ -62,6 +62,48 @@ function LoginPage() {
   const [password, SetPassword] = useState("");
   const navigate = useNavigate();
 
+  axios.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      const {
+        config,
+        response: { status },
+      } = error;
+      if (status === 401) {
+        if (error.response.data.code === "TOKEN_VALIDATE_FAILURE") {
+          const originalRequest = config;
+          const refreshToken = localStorage.getItem("refreshToken");
+          const email = localStorage.getItem("email");
+
+          const res = await axios.get(
+            "https://lakku-lakku.com/api/v1/users/re-issue",
+            {
+              params: {
+                email: email,
+                refreshToken: refreshToken,
+              },
+            }
+          );
+
+          const newAccessToken = res.data.accessToken;
+          const newRefreshtoekn = res.data.refreshToken;
+
+          localStorage.setItem("accessToken", newAccessToken);
+          localStorage.setItem("refreshToken", newRefreshtoekn);
+
+          axios.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          return axios(originalRequest);
+        } else if (error.response.data.code === "REFRESHTOKEN_EXPIRED") {
+          navigate("/login");
+        }
+      }
+      return Promise.reject(error);
+    }
+  );
+
   async function getLoginUser() {
     try {
       const response = await axios.post(
@@ -71,12 +113,21 @@ function LoginPage() {
           password: password,
         }
       );
+      console.log(response.data);
+
       const { accessToken } = response.data.accessToken;
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-      await navigate("/main");
+
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("email", email);
+      localStorage.setItem("nickname", response.data.nickname);
+
+      const nickname = localStorage.getItem("nickname");
+      await navigate(`/main/${nickname}`);
     } catch (err) {
       console.error(err.response);
-      if (err.response.status == 400) {
+      if (err.response.status === 400) {
         dispatch({
           type: "PasswordCheck",
           passwordAlert: {
@@ -84,7 +135,14 @@ function LoginPage() {
             status: "warning",
           },
         });
-      } else if (err.response.status == 404) {
+        dispatch({
+          type: "EmailCheck",
+          emailAlert: {
+            msg: " ",
+            status: "success",
+          },
+        });
+      } else if (err.response.status === 404) {
         dispatch({
           type: "EmailCheck",
           emailAlert: {
