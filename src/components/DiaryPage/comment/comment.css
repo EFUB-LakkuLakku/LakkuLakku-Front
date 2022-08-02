@@ -40,7 +40,6 @@
 }
 .comment-wrapper {
   width: 913rem;
-  height: 250rem;
   border-radius: 6px;
   border: solid 1px var(--border);
   background-color: var(--w200);
@@ -48,7 +47,6 @@
 
 .comment-wrapper-reply {
   width: 913rem;
-  height: 250rem;
   border-radius: 6px;
   border: solid 1px var(--border);
   background-color: var(--w100);
@@ -58,7 +56,7 @@
 
 .form-wrapper {
   width: 913rem;
-  height: 232rem;
+  height: 210rem;
   border-radius: 6px;
   border: solid 1px var(--b700);
   background-color: white;
@@ -95,7 +93,7 @@
 .comment-form-textarea {
   font-family: "NotoSansKR-Medium";
   padding: 10rem 22rem 10rem 22rem;
-  width: 869rem;
+  width: 911rem;
   height: 80rem;
   border: none;
   border-bottom: solid 2px var(--w400);
@@ -233,6 +231,7 @@
   width: 869rem;
   font-size: 16rem;
   height: 100rem;
+  word-break: break-all;
 }
 
 .comment-bottom-part {
