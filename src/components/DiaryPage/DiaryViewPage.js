@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import DiaryEditPage from "./DiaryEditPage";
-import DiaryViewPage from "./DiaryViewPage";
+import DiaryTopBar from "./top/DiaryTopBar";
+import DiaryHeader from "./top/DiaryHeader";
+import SampleImg from "../../assets/sample-img.svg";
+import DiaryTabbar from "./DiaryTabbar";
+import Comments from "./comment/Comments";
+import Like from "./Like";
+import Chat from "./Chat";
+
 import { useParams } from "react-router-dom";
 
 //flex 설정 덮어씌우기 -> 더 좋은 방법이 있다면 추후에 수정하기
@@ -51,16 +57,29 @@ const DiaryBottomBar = styled.div`
   background-color: var(--sub-2);
 `;
 
-function DiaryPage() {
+function DiaryViewPage({ setIsEditing }) {
   const { nickname } = useParams(); // 현재 유저 닉네임 정보
 
-  const [isEditing, setIsEditing] = useState(false); //수정모드인지 아닌지
-
-  return isEditing ? (
-    <DiaryEditPage isEditing={isEditing} setIsEditing={setIsEditing} />
-  ) : (
-    <DiaryViewPage setIsEditing={setIsEditing} />
+  return (
+    <View>
+      <DiaryTopBar setIsEditing={setIsEditing} isEditing={false} />
+      <DiaryHeader setIsEditing={setIsEditing} />
+      <Container>
+        <ImgBox
+          src={SampleImg}
+          alt={"diaryimg"}
+          width={"100%"}
+          height={"679rem"}
+        />
+        <InfoBox>
+          <Like like={false} like_cnt={100} />
+          <Chat chat_cnt={10} />
+        </InfoBox>
+        <Comments currentUserId={2} />
+      </Container>
+      <DiaryBottomBar />
+    </View>
   );
 }
 
-export default DiaryPage;
+export default DiaryViewPage;

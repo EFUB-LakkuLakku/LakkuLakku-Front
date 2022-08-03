@@ -26,7 +26,7 @@ const TabContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
-  margin-top: -37rem;
+  margin-top: -38rem;
   margin-right: 30rem;
 `;
 
@@ -36,6 +36,7 @@ const TabName = styled.text`
   font-weight: 600;
   font-size: 18rem;
   line-height: 27rem;
+  color: var(--font);
 
   /* identical to box height, or 150% */
 
@@ -46,18 +47,18 @@ const TabName = styled.text`
   font-feature-settings: "calt" off;
 `;
 
-const Tabbar = ({ currentTab, setCurrentTab }) => {
+const Tabbar = ({ currentTab, setCurrentTab, userNickName }) => {
   return (
     <TabContainer>
       <Tab
-        to={"/main"}
+        to={`/main/${userNickName}`}
         focus={currentTab == 0 ? true : false}
         onClick={() => setCurrentTab(0)}
       >
         <TabName>다이어리</TabName>
       </Tab>
       <Tab
-        to={"/main/social"}
+        to={`/main/${userNickName}/social`}
         focus={currentTab == 1 ? true : false}
         onClick={() => setCurrentTab(1)}
       >

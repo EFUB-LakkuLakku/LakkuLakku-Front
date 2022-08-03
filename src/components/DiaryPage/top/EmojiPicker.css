@@ -1,0 +1,48 @@
+.EmojiPicker {
+  position: relative;
+  margin-left: 38rem;
+}
+
+.EmojiPicker__Wrapper {
+  position: absolute;
+  top: 130%;
+  left: 0%;
+  z-index: 2;
+  animation: fadeIn 0.15s ease-in forwards;
+}
+
+.EmojiPicker__Btn {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  background: none;
+  outline: none;
+  border: 0;
+}
+
+.EmojiPicker__Btn:hover {
+  background-color: var(--w100);
+}
+
+.EmojiPicker__Btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.Emoji__Container {
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  background: none;
+  outline: none;
+  border: 0;
+}
