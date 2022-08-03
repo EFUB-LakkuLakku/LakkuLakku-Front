@@ -148,6 +148,7 @@ const Title = styled.div`
 
 const CancelBtn = styled.button`
     border: none;
+    background-color: transparent;
 `;
 
 const ImgBox = styled.div`
@@ -160,7 +161,7 @@ const UploadedImgBox = styled.div`
     height: 283rem;
     width: 280rem;
     border: 7rem solid #B8B2A7;
-    border-radius: 24rem;
+    border-radius: 33rem;  //수정
 
     margin-right: 56rem;
 `;
@@ -168,6 +169,8 @@ const UploadedImgBox = styled.div`
 const UploadedImg = styled.img`
     width: 100%;
     height: 100%;
+
+    border-radius: 25rem;  //수정
 `;
 
 const BtnBox = styled.div`
@@ -185,6 +188,7 @@ const ChangeBtn = styled.button`
     margin-bottom: 16rem;
     
     border: none;
+    background-color: transparent;
 `;
 
 const BioHeader = styled.div`

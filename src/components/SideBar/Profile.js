@@ -129,7 +129,7 @@ const ProfileEditBtn = styled.button`
   border-radius: 17rem;
   border: none;
 
-  font-size: 10rem;
+  font-size: 12rem;
   font-family: "NotoSansKR-Bold";
 `;
 
