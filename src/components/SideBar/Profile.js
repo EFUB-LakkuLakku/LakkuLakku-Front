@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import DefaultImg from "../../assets/DefaultImg.png";
 //import { ReactComponent as DefaultImg } from '../assets/default_img.svg'
 import ProfileEditModal from './ProfileEditModal';
@@ -6,10 +6,12 @@ import styled from "styled-components";
 import theme from "../../styles/theme";
 
 const Profile = () => {
-  const [info, setInfo] = useState({ "image": DefaultImg, "bio":'나는 오늘도 내일을 산다..' }); //초깃값에 여러개 넣기 //나중에 초깃값에 '' 넣기!
-  const [nickname, setNickname] = useState('발발이'); //나중에 초깃값에 '' 넣기!
+  const [info, setInfo] = useState({
+    image: DefaultImg,
+    bio: "나는 오늘도 내일을 산다..",
+  }); //초깃값에 여러개 넣기 //나중에 초깃값에 '' 넣기!
+  const [nickname, setNickname] = useState("발발이"); //나중에 초깃값에 '' 넣기!
   const [showModal, setShowModal] = useState(false);
-
 
   /*
   const editedInfo = async () => {
@@ -46,10 +48,8 @@ const Profile = () => {
         {showModal && <ProfileEditModal imageInfo={info.image} bioInfo={info.bio} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} 
 
     </ProfileBox>
-
   );
 };
-
 
 const ProfileBox = styled.div`
   flex: 0.635;
@@ -62,7 +62,6 @@ const ProfileBox = styled.div`
   align-items: center;
 
   padding-top: 62rem;
-
 `;
 
 const ProfileImg = styled.img`
@@ -83,7 +82,7 @@ const Nickname = styled.div`
 const BioBox = styled.div`
   width: 270rem;
 
-  margin-bottom: 14rem; 
+  margin-bottom: 14rem;
 `;
 
 const BioHeader = styled.div`
@@ -98,12 +97,12 @@ const BioHeader = styled.div`
 
 const Bio = styled.div`
   font-size: 14rem;
-  font-family: "NotoSansKR-Regular";    
-  color: #625D52;
+  font-family: "NotoSansKR-Regular";
+  color: #625d52;
 
   width: 270rem;
   height: 39rem;
-  background-color: #F6F5EC;
+  background-color: #f6f5ec;
   border-radius: 10rem;
 
   line-height: 39rem;
@@ -120,7 +119,6 @@ const BtnBox = styled.div`
   justify-content: flex-end;
 `;
 
-
 const ProfileEditBtn = styled.button`
   width: 84rem;
   height: 24rem;
@@ -132,6 +130,5 @@ const ProfileEditBtn = styled.button`
   font-size: 12rem;
   font-family: "NotoSansKR-Bold";
 `;
-
 
 export default Profile;

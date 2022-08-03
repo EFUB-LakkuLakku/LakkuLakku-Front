@@ -1,0 +1,146 @@
+@use 'src/components/MonthlyPage/common.scss' as common;
+
+.calendar {
+    @include common.size(100%, 89.2%); 
+    background-color: #FFFFFF;
+    .header {
+        @include common.size(100%, 7%);
+        @include common.flex-row(space-between, baseline);
+        
+        .text {
+            font-size: 24rem;
+            padding-left: 20rem;
+        }
+        .textMonth {
+            padding-left: 10rem;
+        }
+        .col.col-first {
+            @include common.size(80%, 100%);
+            @include common.flex-column(center, flex-start);
+            
+            
+        }
+        .col.col-end {
+            @include common.size(20%, 100%);
+            @include common.flex-row(flex-end, baseline);
+            img {
+                width: 24rem;
+                height: 25.7rem;
+                padding-top: 11%;
+                padding-right: 15%;
+            }
+        }
+    }
+    .days {
+        @include common.size(100%, fit-content);
+        @include common.flex-row(space-between, center);
+        font-weight: 600;
+        font-size: 16rem;
+
+        padding-top: 11px;
+        padding-bottom: 11px;
+
+        color: black;
+
+        .col {
+            @include common.size(12.9%, 100%);
+            @include common.flex-column(center, center);
+        }
+
+        
+        
+    }
+
+    .body {
+        @include common.size(100%, 97%);
+        @include common.flex-column();
+     
+
+        .row {
+            @include common.size(100%, 100%);
+            @include common.flex-row(space-between, center);
+            border-top: 1px solid rgba(0, 0, 0, 0.5);
+            border-width: 0.01px;
+            
+            .col {
+                @include common.size(100%, 100%);
+                @include common.flex-row(right, right);
+                font-size: 14rem;
+                font-weight: 510;
+                border-left: 1px solid rgba(0, 0, 0, 0.5) !important;
+                border-width: 0.01px;
+                &:hover {
+                    background: var(--background);
+                    opacity: 0.5;
+                }
+                
+           
+                .not-valid {
+                    color: var(--black);
+                    opacity: 0.5;
+                }
+                  
+            }
+            .valid { 
+                &:hover {
+                    background: var(--background);
+                }
+            }
+           
+            .selectedCircle{
+                position:absolute;
+                margin: 3px;
+                margin-top: 5px;
+                width : 27rem;
+                height : 27rem;
+                border-radius: 50%;
+                background-color: var(--main);
+            }
+
+            .diaryTitle{
+                margin: 3px;
+                margin-top: 5px;
+                width : 104rem;
+                height : 26rem;
+                border-radius: 10%;
+                background-color: var(--main);
+
+            }
+
+            .diaryEmoji{
+                position:absolute;
+                background-image: url(./emoji.png);
+                width : 76rem;
+                height : 75rem;
+                margin-top: 35px;
+                margin-right: 35px;
+            }
+
+            .col.cell.weekEnd{
+                &:hover {
+                    background: var(--background);
+                    opacity: 0.5;
+                }
+                background: var(--sub-2);
+            }
+            .startDate{
+                border-left: 0px;
+            }
+            .weekEnd{
+                color: var(--dark-red);
+                
+
+            }
+            .dateText{
+                position:relative;
+                margin: 8px;
+            }
+
+         
+    
+         
+
+
+        }
+    }
+} 

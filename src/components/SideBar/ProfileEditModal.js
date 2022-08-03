@@ -4,6 +4,7 @@ import { ReactComponent as DeleteIcon } from '../../assets/delete_icon.svg'
 //import DefaultImg from '../../assets/default_img.svg'
 import styled from 'styled-components';
 import theme from '../../styles/theme';
+import axios from 'axios';
 
 const ProfileEditModal = ({imageInfo, bioInfo, isOpenModal, setIsOpenModal}) => {
     const [image, setImage] = useState(imageInfo); 
@@ -116,6 +117,8 @@ const Background = styled.div`
     position: fixed;
     top:0; left: 0; bottom: 0; right: 0;
     background: rgba(0, 0, 0, 0.6);
+
+    z-index: 100; //수정
 `;
 
 const ProfileEditBox = styled.div`

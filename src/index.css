@@ -1,17 +1,19 @@
 #root {
   --background: #fffbf2;
   --border: #d3cec4;
-  --300: #b8b2a7;
+  --w300: #b8b2a7;
   --sub: #f6f5ec;
-  --200: #faf9f7;
-  --400: #a39e93;
+  --w200: #faf9f7;
+  --w400: #a39e93;
   --sub-2: #fffae7;
-  --100: #e8e6e1;
-  --600: #625d52;
-  --500: #857f72;
-  --700: #504a40;
+  --sub-3: #fff6d6;
+  --w100: #e8e6e1;
+
+  --b600: #625d52;
+  --b500: #857f72;
+  --b700: #504a40;
   --font: #423d33;
-  --900: #27241d;
+  --b900: #27241d;
   --white: #fff;
   --nickname: #8b681a;
   --black: #000;
@@ -19,10 +21,11 @@
   --dark-red: #a31010;
   --main: #ffe898;
   --pale-grey: #f8f9fa;
+  --w50: #f0f0f0;
 }
 
 html {
-  font-size: calc(6.25% * 0.8); /*1rem = 0.7px 이 되도록 맞춤*/
+  font-size: calc(6.25% * 0.9); /*1rem = 0.7px 이 되도록 맞춤*/
 }
 
 * {
@@ -47,4 +50,18 @@ code {
     monospace;
 }
 
+input::placeholder {
+  font-family: "NotoSansKR-Medium";
+  color: var(--b500);
+}
 
+/*커스텀 스크롤바*/
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+}
+::-webkit-scrollbar-track {
+  background: var(--white);
+}
