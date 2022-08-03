@@ -10,61 +10,40 @@ import { Image as KonvaImage, Layer, Stage } from "react-konva";
 import useImage from "use-image";
 import { IndividualSticker } from "./individualSticker";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteStickerOnPanel } from "../../../modules/sticker";
-import { deleteImageOnPanel } from "../../../modules/image";
+import { deleteStickerOnPanel, changeSticker } from "../../../modules/sticker";
+import { deleteImageOnPanel, changeImage } from "../../../modules/image";
 import SampleImg from "../../../assets/sample-img.svg";
 
 export default function Canvas({ type }) {
-  // 다이어리 요소들 조회하는 api 요청을 Canvas 내부에서 보내기.
+  // 다이어리 요소들 조회하는 api 요청-> 리덕스 미들웨어에서 보내기.
 
   const dispatch = useDispatch();
   const stickers = useSelector((state) => state.sticker);
   const images = useSelector((state) => state.image);
-
+  const [selectedId, selectShape] = React.useState(null);
   const [background] = useImage(SampleImg); // 속지
 
-  const resetAllButtons = useCallback(() => {
-    console.log("resetAllButtons");
-    stickers.forEach((image) => {
-      if (image.resetButtonRef.current) {
-        image.resetButtonRef.current();
-      }
-    });
-  }, [stickers]);
+  // 빈 땅 클릭했을때 포커스 해제
+  const checkDeselect = (e) => {
+    console.log(e.target);
 
-  const handleCanvasClick = useCallback(
-    (event) => {
-      if (event.target.attrs.id === "backgroundImage") {
-        resetAllButtons();
-      }
-    },
-    [resetAllButtons]
-  );
+    const clickedOnEmpty = e.target.attrs.id == "backgroundImage"; // 배경을 클릭했다면
 
-  /*
-  var container = document.querySelector("#stage-parent");
-  var width;
-  var height;
-
-  if (container) {
-    width = container.clientWidth;
-    height = container.clientHeight;
-    console.log(width, height);
-  }
-  */
+    if (clickedOnEmpty) selectShape(null);
+  };
   console.log(stickers);
   return (
     <div style={{ width: "100%", height: "674rem" }}>
       <Stage
         width={945}
         height={674 * 0.9}
-        onClick={handleCanvasClick}
-        onTap={handleCanvasClick}
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
+        onMouseDown={checkDeselect}
+        onTouchStart={checkDeselect}
       >
         <Layer>
           <KonvaImage
@@ -77,15 +56,21 @@ export default function Canvas({ type }) {
             stickers.map((sticker, i) => {
               return (
                 <IndividualSticker
+                  key={i}
                   onDelete={() => dispatch(deleteStickerOnPanel(i))}
                   onDragEnd={(event) => {
                     sticker.x = event.target.x();
                     sticker.y = event.target.y();
                   }}
-                  key={i}
+                  isSelected={sticker.id === selectedId}
                   image={sticker}
-                  width={100}
-                  height={100}
+                  onSelect={() => {
+                    selectShape(sticker.id);
+                  }}
+                  onChange={(newAttrs) => {
+                    // 변경된 크기값으로 적용
+                    dispatch(changeSticker(i, newAttrs));
+                  }}
                 />
               );
             })}
@@ -101,11 +86,19 @@ export default function Canvas({ type }) {
                   }}
                   key={i}
                   image={image}
-                  width={300}
-                  height={150}
+                  isSelected={image.id === selectedId}
+                  onSelect={() => {
+                    selectShape(image.id);
+                  }}
+                  onChange={(newAttrs) => {
+                    // 변경된 크기값으로 적용
+                    dispatch(changeImage(i, newAttrs));
+                  }}
                 />
               );
             })}
+
+          {/**텍스트추가 */}
         </Layer>
       </Stage>
     </div>

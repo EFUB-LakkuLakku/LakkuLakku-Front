@@ -1,39 +1,35 @@
 import useImage from "use-image";
 import React, { useState, useEffect, useRef } from "react";
-import { Image as KonvaImage, Group } from "react-konva";
+import { Image as KonvaImage, Group, Transformer } from "react-konva";
 import { useHoverDirty, useLongPress } from "react-use";
 
 export const IndividualSticker = ({
   image,
   onDelete,
   onDragEnd,
-  width,
-  height,
+  isSelected,
+  onSelect,
+  onChange,
 }) => {
   const imageRef = useRef(null);
   const isHovered = useHoverDirty(imageRef);
   const [stickerImage] = useImage(image.url);
-  const [deleteImage] = useImage(require("../../../assets/cancel.svg"));
-  const [showDeleteButton, setShowDeleteButton] = useState(false);
   const [onMouseOver, setOnMouseOver] = useState(false);
+  const trRef = React.useRef(); //Transformer
 
-  const onLongPress = () => {
-    setShowDeleteButton(true);
-  };
-
-  /*
-  image.backRef.current = () => {
-    setShowDeleteButton(false);
-  };
-  */
-  const longPressEvent = useLongPress(onLongPress, { delay: 200 });
-  const [isDragging, setIsDragging] = useState(false);
+  React.useEffect(() => {
+    if (isSelected) {
+      //transformer 직접 붙히기
+      trRef.current.nodes([imageRef.current]);
+      trRef.current.getLayer().batchDraw();
+    }
+  }, [isSelected]);
 
   const stickerWidth = image.width;
   const stickerHeight = stickerImage
     ? (image.width * stickerImage.height) / stickerImage.width
     : 0;
-
+  /*
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
       if (e.key == "Backspace" && onMouseOver) {
@@ -42,43 +38,67 @@ export const IndividualSticker = ({
       }
     });
   });
-
+*/
   return (
-    <Group
-      draggable
-      x={image.x}
-      y={image.y}
-      onDragStart={() => setIsDragging(true)}
-      onDragEnd={(event) => {
-        setIsDragging(false);
-        onDragEnd(event); // 드래그 끝난 지점의 스티커 좌표 저장
-      }}
-      onMouseOver={() => {
-        setOnMouseOver(true);
-        console.log(image.id, "스티커가 onMouseOver");
-      }}
-      onMouseLeave={() => {
-        setOnMouseOver(false);
-        console.log(image.id, "스티커가 onMouseLeave");
-      }}
-    >
+    <>
       <KonvaImage
+        onWheel={onDelete}
+        onClick={onSelect}
+        onTap={onSelect}
         ref={imageRef}
-        width={width}
-        height={height}
+        width={image.width}
+        height={image.height}
         image={stickerImage}
-        {...longPressEvent}
+        draggable
+        x={image.x}
+        y={image.y}
+        rotation={image.rotation}
+        onDragEnd={(e) => {
+          onDragEnd(e); // 드래그 끝난 지점의 스티커 좌표 저장
+        }}
+        onMouseOver={() => {
+          setOnMouseOver(true);
+          //console.log(image.id, "스티커가 onMouseOver");
+        }}
+        onMouseLeave={() => {
+          setOnMouseOver(false);
+          //console.log(image.id, "스티커가 onMouseLeave");
+        }}
+        onTransformEnd={(e) => {
+          console.log(e);
+          const node = imageRef.current;
+          const scaleX = node.scaleX();
+          const scaleY = node.scaleY();
+
+          //리셋
+          node.scaleX(1);
+          node.scaleY(1);
+
+          //변경
+          onChange({
+            ...image,
+            x: node.x(),
+            y: node.y(),
+            rotation: e.target.attrs.rotation,
+
+            // 최소값 지정
+            width: Math.max(5, node.width() * scaleX),
+            height: Math.max(node.height() * scaleY),
+          });
+        }}
       />
-      {showDeleteButton && !isDragging && (
-        <KonvaImage
-          onTouchStart={onDelete}
-          onClick={onDelete}
-          image={deleteImage}
-          width={width}
-          height={height}
-          offsetX={-stickerWidth / 2 - 20}
+      {isSelected && (
+        <Transformer
+          ref={trRef}
+          boundBoxFunc={(oldBox, newBox) => {
+            // 리사이즈 제한
+            if (newBox.width < 5 || newBox.height < 5) {
+              return oldBox;
+            }
+            return newBox;
+          }}
         />
       )}
-    </Group>
+    </>
   );
 };
