@@ -10,18 +10,17 @@ import { Image as KonvaImage, Layer, Stage } from "react-konva";
 import useImage from "use-image";
 import { IndividualSticker } from "./individualSticker";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteStickerOnPanel, changeSticker } from "../../../modules/sticker";
-import { deleteImageOnPanel, changeImage } from "../../../modules/image";
-import SampleImg from "../../../assets/sample-img.svg";
+import { deleteStickerOnPanel } from "../../../modules/sticker";
+import { deleteImageOnPanel } from "../../../modules/image";
 
-export default function Canvas({ type }) {
-  // 다이어리 요소들 조회하는 api 요청-> 리덕스 미들웨어에서 보내기.
+export default function Canvas({ type, paper, setPaper }) {
+  // 다이어리 요소들 조회하는 api 요청을 Canvas 내부에서 보내기.
 
   const dispatch = useDispatch();
   const stickers = useSelector((state) => state.sticker);
   const images = useSelector((state) => state.image);
   const [selectedId, selectShape] = React.useState(null);
-  const [background] = useImage(SampleImg); // 속지
+  const [background] = useImage(paper.src); // 속지
 
   // 빈 땅 클릭했을때 포커스 해제
   const checkDeselect = (e) => {
