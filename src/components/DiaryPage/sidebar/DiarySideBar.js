@@ -4,10 +4,11 @@ import ClockOnSVG from "../../../assets/clock.svg";
 import ListOnSVG from "../../../assets/list.svg";
 import ListOffSVG from "../../../assets/list-off.svg";
 import ClockOffSVG from "../../../assets/clock-off.svg";
-import Stickers from "../../../db/stickers.json";
+//import Stickers from "../../../db/stickers.json";
 import { addStickerToPanel } from "../../../modules/sticker";
 import { useDispatch } from "react-redux";
 import DropdownMenu from "./DropdownMenu";
+import DiaryService from "../../../api/DiaryService";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -135,13 +136,35 @@ function StickerSideBar({ sideBarType }) {
   const [currentTab, setCurrentTab] = useState(0);
   const dispatch = useDispatch();
   const categories = ["베이직", "큐트", "키치", "보테니컬"];
-
+  const [Stickers, setStickers] = useState([]);
+  const [categoryStickers, setCategoryStickers] = useState([]);
   const [categoryOpen, setCategoryOpen] = useState([
     false,
     false,
     false,
     false,
   ]);
+
+  useEffect(() => {
+    DiaryService.getDiarySticker()
+      .then((res) => {
+        if (res.status == 200) setStickers(res.data);
+      })
+      .catch((err) => {
+        console.log(err, "스티커를 가져오지 못했습니다.");
+      });
+
+    DiaryService.getCategoryDiarySticker()
+      .then((res) => {
+        if (res.status == 200) {
+          setCategoryStickers(res.data);
+          console.log(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err, "카테고리 스티커를 가져오지 못했습니다.");
+      });
+  }, []);
 
   return (
     <Container sideBarType={sideBarType}>
@@ -211,7 +234,7 @@ function StickerSideBar({ sideBarType }) {
                     return new_state;
                   });
                 }}
-                stickers={Stickers}
+                stickers={categoryStickers[idx].stickerList}
               >
                 {category}
               </DropdownMenu>
