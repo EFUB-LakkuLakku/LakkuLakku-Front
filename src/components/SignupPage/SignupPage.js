@@ -114,14 +114,11 @@ function SignupPage() {
 
   async function getPostUser() {
     try {
-      const response = await axios.post(
-        "https://lakku-lakku.com/api/v1/users/signup",
-        {
-          email: email,
-          password: password,
-          nickname: nickname,
-        }
-      );
+      const response = await axios.post("/api/v1/users/signup", {
+        email: email,
+        password: password,
+        nickname: nickname,
+      });
       await navigate("/login");
     } catch (err) {
       console.error(err);
@@ -147,7 +144,7 @@ function SignupPage() {
   async function getDuplicateEmail() {
     try {
       const response = await axios.get(
-        `https://lakku-lakku.com/api/v1/users/signup/email?email=${email}`
+        `/api/v1/users/signup/email?email=${email}`
       );
       console.log(response);
       alert("사용 가능한 이메일입니다.");
@@ -166,7 +163,7 @@ function SignupPage() {
   async function getDuplicateNickname() {
     try {
       const response = await axios.get(
-        `https://lakku-lakku.com/api/v1/users/signup/nickname?nickname=${nickname}`
+        `/api/v1/users/signup/nickname?nickname=${nickname}`
       );
       console.log(response);
       alert("사용 가능한 닉네임입니다.");

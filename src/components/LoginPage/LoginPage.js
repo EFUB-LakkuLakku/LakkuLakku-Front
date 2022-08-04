@@ -77,15 +77,12 @@ function LoginPage() {
           const refreshToken = localStorage.getItem("refreshToken");
           const email = localStorage.getItem("email");
 
-          const res = await axios.get(
-            "https://lakku-lakku.com/api/v1/users/re-issue",
-            {
-              params: {
-                email: email,
-                refreshToken: refreshToken,
-              },
-            }
-          );
+          const res = await axios.get("/api/v1/users/re-issue", {
+            params: {
+              email: email,
+              refreshToken: refreshToken,
+            },
+          });
 
           const newAccessToken = res.data.accessToken;
           const newRefreshtoekn = res.data.refreshToken;
@@ -106,13 +103,10 @@ function LoginPage() {
 
   async function getLoginUser() {
     try {
-      const response = await axios.post(
-        "https://lakku-lakku.com/api/v1/users/login",
-        {
-          email: email,
-          password: password,
-        }
-      );
+      const response = await axios.post("/api/v1/users/login", {
+        email: email,
+        password: password,
+      });
       console.log(response.data);
 
       const { accessToken } = response.data.accessToken;

@@ -53,7 +53,7 @@ export const getComments = async () => {
 
 export const userProfile = async () => {
   return {
-    userId: "2",
+    userId: "",
     avatar:
       "http://thumbnail.10x10.co.kr/webimage/image/basic600/440/B004408698.jpg?cmd=thumb&w=400&h=400&fit=true&ws=false",
     username: "희진",
