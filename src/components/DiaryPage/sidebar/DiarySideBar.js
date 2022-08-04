@@ -118,7 +118,7 @@ const PaperContainer = styled.div`
 
 const CategoryContainer = styled.div`
   flex: 1; // 탭바 제외한 나머지부분
-  width: 327rem; //330- 스크롤바(5px)
+  width: 327rem; //330 - 스크롤바(5px)
   padding: 25rem;
   overflow: auto; // 스크롤 영역 생성
   display: flex;

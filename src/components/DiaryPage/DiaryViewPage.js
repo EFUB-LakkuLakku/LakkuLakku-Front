@@ -75,7 +75,7 @@ function DiaryViewPage({ setIsEditing }) {
           <Like like={false} like_cnt={100} />
           <Chat chat_cnt={10} />
         </InfoBox>
-        <Comments currentUserId={2} />
+        <Comments />
       </Container>
       <DiaryBottomBar />
     </View>

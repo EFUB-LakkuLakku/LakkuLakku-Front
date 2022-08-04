@@ -24,23 +24,24 @@ const Comment = ({
     activeComment.id === comment.id &&
     activeComment.type === "replying";
   const canReply = parentId ? false : true;
-  const canDelete = currentUserId === comment.userId && replies.length === 0;
-  const canEdit = currentUserId === comment.userId;
+  const canDelete = currentUserId == comment.userId && replies.length === 0;
+  const canEdit = currentUserId == comment.userId;
   const replyId = parentId ? parentId : comment.id;
+  const [isEdited, SetisEdited] = useState(false);
 
   const createdAtTime = () => {
-    const year = new Date(comment.createdAt).getFullYear();
-    const month = new Date(comment.createdAt).getMonth() + 1;
-    const date = new Date(comment.createdAt).getDate();
-    const hour = new Date(comment.createdAt).getHours();
-    const min = new Date(comment.createdAt).getMinutes();
+    const year = new Date(comment.createdOn).getFullYear();
+    const month = new Date(comment.createdOn).getMonth() + 1;
+    const date = new Date(comment.createdOn).getDate();
+    const hour = new Date(comment.createdOn).getHours();
+    const min = new Date(comment.createdOn).getMinutes();
     return (
       year + "년 " + month + "월 " + date + "일 " + hour + "시 " + min + "분"
     );
   };
 
   const timeShown = () => {
-    const timePassed = new Date() - new Date(comment.createdAt).getTime();
+    const timePassed = new Date() - new Date(comment.createdOn).getTime();
     if (timePassed < 60000) return Math.floor(timePassed / 1000) + "초";
     else if (timePassed < 3600000) return Math.floor(timePassed / 60000) + "분";
     else if (timePassed < 24 * 3600000)
@@ -105,9 +106,10 @@ const Comment = ({
               {canEdit && (
                 <div
                   className="comment-action"
-                  onClick={() =>
-                    setActiveComment({ id: comment.id, type: "editing" })
-                  }
+                  onClick={() => {
+                    setActiveComment({ id: comment.id, type: "editing" });
+                    SetisEdited(true);
+                  }}
                 >
                   수정하기
                 </div>
@@ -122,7 +124,14 @@ const Comment = ({
               )}
             </div>
             <div className="comment-bottom-right">
-              <div className="comment-time-text">{createdAtTime()}</div>
+              {!isEdited && (
+                <div className="comment-time-text">{createdAtTime()}</div>
+              )}
+              {isEdited && (
+                <div className="comment-time-text">
+                  {createdAtTime()}(수정됨)
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -19,52 +19,30 @@ export default function Canvas({ type, paper, setPaper }) {
   const dispatch = useDispatch();
   const stickers = useSelector((state) => state.sticker);
   const images = useSelector((state) => state.image);
-
+  const [selectedId, selectShape] = React.useState(null);
   const [background] = useImage(paper.src); // 속지
 
+  // 빈 땅 클릭했을때 포커스 해제
+  const checkDeselect = (e) => {
+    console.log(e.target);
 
-  const resetAllButtons = useCallback(() => {
-    console.log("resetAllButtons");
-    stickers.forEach((image) => {
-      if (image.resetButtonRef.current) {
-        image.resetButtonRef.current();
-      }
-    });
-  }, [stickers]);
+    const clickedOnEmpty = e.target.attrs.id == "backgroundImage"; // 배경을 클릭했다면
 
-  const handleCanvasClick = useCallback(
-    (event) => {
-      if (event.target.attrs.id === "backgroundImage") {
-        resetAllButtons();
-      }
-    },
-    [resetAllButtons]
-  );
-
-  /*
-  var container = document.querySelector("#stage-parent");
-  var width;
-  var height;
-
-  if (container) {
-    width = container.clientWidth;
-    height = container.clientHeight;
-    console.log(width, height);
-  }
-  */
+    if (clickedOnEmpty) selectShape(null);
+  };
   console.log(stickers);
   return (
     <div style={{ width: "100%", height: "674rem" }}>
       <Stage
         width={945}
         height={674 * 0.9}
-        onClick={handleCanvasClick}
-        onTap={handleCanvasClick}
         style={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
+        onMouseDown={checkDeselect}
+        onTouchStart={checkDeselect}
       >
         <Layer>
           <KonvaImage
@@ -77,15 +55,21 @@ export default function Canvas({ type, paper, setPaper }) {
             stickers.map((sticker, i) => {
               return (
                 <IndividualSticker
+                  key={i}
                   onDelete={() => dispatch(deleteStickerOnPanel(i))}
                   onDragEnd={(event) => {
                     sticker.x = event.target.x();
                     sticker.y = event.target.y();
                   }}
-                  key={i}
+                  isSelected={sticker.id === selectedId}
                   image={sticker}
-                  width={100}
-                  height={100}
+                  onSelect={() => {
+                    selectShape(sticker.id);
+                  }}
+                  onChange={(newAttrs) => {
+                    // 변경된 크기값으로 적용
+                    dispatch(changeSticker(i, newAttrs));
+                  }}
                 />
               );
             })}
@@ -101,11 +85,19 @@ export default function Canvas({ type, paper, setPaper }) {
                   }}
                   key={i}
                   image={image}
-                  width={300}
-                  height={150}
+                  isSelected={image.id === selectedId}
+                  onSelect={() => {
+                    selectShape(image.id);
+                  }}
+                  onChange={(newAttrs) => {
+                    // 변경된 크기값으로 적용
+                    dispatch(changeImage(i, newAttrs));
+                  }}
                 />
               );
             })}
+
+          {/**텍스트추가 */}
         </Layer>
       </Stage>
     </div>
