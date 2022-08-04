@@ -4,14 +4,29 @@ import DefaultImg from "../../assets/DefaultImg.png";
 import ProfileEditModal from './ProfileEditModal';
 import styled from "styled-components";
 import theme from "../../styles/theme";
+import API from '../../utils/api';
 
 const Profile = () => {
-  const [info, setInfo] = useState({
-    image: DefaultImg,
-    bio: "나는 오늘도 내일을 산다..",
-  }); //초깃값에 여러개 넣기 //나중에 초깃값에 '' 넣기!
-  const [nickname, setNickname] = useState("발발이"); //나중에 초깃값에 '' 넣기!
+  const [info, setInfo] = useState( { user: { profileImageUrl: DefaultImg, bio: "" } } ); //초기값!!
   const [showModal, setShowModal] = useState(false);
+
+
+
+  const editedInfo = async () => {
+    await API.get(`/api/v1/home/`)
+    .then(res => setInfo(res.data))
+    .then(res => console.log(res))
+    .catch(err=> console.log(err))
+  };  //api 연결  //bio만 수정된 게 반영 안됨
+
+  useEffect(() => {
+    editedInfo();
+    
+    localStorage.setItem("id", info.user.id);
+    localStorage.setItem("profileImage", info.user.profileImageUrl);
+    localStorage.setItem("nickname", info.user.nickname);
+
+  });  
 
   /*
   const editedInfo = async () => {
@@ -24,20 +39,19 @@ const Profile = () => {
       editedInfo();
     }, [info]);  
   */
-
   //nickname 백엔드에서 get해오기
 
 
   return (
     <ProfileBox>
       
-        <ProfileImg src={info.image} />
+        <ProfileImg src={info.user.profileImageUrl} />
         
-        <Nickname> <span style={{color: '#8b681a'}}>{nickname}</span>의 먼슬리 다이어리</Nickname>
+        <Nickname> <span style={{color: '#8b681a'}}>{info.user.nickname}</span>의 먼슬리 다이어리</Nickname>
 
         <BioBox>
             <BioHeader>자기소개</BioHeader>
-            <Bio> {info.bio} </Bio>
+            <Bio> {info.user.bio} </Bio>
         </BioBox>
 
         <BtnBox onClick={e => e.stopPropagation()}>
@@ -45,7 +59,7 @@ const Profile = () => {
             프로필 수정
             </ProfileEditBtn>
         </BtnBox>
-        {showModal && <ProfileEditModal imageInfo={info.image} bioInfo={info.bio} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} 
+        {showModal && <ProfileEditModal imageInfo={info.user.profileImageUrl} bioInfo={info.user.bio} nicknameInfo={info.user.nickname} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} 
 
     </ProfileBox>
   );

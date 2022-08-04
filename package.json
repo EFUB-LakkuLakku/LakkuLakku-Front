@@ -2,6 +2,7 @@
   "name": "lakkulakku",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://lakku-lakku.com",
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -49,7 +50,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://lakku-lakku.com",
   "devDependencies": {
     "sass": "^1.53.0",
     "sass-loader": "^13.0.2",

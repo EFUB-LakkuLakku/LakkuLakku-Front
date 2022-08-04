@@ -12,16 +12,16 @@ import { IndividualSticker } from "./individualSticker";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteStickerOnPanel } from "../../../modules/sticker";
 import { deleteImageOnPanel } from "../../../modules/image";
-import SampleImg from "../../../assets/sample-img.svg";
 
-export default function Canvas({ type }) {
+export default function Canvas({ type, paper, setPaper }) {
   // 다이어리 요소들 조회하는 api 요청을 Canvas 내부에서 보내기.
 
   const dispatch = useDispatch();
   const stickers = useSelector((state) => state.sticker);
   const images = useSelector((state) => state.image);
 
-  const [background] = useImage(SampleImg); // 속지
+  const [background] = useImage(paper.src); // 속지
+
 
   const resetAllButtons = useCallback(() => {
     console.log("resetAllButtons");

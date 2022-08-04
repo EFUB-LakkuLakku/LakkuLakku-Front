@@ -4,9 +4,9 @@ import { ReactComponent as DeleteIcon } from '../../assets/delete_icon.svg'
 //import DefaultImg from '../../assets/default_img.svg'
 import styled from 'styled-components';
 import theme from '../../styles/theme';
-import axios from 'axios';
+import API from '../../utils/api';
 
-const ProfileEditModal = ({imageInfo, bioInfo, isOpenModal, setIsOpenModal}) => {
+const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsOpenModal}) => {
     const [image, setImage] = useState(imageInfo); 
     const [bio, setBio] = useState(bioInfo);   
     
@@ -57,16 +57,46 @@ const ProfileEditModal = ({imageInfo, bioInfo, isOpenModal, setIsOpenModal}) => 
 
 
 
-    /*
-    const sendToServer =  async () => {         
+    const sendToServer = async () => {         
         
-            const formData = new FormData()
-            formData.append('file', image);
-            await axios.put('(url 쓰기)', { "image":formData, "bio":bio );
-            alert("저장되었습니다!");
-         
-            setIsOpenModal(false);
+        const formData = new FormData()
+        formData.append("nickname", nicknameInfo);
+        formData.append("image", image);
+        formData.append("bio", bio);
+
+        console.log(nicknameInfo);
+        console.log(image); //더 알아보기
+        console.log(bio);
+        console.log(formData); //더 알아보기
+
+        await API.put(`/api/v1/profile`, formData )
+        .then(res => console.log((res.data)))
+        .catch(err=> console.log(err))
+        
+        alert("저장되었습니다!");
+        
+        setIsOpenModal(false);
+    } //api 연결 
+
+    
+
+    /*
+
+    const editInfo = async () => {
+
+        const response = await axios.put(`${PROXY}/users/1`,
+        {
+            "nickname" : nameInputs,
+            "identifier" : "testIdentifier",
+            "bio": bioInputs	
+        }) // submit→'db'에 있는 걸 수정
+        .catch(e => console.log(response))
+        
+        setNameInputs('');
+        setBioInputs('');
+        setIsOpenModal(false);
     }
+
     */
 
 
@@ -104,7 +134,7 @@ const ProfileEditModal = ({imageInfo, bioInfo, isOpenModal, setIsOpenModal}) => 
                     value={bio}
                     type="text" />
 
-                    <SaveBtn>저장</SaveBtn> {/* type="submit" onClick={sendToServer}, 누르면 수정된 이미지와 자기소개를 서버에 저장하는 버튼*/}
+                    <SaveBtn type="submit" onClick={sendToServer}>저장</SaveBtn> {/* 누르면 수정된 이미지와 자기소개를 서버에 저장하는 버튼*/}
                 </Footer>
             </ProfileEditBox>
         </Background>
