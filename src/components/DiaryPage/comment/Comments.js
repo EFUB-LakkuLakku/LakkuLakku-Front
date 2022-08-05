@@ -2,15 +2,9 @@ import { useState, useEffect } from "react";
 import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 import "./comment.css";
-import {
-  getComments as getCommentsApi,
-  createComment as createCommentApi,
-  updateComment as updateCommentApi,
-  deleteComment as deleteCommentApi,
-  userProfile as userProfileApi,
-} from "./api";
+import API from "../../../utils/api";
 
-const Comments = ({ currentUserId }) => {
+const Comments = () => {
   const init = {
     userId: "",
     avatar: "",
@@ -20,25 +14,66 @@ const Comments = ({ currentUserId }) => {
   const [activeComment, setActiveComment] = useState(null);
   const [userProfile, setUserProfile] = useState(init);
   const rootComments = backendComments.filter(
-    (backendComment) => backendComment.parentId === null
+    (backendComment) => backendComment.parentId == null
   );
+  const [diaryId, setDiaryId] = useState("");
+  const [diaryDate, setDiaryDate] = useState("");
+  const [currentUserId, setCurrentUserId] = useState("");
 
-  const getReplies = (commentId) =>
-    backendComments
-      .filter((backendComment) => backendComment.parentId === commentId)
-      .sort(
-        (a, b) =>
-          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-      );
-  const addComment = (text, parentId) => {
-    createCommentApi(text, parentId).then((comment) => {
-      setBackendComments([comment, ...backendComments]);
+  async function getComments() {
+    try {
+      //날짜부분 나중에 민경님이 넘겨주시면 변수로 넣기
+      const response = await API.get("/api/v1/diaries/2022-08-05");
+      setDiaryId(response.data.diary.id);
+      setDiaryDate(response.data.diary.date);
+      setBackendComments(response.data.commentList);
+      console.log(response.data.commentList);
+
+      //임시 유저 아이디 설정, 나중에 유진님이 아이디 로컬에 저장하면 그걸로 설정
+      setCurrentUserId("2e4a6815-a207-4372-b6cd-a049ae00e979");
+      console.log(currentUserId);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function addComment(text, parentId) {
+    try {
+      const response = await API.post(`/api/v1/diaries/${diaryDate}/comments`, {
+        diaryId: diaryId,
+        content: text,
+        isSecret: false,
+        parentId: parentId,
+      });
+      console.log(response.data);
+
+      //임시 프로필 설정 -> 유진님이 저장해주시면, getcomment 부분으로 옮겨서 조회할때 받아오기
+      const user = {
+        userId: response.data.userId,
+        avatar: response.data.profileImageUrl,
+        username: response.data.nickname,
+      };
+      console.log(user);
+      setUserProfile(user);
+
+      setBackendComments([response.data, ...backendComments]);
       setActiveComment(null);
-    });
-  };
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
-  const updateComment = (text, commentId) => {
-    updateCommentApi(text).then(() => {
+  async function updateComment(text, commentId) {
+    try {
+      const response = await API.put(
+        `/api/v1/diaries/${diaryDate}/comments/${commentId}`,
+        {
+          diaryId: diaryId,
+          content: text,
+          isSecret: false,
+        }
+      );
+
       const updatedBackendComments = backendComments.map((backendComment) => {
         if (backendComment.id === commentId) {
           return { ...backendComment, content: text };
@@ -47,28 +82,39 @@ const Comments = ({ currentUserId }) => {
       });
       setBackendComments(updatedBackendComments);
       setActiveComment(null);
-    });
-  };
-  const deleteComment = (commentId) => {
-    deleteCommentApi().then(() => {
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function deleteComment(commentId) {
+    try {
+      const response = await API.delete(
+        `/api/v1/diaries/${diaryDate}/comments/${commentId}`
+      );
+
       const updatedBackendComments = backendComments.filter(
         (backendComment) => backendComment.id !== commentId
       );
       setBackendComments(updatedBackendComments);
-    });
-  };
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const getReplies = (commentId) =>
+    backendComments
+      .filter((backendComment) => backendComment.parentId === commentId)
+      .sort(
+        (a, b) =>
+          new Date(a.createdOn).getTime() - new Date(b.createdOn).getTime()
+      );
 
   useEffect(() => {
-    getCommentsApi().then((data) => {
-      setBackendComments(data);
-    });
-    userProfileApi().then((profile) => {
-      setUserProfile(profile);
-    });
+    getComments();
   }, []);
 
-  console.log(userProfile);
-
+  rootComments.map((rootComment) => console.log(rootComment.userId));
   return (
     <div className="comments">
       <CommentForm

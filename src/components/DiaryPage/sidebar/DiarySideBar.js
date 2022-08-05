@@ -4,11 +4,14 @@ import ClockOnSVG from "../../../assets/clock.svg";
 import ListOnSVG from "../../../assets/list.svg";
 import ListOffSVG from "../../../assets/list-off.svg";
 import ClockOffSVG from "../../../assets/clock-off.svg";
-//import Stickers from "../../../db/stickers.json";
+import Stickers from "../../../db/stickers.json";
+import Papers from "../../../db/papers.json";
 import { addStickerToPanel } from "../../../modules/sticker";
 import { useDispatch } from "react-redux";
 import DropdownMenu from "./DropdownMenu";
-import DiaryService from "../../../api/DiaryService";
+import PaperDropdownMenu from "./PaperDropdownMenu";
+import API from "../../../utils/api";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,7 +23,6 @@ const Container = styled.div`
     css`
       animation: 0.7s
         ${({ sideBarType }) => {
-          console.log(sideBarType);
           if (sideBarType === undefined) return "default";
           else if (sideBarType === null) return "showOut";
           else return "showUp";
@@ -105,6 +107,15 @@ const StickerContainer = styled.div`
   margin: 25rem;
 `;
 
+const PaperContainer = styled.div`
+  width: 263rem;
+  height: 133rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10rem;
+`;
+
 const CategoryContainer = styled.div`
   flex: 1; // 탭바 제외한 나머지부분
   width: 327rem; //330 - 스크롤바(5px)
@@ -127,8 +138,17 @@ const CategoryText = styled.text`
   color: #000000;
 `;
 
-function DiarySideBar({ sideBarType }) {
-  return <StickerSideBar sideBarType={sideBarType} />;
+function DiarySideBar({ sideBarType, paper, setPaper }) {
+  if (sideBarType === "sticker")
+    return <StickerSideBar sideBarType={sideBarType} />;
+  else if (sideBarType === "paper")
+    return (
+      <PaperSideBar
+        sideBarType={sideBarType}
+        paper={paper}
+        setPaper={setPaper}
+      />
+    );
 }
 
 function StickerSideBar({ sideBarType }) {
@@ -194,6 +214,7 @@ function StickerSideBar({ sideBarType }) {
           )}
         </ImgWrapper>
       </Tab>
+
       {currentTab == 0 ? (
         <ListWrapper>
           {Stickers.map((sticker) => {
@@ -234,7 +255,7 @@ function StickerSideBar({ sideBarType }) {
                     return new_state;
                   });
                 }}
-                stickers={categoryStickers[idx].stickerList}
+                stickers={Stickers}
               >
                 {category}
               </DropdownMenu>
@@ -245,4 +266,110 @@ function StickerSideBar({ sideBarType }) {
     </Container>
   );
 }
+
+function PaperSideBar({ sideBarType, paper, setPaper }) {
+  // 0번 : 최근에 사용한 것, 1번 : 카테고리별 스티커 목록
+  const [currentTab, setCurrentTab] = useState(0);
+  const categories = ["베이직", "큐트", "키치", "보테니컬"];
+
+  const [categoryOpen, setCategoryOpen] = useState([
+    false,
+    false,
+    false,
+    false,
+  ]);
+
+  //cors 이슈
+  const [paperImgs, setPaperImgs] = useState([]); //추가
+
+  useEffect(() => {
+    API.get(`/api/v1/diaries/edit/templates`)
+      .then((res) => setPaperImgs(res.data))
+      .catch((err) => console.log(err));
+
+    console.log(paperImgs.templateList);
+  }); //api 연결
+
+  return (
+    <Container sideBarType={sideBarType}>
+      <Tab>
+        <ImgWrapper>
+          {currentTab == 0 ? (
+            <ImgBox src={ClockOnSVG} width="24rem" height="24rem" />
+          ) : (
+            <ImgBox
+              src={ClockOffSVG}
+              width="24rem"
+              height="24rem"
+              onClick={() => setCurrentTab(0)}
+            />
+          )}
+        </ImgWrapper>
+        <ImgWrapper>
+          {currentTab == 1 ? (
+            <ImgBox src={ListOnSVG} width="24rem" height="24rem" />
+          ) : (
+            <ImgBox
+              src={ListOffSVG}
+              width="24rem"
+              height="24rem"
+              onClick={() => setCurrentTab(1)}
+            />
+          )}
+        </ImgWrapper>
+      </Tab>
+
+      {currentTab == 0 ? (
+        <ListWrapper>
+          {Papers.map((paperdata) => {
+            return (
+              <PaperContainer>
+                <ImgBox
+                  id={paperdata.id}
+                  src={paperdata.url}
+                  width="263rem"
+                  height="133rem"
+                  onClick={() =>
+                    setPaper({
+                      //캔버스 안의 속지 state!!
+                      src: paperdata.url,
+                      x: 0,
+                      y: 0,
+                      id: paperdata.id,
+                    })
+                  }
+                />
+              </PaperContainer>
+            );
+          })}
+        </ListWrapper>
+      ) : (
+        <CategoryContainer>
+          <CategoryText>테마</CategoryText>
+          {categories.map((category, idx) => {
+            return (
+              <PaperDropdownMenu
+                paper={paper}
+                setPaper={setPaper}
+                selected={categoryOpen[idx]}
+                onClick={() => {
+                  //idx번째 dropdown 메뉴 toggle
+                  setCategoryOpen((prev) => {
+                    const new_state = [...prev];
+                    new_state[idx] = !new_state[idx];
+                    return new_state;
+                  });
+                }}
+                papers={Papers} //이거 때문에 papers.json의 url 고쳐야됨!!
+              >
+                {category}
+              </PaperDropdownMenu>
+            );
+          })}
+        </CategoryContainer>
+      )}
+    </Container>
+  );
+}
+
 export default DiarySideBar;

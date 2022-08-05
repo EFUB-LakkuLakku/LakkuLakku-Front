@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import theme from "../../styles/theme";
+import axios from 'axios';
 
 
 const Setting = () => {
@@ -135,7 +136,7 @@ const SettingBox = styled.div`
 
     border-top-right-radius: 30rem;
     border-bottom-right-radius: 30rem;
-    border: 1rem solid #D3CEC4;
+    border: 1rem solid ${theme.border};
 `;
 
 const Header = styled.div`
