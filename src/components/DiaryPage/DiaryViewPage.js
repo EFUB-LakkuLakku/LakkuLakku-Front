@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DiaryTopBar from "./top/DiaryTopBar";
 import DiaryHeader from "./top/DiaryHeader";
@@ -7,7 +7,7 @@ import DiaryTabbar from "./DiaryTabbar";
 import Comments from "./comment/Comments";
 import Like from "./Like";
 import Chat from "./Chat";
-
+import DiaryService from "../../api/DiaryService";
 import { useParams } from "react-router-dom";
 
 //flex 설정 덮어씌우기 -> 더 좋은 방법이 있다면 추후에 수정하기
@@ -58,12 +58,33 @@ const DiaryBottomBar = styled.div`
 `;
 
 function DiaryViewPage({ setIsEditing }) {
-  const { nickname } = useParams(); // 현재 유저 닉네임 정보
+  const { nickname, date } = useParams(); // 현재 유저 닉네임 정보 및 날짜정보
+  const [like, setLike] = useState(false); // 유저가 좋아요 눌렀는지 여부
+  const [diaryInfo, setDiaryInfo] = useState();
+
+  // 다이어리 정보 조회
+  useEffect(() => {
+    DiaryService.getDiary(date)
+      .then((res) => {
+        if (res.status == 200) {
+          setDiaryInfo(res.data);
+          console.log(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err, "실패하였습니다");
+      });
+  }, []);
 
   return (
     <View>
       <DiaryTopBar setIsEditing={setIsEditing} isEditing={false} />
-      <DiaryHeader setIsEditing={setIsEditing} />
+      <DiaryHeader
+        setIsEditing={setIsEditing}
+        titleEmoji={diaryInfo?.diary.titleEmoji}
+        title={diaryInfo?.diary.title}
+        onlyView={true}
+      />
       <Container>
         <ImgBox
           src={SampleImg}
@@ -72,7 +93,7 @@ function DiaryViewPage({ setIsEditing }) {
           height={"679rem"}
         />
         <InfoBox>
-          <Like like={false} like_cnt={100} />
+          <Like like={like} like_cnt={100} />
           <Chat chat_cnt={10} />
         </InfoBox>
         <Comments />

@@ -26,7 +26,7 @@ export const EmojiPicker = ({ disabled }) => {
         </span>
       ) : (
         <button
-          disabled={disabled}
+          disabled={true}
           type="button"
           className="EmojiPicker__Btn"
           onClick={toggleEmojiPicker}

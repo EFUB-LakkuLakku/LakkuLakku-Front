@@ -98,7 +98,7 @@ export default function DiaryTabbar({ setsideBarType }) {
             reader.onload = () => {
               // 로드가 끝나면
               console.log(reader.result);
-
+              console.log(files[0]);
               dispatch(
                 addImageToPanel({
                   id: files[0].name,

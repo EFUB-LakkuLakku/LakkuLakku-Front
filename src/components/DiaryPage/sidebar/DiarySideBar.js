@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 import DropdownMenu from "./DropdownMenu";
 import PaperDropdownMenu from "./PaperDropdownMenu";
 import API from "../../../utils/api";
-
+import DiaryService from "../../../api/DiaryService";
 const Container = styled.div`
   display: flex;
   flex-direction: column;

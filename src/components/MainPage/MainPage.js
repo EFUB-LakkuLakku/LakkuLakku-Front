@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SideBar } from "../index";
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
 import { useLocation } from "react-router";
-
+import HomeService from "../../api/HomeService";
 import {
   MonthlyPage,
   SettingPage,
@@ -29,6 +29,7 @@ export default function MainPage() {
   const userNickName = params[2];
   // 0번 : 다이어리 탭, 1번: 친구탭
   const [currentTab, setCurrentTab] = React.useState(0); // 다이어리탭을 기본으로
+
   return (
     <View>
       {/** 다이어리 페이지가 아닐 경우에만 탭바 보이기 */}
