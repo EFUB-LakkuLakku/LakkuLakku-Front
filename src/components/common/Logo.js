@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Icon from "../../assets/icon.svg";
 import TextLogo from "../../assets/lakkulakku.svg";
-import info from "../MonthlyPage/info.png";
+import info from "../MonthlyPage/questionMark.png";
 import Modal from "../MonthlyPage/TutorialModal";
 
 const Wrapper = styled.div`
@@ -23,8 +23,8 @@ const Container = styled.div`
 const Info = styled.img.attrs({
   src: info,
 })`
-  width: 29rem;
-  height: 29rem;
+  width: 25rem;
+  height: 25rem;
   cursor: pointer;
 `;
 

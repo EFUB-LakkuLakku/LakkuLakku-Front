@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import close from "./Close.png";
-import arrow from "./right.png";
+//import arrow from "./right.png";
 
 const Container = styled.div`
   position: absolute;
@@ -34,8 +34,44 @@ const Background = styled.div`
 `;
 
 const ModalBlock = styled.div`
+  position: fixed;
+  padding: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  animation: modal-show 1s;
+  @keyframes modal-show {
+    from {
+      opacity: 0;
+      margin-top: -50px;
+    }
+    to {
+      opacity: 1;
+      margin-top: 0;
+    }
+  }
+`;
+
+/*const Background = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: modal-bg-show 1s;
+  @keyframes modal-bg-show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+`;
+
+const ModalBlock = styled.div`
   position: absolute;
   top: 90rem;
+  right: 450rem;
   border-radius: 30px;
   padding: 1.5rem;
   background-color: rgba(0, 0, 0, 0.5);
@@ -52,7 +88,7 @@ const ModalBlock = styled.div`
       margin-top: 0;
     }
   }
-`;
+`;*/
 
 const Close = styled.img.attrs({
   src: close,
@@ -62,7 +98,7 @@ const Close = styled.img.attrs({
   top: 20rem;
   cursor: pointer;
 `;
-
+/*
 const ArrowCircle = styled.div`
   position: absolute;
   top: 452rem;
@@ -83,22 +119,20 @@ const Arrow = styled.img.attrs({
 })``;
 
 const Contents = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
+  position: absolute;
+  top: 90rem;
+  left: 450rem;
+`;*/
 
 const ModalFrame = ({ _handleModal, children, ...rest }) => {
   return (
     <Container>
-      <Background onClick={_handleModal} />
-      <ModalBlock {...rest}>
-        <Close onClick={_handleModal} />
-        <ArrowCircle>
-          <Arrow />
-        </ArrowCircle>
-        <Contents>{children}</Contents>
-      </ModalBlock>
+      <Background>
+        <ModalBlock {...rest}>
+          <Close onClick={_handleModal} />
+          {children}
+        </ModalBlock>
+      </Background>
     </Container>
   );
 };
