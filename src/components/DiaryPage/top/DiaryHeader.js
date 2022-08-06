@@ -3,6 +3,7 @@ import Plus from "../../../assets/plus-square.svg";
 import styled from "styled-components";
 import { EmojiPicker } from "./EmojiPicker";
 import { useLocation } from "react-router-dom";
+
 const Container = styled.div`
   width: 100%;
   height: 70rem;
@@ -55,19 +56,14 @@ const Title = styled.input.attrs(({ value, onChange, disabled }) => ({
 `;
 
 export default function DiaryHeader({ titleEmoji, _title, onlyView }) {
-  const [chosenEmoji, setChosenEmoji] = useState(titleEmoji);
-  const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
   const [title, setTitle] = useState(_title);
 
   const { pathname } = useLocation();
   const params = pathname.split("/");
   const dates = params[4]; // 다이어리 날짜 정보
+
   const ymd = dates.split("-");
 
-  const onEmojiClick = (event, emojiObject) => {
-    setChosenEmoji(emojiObject);
-    emojiPickerVisible(false);
-  };
   const emojiContainer = styled.button.attrs(({ onClick }) => ({
     onClick: onClick,
   }))`

@@ -57,24 +57,8 @@ const DiaryBottomBar = styled.div`
   background-color: var(--sub-2);
 `;
 
-function DiaryViewPage({ setIsEditing }) {
-  const { nickname, date } = useParams(); // 현재 유저 닉네임 정보 및 날짜정보
+function DiaryViewPage({ setIsEditing, diaryInfo }) {
   const [like, setLike] = useState(false); // 유저가 좋아요 눌렀는지 여부
-  const [diaryInfo, setDiaryInfo] = useState();
-
-  // 다이어리 정보 조회
-  useEffect(() => {
-    DiaryService.getDiary(date)
-      .then((res) => {
-        if (res.status == 200) {
-          setDiaryInfo(res.data);
-          console.log(res.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err, "실패하였습니다");
-      });
-  }, []);
 
   return (
     <View>
@@ -93,7 +77,7 @@ function DiaryViewPage({ setIsEditing }) {
           height={"679rem"}
         />
         <InfoBox>
-          <Like like={like} like_cnt={100} />
+          <Like like={false} like_cnt={diaryInfo?.likeList.length} />
           <Chat chat_cnt={10} />
         </InfoBox>
         <Comments />
