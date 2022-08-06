@@ -3,6 +3,7 @@ import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 import "./comment.css";
 import API from "../../../utils/api";
+import { useLocation } from "react-router-dom";
 
 const Comments = () => {
   const init = {
@@ -19,17 +20,20 @@ const Comments = () => {
   const [diaryId, setDiaryId] = useState("");
   const [diaryDate, setDiaryDate] = useState("");
   const [currentUserId, setCurrentUserId] = useState("");
+  const { pathname } = useLocation();
+  const params = pathname.split("/");
+  const dates = params[4];
+
+  console.log(dates);
 
   async function getComments() {
     try {
-      //날짜부분 나중에 민경님이 넘겨주시면 변수로 넣기
-      const response = await API.get("/api/v1/diaries/2022-08-05");
+      const response = await API.get(`/api/v1/diaries/${dates}`);
       setDiaryId(response.data.diary.id);
       setDiaryDate(response.data.diary.date);
       setBackendComments(response.data.commentList);
       console.log(response.data.commentList);
 
-      //임시 유저 아이디 설정, 나중에 유진님이 아이디 로컬에 저장하면 그걸로 설정
       const id = localStorage.getItem("id");
       setCurrentUserId(id);
       console.log(currentUserId);
