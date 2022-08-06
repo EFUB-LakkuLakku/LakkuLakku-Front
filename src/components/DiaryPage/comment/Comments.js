@@ -30,8 +30,17 @@ const Comments = () => {
       console.log(response.data.commentList);
 
       //임시 유저 아이디 설정, 나중에 유진님이 아이디 로컬에 저장하면 그걸로 설정
-      setCurrentUserId("2e4a6815-a207-4372-b6cd-a049ae00e979");
+      const id = localStorage.getItem("id");
+      setCurrentUserId(id);
       console.log(currentUserId);
+
+      const user = {
+        userId: id,
+        avatar: localStorage.getItem("profileImage"),
+        username: localStorage.getItem("nickname"),
+      };
+      console.log(user);
+      setUserProfile(user);
     } catch (err) {
       console.error(err);
     }
@@ -48,13 +57,6 @@ const Comments = () => {
       console.log(response.data);
 
       //임시 프로필 설정 -> 유진님이 저장해주시면, getcomment 부분으로 옮겨서 조회할때 받아오기
-      const user = {
-        userId: response.data.userId,
-        avatar: response.data.profileImageUrl,
-        username: response.data.nickname,
-      };
-      console.log(user);
-      setUserProfile(user);
 
       setBackendComments([response.data, ...backendComments]);
       setActiveComment(null);
