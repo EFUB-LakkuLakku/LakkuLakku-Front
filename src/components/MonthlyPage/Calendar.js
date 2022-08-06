@@ -71,7 +71,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
 
       function createDiary() {
         const token =
-          "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoZWVqaW5AZ21haWwuY29tIiwicm9sZXMiOiJVU0VSIiwiaWF0IjoxNjU5NzY5MTg5LCJleHAiOjE2NTk3NzYzODl9.5QbjvgTUuNOR21uhejUfVY7BqfiewmcSjxWAQh768tI";
+          "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoZWVqaW5AZ21haWwuY29tIiwicm9sZXMiOiJVU0VSIiwiaWF0IjoxNjU5Nzc5MjAzLCJleHAiOjE2NTk3ODY0MDN9.4eL8rMLBY8f9n0b52eQoiIm6ZgoqkmzQwrBxppvqIUQ";
 
         const date = `2022-${formattedMonth}-${cloneFormattedDate}`;
         const nickname = localStorage.getItem("nickname");

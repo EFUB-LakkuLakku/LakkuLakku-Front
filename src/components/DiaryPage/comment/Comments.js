@@ -24,26 +24,26 @@ const Comments = () => {
   const params = pathname.split("/");
   const dates = params[4];
 
-  console.log(dates);
-
   async function getComments() {
     try {
-      const response = await API.get(`/api/v1/diaries/${dates}`);
+      const response = await API.get(`/api/v1/diaries/${dates}`, {
+        params: { nickname: localStorage.getItem("nickname") },
+      });
       setDiaryId(response.data.diary.id);
       setDiaryDate(response.data.diary.date);
       setBackendComments(response.data.commentList);
-      console.log(response.data.commentList);
+      //console.log(response.data.commentList);
 
       const id = localStorage.getItem("id");
       setCurrentUserId(id);
-      console.log(currentUserId);
+      //console.log(currentUserId);
 
       const user = {
         userId: id,
         avatar: localStorage.getItem("profileImage"),
         username: localStorage.getItem("nickname"),
       };
-      console.log(user);
+      //console.log(user);
       setUserProfile(user);
     } catch (err) {
       console.error(err);
@@ -58,7 +58,7 @@ const Comments = () => {
         isSecret: false,
         parentId: parentId,
       });
-      console.log(response.data);
+      //console.log(response.data);
 
       //임시 프로필 설정 -> 유진님이 저장해주시면, getcomment 부분으로 옮겨서 조회할때 받아오기
 
@@ -120,7 +120,7 @@ const Comments = () => {
     getComments();
   }, []);
 
-  rootComments.map((rootComment) => console.log(rootComment.userId));
+  //rootComments.map((rootComment) => console.log(rootComment.userId));
   return (
     <div className="comments">
       <CommentForm

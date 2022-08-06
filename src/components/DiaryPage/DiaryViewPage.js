@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import DiaryTopBar from "./top/DiaryTopBar";
 import DiaryHeader from "./top/DiaryHeader";
@@ -7,8 +7,9 @@ import DiaryTabbar from "./DiaryTabbar";
 import Comments from "./comment/Comments";
 import Like from "./Like";
 import Chat from "./Chat";
+import API from "../../utils/api";
 
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 
 //flex 설정 덮어씌우기 -> 더 좋은 방법이 있다면 추후에 수정하기
 const View = styled.div`
@@ -59,6 +60,26 @@ const DiaryBottomBar = styled.div`
 
 function DiaryViewPage({ setIsEditing }) {
   const { nickname } = useParams(); // 현재 유저 닉네임 정보
+  const { pathname } = useLocation();
+  const params = pathname.split("/");
+  const dates = params[4];
+  const [chatCnt, setChatCnt] = useState(0);
+
+  async function getChatCnt() {
+    try {
+      const response = await API.get(`/api/v1/diaries/${dates}`, {
+        params: { nickname: localStorage.getItem("nickname") },
+      });
+      setChatCnt(response.data.diary.cntComment);
+      console.log(response.data.diary);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    getChatCnt();
+  }, [chatCnt]);
 
   return (
     <View>
@@ -73,7 +94,7 @@ function DiaryViewPage({ setIsEditing }) {
         />
         <InfoBox>
           <Like like={false} like_cnt={100} />
-          <Chat chat_cnt={10} />
+          <Chat chat_cnt={chatCnt} />
         </InfoBox>
         <Comments />
       </Container>

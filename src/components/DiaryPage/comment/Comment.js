@@ -40,6 +40,20 @@ const Comment = ({
     );
   };
 
+  //서버단에서 9시간 차이나는거 보완하는 임시 코드
+  const NewCreatedAtTime = () => {
+    const year = new Date(comment.createdOn).getFullYear();
+    const month = new Date(comment.createdOn).getMonth() + 1;
+    const date = new Date(comment.createdOn).getDate();
+    const hour = (new Date(comment.createdOn).getHours() + 9) % 24;
+    const min = new Date(comment.createdOn).getMinutes();
+
+    console.log(hour);
+    return (
+      year + "년 " + month + "월 " + date + "일 " + hour + "시 " + min + "분"
+    );
+  };
+
   const timeShown = () => {
     const timePassed = new Date() - new Date(comment.createdOn).getTime();
     if (timePassed < 60000) return Math.floor(timePassed / 1000) + "초";
@@ -76,10 +90,10 @@ const Comment = ({
                 />
               )}
               <div className="profile-image-container">
-                <img src={comment.avatar} />
+                <img src={comment.profileImageUrl} />
               </div>
               <div className="comment-author">
-                <div className="comment-author-text"> {comment.username}</div>
+                <div className="comment-author-text"> {comment.nickname}</div>
               </div>
             </div>
             <div className="profile-rightside-container">
