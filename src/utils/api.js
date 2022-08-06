@@ -1,12 +1,13 @@
 import axios, { AxiosInstance } from "axios";
 import { BASE_URL } from "../constants/Config";
-
+/*
 localStorage.setItem(
   "accesstoken",
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmbG93ZXJzYXlvQGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY1OTc0NTUxNiwiZXhwIjoxNjU5NzUyNzE2fQ.a4PN8KLAR-lM2rVca-CC7bG48WRxr6Ml7bfbtWEKB3g"
+  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmbG93ZXJzYXlvQGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY1OTc4MzY4NCwiZXhwIjoxNjU5NzkwODg0fQ.PxCBLlRHSL2irXE37OenTB8n4-By1oqrzqdqAOnGpSo"
 );
+*/
 const token = localStorage.getItem("accesstoken");
-localStorage.setItem("nickname", "flowersayo");
+//localStorage.setItem("nickname", "flowersayo");
 const API = axios.create({
   baseURL: BASE_URL, // 기본 서버 주소 입력
   headers: {
