@@ -63,10 +63,10 @@ export default function PaperDropdownMenu({
   children,
   selected,
   onClick,
-  papers,
-  paper,
-  setPaper
+  selectedPaperImgs,
+  setPaper,
 }) {
+
   return (
     <Container>
       <CategoryMenu selected={selected} onClick={onClick}>
@@ -74,7 +74,7 @@ export default function PaperDropdownMenu({
       </CategoryMenu>
       <ListWrapper>
         {selected &&
-            papers.map((paperdata) => {
+            selectedPaperImgs.map((paperdata) => {
             return (
               <ImgWrapper>
                 <ImgBox

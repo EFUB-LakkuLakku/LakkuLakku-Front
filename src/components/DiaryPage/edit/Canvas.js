@@ -52,7 +52,7 @@ export default function Canvas({ type, paper, setPaper }) {
           <KonvaImage
             image={background}
             id="backgroundImage"
-            width={1380 * 0.8}
+            width={1380* 0.685}
             height={674 * 0.9}
           />
           {stickers &&
