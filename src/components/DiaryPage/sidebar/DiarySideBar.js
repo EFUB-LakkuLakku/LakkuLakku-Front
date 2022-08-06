@@ -5,7 +5,7 @@ import ListOnSVG from "../../../assets/list.svg";
 import ListOffSVG from "../../../assets/list-off.svg";
 import ClockOffSVG from "../../../assets/clock-off.svg";
 import Stickers from "../../../db/stickers.json";
-import Papers from "../../../db/papers.json";
+//import Papers from "../../../db/papers.json";
 import { addStickerToPanel } from "../../../modules/sticker";
 import { useDispatch } from "react-redux";
 import DropdownMenu from "./DropdownMenu";
@@ -241,9 +241,9 @@ function StickerSideBar({ sideBarType }) {
 
 
 function PaperSideBar({ sideBarType, paper, setPaper }) {
-  // 0번 : 최근에 사용한 것, 1번 : 카테고리별 스티커 목록
+  // 0번 : 랜덤, 1번 : 카테고리별 스티커 목록
   const [currentTab, setCurrentTab] = useState(0);
-  const categories = ["베이직", "큐트", "키치", "보테니컬"];
+  const categories = ["베이직", "보테니컬", "큐트", "키치"];
 
   const [categoryOpen, setCategoryOpen] = useState([
     false,
@@ -254,17 +254,44 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
 
 
 
-//cors 이슈
   const [paperImgs, setPaperImgs] = useState([]); //추가
+  const [allPaperImgs, setAllPaperImgs] = useState([]);
 
-  useEffect(() => {
-       API.get(`/api/v1/diaries/edit/templates`)
+  const getPapers = async () => {
+      await API.get(`/api/v1/diaries/edit/templates`)
       .then(res => setPaperImgs(res.data))
       .catch(err=> console.log(err))
 
-      console.log(paperImgs.templateList)
-    }
-  );  //api 연결
+      console.log(paperImgs);
+      console.log(paperImgs[0].templateList[0].url);  //paperImgs[0].templateList[0] 활용하기~
+
+
+      const basicPapers = paperImgs[0].templateList.map(paper => paper);
+      console.log(basicPapers);
+      const botanicalPapers = paperImgs[1].templateList.map(paper => paper);
+      const cutePapers = paperImgs[2].templateList.map(paper => paper);
+      const kitschPapers = paperImgs[3].templateList.map(paper => paper);
+
+
+      const allPapers = basicPapers.concat(botanicalPapers,cutePapers,kitschPapers);
+      console.log(allPapers);
+
+      /*
+      function shuffle(array) {
+        array.sort(() => Math.random() - 0.5);
+      }
+      shuffle(allPapers);
+      */
+
+      setAllPaperImgs(allPapers); 
+
+    } //api 연결
+
+
+  useEffect(() => {
+    getPapers();
+  });  
+  
 
 
 
@@ -299,7 +326,7 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
 
       {currentTab == 0 ? (
         <ListWrapper>
-          {Papers.map((paperdata) => {
+          {allPaperImgs.map((paperdata) => {
             return (
               <PaperContainer>
                 <ImgBox
@@ -337,7 +364,7 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
                     return new_state;
                   });
                 }}
-                papers={Papers}  //이거 때문에 papers.json의 url 고쳐야됨!!
+                selectedPaperImgs={paperImgs[idx].templateList.map(paper => paper)}  
               >
                 {category}
               </PaperDropdownMenu>
