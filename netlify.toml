@@ -1,6 +1,6 @@
 [[redirects]]
   from = "/*"
-  to = "https://lakku-lakku.com"
+  to = "https://lakku-lakku.com/api/v1/:splat"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
