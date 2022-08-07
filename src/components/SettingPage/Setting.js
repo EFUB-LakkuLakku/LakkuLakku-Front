@@ -77,7 +77,7 @@ const Setting = () => {
 
     const copyUid = () => {
         window.navigator.clipboard.writeText(id).then(() => {
-            alert("복사었습니다.");
+            alert("복사되었습니다.");
           });
           
          } 

@@ -160,37 +160,40 @@ function YesResult(props) {
 }
 
 
-function Search(props) {
+function Search() {
 
-  const isResult = props.isResult;
-  if (isResult) {
-    return (
-      <View>
-      <Container>
-        <MenuText>친구 추가</MenuText>
-      </Container>
-      <SearchBar>
-        <SearchIcon id='uid' type="submit" onClick={handleSearch}>
-          <img src={searchIcon} />
-        </SearchIcon>
-        <SearchText type="text" placeholder="UID 번호 검색하기" onChange={handleChange}/>
-      </SearchBar>
-      <NoResult></NoResult>
-    </View>
-    )
-  }
+  const [isModal, setIsModal] = useState(false);
+  const ModalHandler = () => {
+    setIsModal((prev) => !prev);
+  };
+
   return(
     <View>
     <Container>
       <MenuText>친구 추가</MenuText>
     </Container>
-    <SearchBar>
-      <SearchIcon id='uid' type="submit" onClick={handleSearch}>
-        <img src={searchIcon} />
-      </SearchIcon>
-      <SearchText type="text" placeholder="UID 번호 검색하기" onChange={handleChange}/>
-    </SearchBar>
-    <YesResult> </YesResult>
+      {isModal ? (
+        <>
+        <SearchBar>
+        <SearchIcon id='uid' type="submit" >
+          <img src={searchIcon} />
+        </SearchIcon>
+        <SearchText type="text" placeholder="UID 번호 검색하기" onChange={handleChange}/>
+      </SearchBar>
+        <ResultBox>
+        <NoneResult>해당하는 사용자를 찾을 수 없습니다.</NoneResult>
+      </ResultBox>
+        </>
+        
+      ):(
+        <SearchBar>
+        <SearchIcon id='uid' type="submit" onClick={ModalHandler}>
+          <img src={searchIcon} />
+        </SearchIcon>
+        <SearchText type="text" placeholder="UID 번호 검색하기" onChange={handleChange}/>
+      </SearchBar>
+      )}
+      
   </View>
   )
 

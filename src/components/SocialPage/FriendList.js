@@ -76,25 +76,96 @@ const Unfollow = styled.button`
   background-color: transparent;
 `;
 
-const ShadowBox = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%
-  background-color: var(--black);
-  opacity: 0.7;
+const ModalBackground = styled.div`
+  
+  position: fixed;
+  top:0; left: 0; bottom: 0; right: 0;
+  background: rgba(0, 0, 0, 0.6);
+
+  z-index: 100; //수정
 `;
 
 const UnfollowBox = styled.div`
-  position: center;
+  position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   background-color: var(--white);
   width: 400rem;
   height: 292rem;
-  border-radius: 50rem;
+  border-radius: 20rem;
+`;
+const ModalBtn = styled.button`
+  font-family: "NotoSansKR-Light";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16rem;
+  margin-left: 60rem;
+  text-align: center;
+
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+  margin-left: 160rem;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  color: #FF0000;
+`;
+
+const CancelBtn = styled.button`
+  font-family: "NotoSansKR-Light";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16rem;
+  text-align: center;
+
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+  margin-left: 175rem;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+`;
+
+
+const ModalLine = styled.div`
+
+height: 50rem;
+margin-top: 30rem;
+border-top: 1px solid #E8E6E1;
+border-bottom: 1px solid #E8E6E1;
+
+}
+`;
+
+const ModalText = styled.div`
+  font-family: "NotoSansKR-Light";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16rem;
+  margin-left: 60rem;
+
+}
+`;
+
+
+
+const ModalUserImage = styled.div`
+  margin-left: 160rem;
+  margin-top: 30rem;
+  margin-bottom: 10rem;
+  width: 90rem;
+  height: 90rem;
+  border-radius: 50%;
+  vertical-align: middle;
 `;
 
 function FriendList() {
 
-  let [modal, setModal] = useState(false);
+  const [isModal, setIsModal] = useState(false);
+  const ModalHandler = () => {
+    setIsModal((prev) => !prev);
+  };
 
   API
     .get(`/api/v1/friends`)
@@ -104,9 +175,6 @@ function FriendList() {
 
   return (
     <View>
-      <ShadowBox>
-        <unfollowBox></unfollowBox>
-      </ShadowBox>
       <Container>
         <MenuText>친구 목록</MenuText>
       </Container>
@@ -118,14 +186,26 @@ function FriendList() {
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
-        <Unfollow onClick={()=>{setModal(true)}}>
-          {
-            modal === true
-            ? <unfollowBox/>
-            :null
-          }
-          <img src={unfollow}  />
-        </Unfollow>
+        {isModal ? (
+          <>
+          <Unfollow ><img src={unfollow} /></Unfollow>
+          <ModalBackground>
+            
+            <UnfollowBox>
+              <ModalUserImage><img src={userImage} /></ModalUserImage>
+              <ModalText>왈왈이왈왈이왈왈님과 연결을 끊겠습니까?</ModalText>
+              <ModalLine><ModalBtn onClick={ModalHandler}>친구 끊기</ModalBtn></ModalLine>
+              
+              <CancelBtn onClick={ModalHandler}>취소</CancelBtn>
+            </UnfollowBox>
+          </ModalBackground>
+          </>
+          
+        ) : (
+          <Unfollow onClick={ModalHandler}><img src={unfollow} /></Unfollow>
+        )}
+
+
       </UserBox>
       <UserBox>
         <UserImage>
