@@ -175,7 +175,7 @@ function Search(props) {
         </SearchIcon>
         <SearchText type="text" placeholder="UID 번호 검색하기" onChange={handleChange}/>
       </SearchBar>
-      <YesResult> </YesResult>
+      <NoResult></NoResult>
     </View>
     )
   }
@@ -190,7 +190,7 @@ function Search(props) {
       </SearchIcon>
       <SearchText type="text" placeholder="UID 번호 검색하기" onChange={handleChange}/>
     </SearchBar>
-    <NoResult></NoResult>
+    <YesResult> </YesResult>
   </View>
   )
 

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import userImage from "./UserImage.png";
+import userImage2 from "./UserImage2.png";
+import userImage3 from "./UserImage3.png";
+import userImage4 from "./UserImage4.png";
+import userImage5 from "./UserImage5.png";
 import homeImage from "./home.png";
 import unfollow from "./unfollow.png";
 import axios from "axios";
@@ -35,8 +39,9 @@ const MenuText = styled.span`
 `;
 
 const UserBox = styled.div`
-  text-align: center;
-  margin-top: 20rem;
+
+  margin-top: 22rem;
+  margin-left: 110rem;
 `;
 
 const UserImage = styled.span`
@@ -51,8 +56,9 @@ const UserName = styled.span`
   font-style: normal;
   font-weight: 700;
   font-size: 18rem;
+  display: inline-block;
+  width: 160rem;
 
-  vertical-align: middle;
   margin-left: 40rem;
 `;
 
@@ -123,9 +129,9 @@ function FriendList() {
       </UserBox>
       <UserBox>
         <UserImage>
-          <img src={userImage} />
+          <img src={userImage2} />
         </UserImage>
-        <UserName>왈왈이왈왈이왈왈</UserName>
+        <UserName>킁킁이      </UserName>
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
@@ -135,9 +141,9 @@ function FriendList() {
       </UserBox>
       <UserBox>
         <UserImage>
-          <img src={userImage} />
+          <img src={userImage3} />
         </UserImage>
-        <UserName>왈왈이왈왈이왈왈</UserName>
+        <UserName>냥냥이</UserName>
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
@@ -147,9 +153,9 @@ function FriendList() {
       </UserBox>
       <UserBox>
         <UserImage>
-          <img src={userImage} />
+          <img src={userImage4} />
         </UserImage>
-        <UserName>왈왈이왈왈이왈왈</UserName>
+        <UserName>라꾸라꾸</UserName>
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
@@ -159,9 +165,9 @@ function FriendList() {
       </UserBox>
       <UserBox>
         <UserImage>
-          <img src={userImage} />
+          <img src={userImage5} />
         </UserImage>
-        <UserName>왈왈이왈왈이왈왈</UserName>
+        <UserName>어쩔티비티비</UserName>
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
