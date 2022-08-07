@@ -56,7 +56,14 @@
         @include common.size(100%, 97%);
         @include common.flex-column();
      
-
+        .col.cell.weekEnd{
+            &:hover {
+                background: var(--main);
+                
+            }
+            background: var(--sub-2);
+        }
+        
         .row {
             @include common.size(100%, 100%);
             @include common.flex-row(space-between, center);
@@ -71,10 +78,9 @@
                 border-left: 1px solid rgba(0, 0, 0, 0.5) !important;
                 border-width: 0.01px;
                 &:hover {
-                    background: var(--background);
+                    background: var(--main);
                     opacity: 0.5;
                 }
-                
            
                 .not-valid {
                     color: var(--black);
@@ -106,6 +112,17 @@
                 height : 26rem;
                 border-radius: 10%;
                 background-color: var(--main);
+                    
+            }
+            
+            .diaryTitle:after{
+                position:absolute;
+                content: "제목입니다";
+                margin-top: 3px;
+                margin-left: 10px;
+
+            }
+                
 
             }
 
@@ -118,13 +135,7 @@
                 margin-right: 35px;
             }
 
-            .col.cell.weekEnd{
-                &:hover {
-                    background: var(--background);
-                    opacity: 0.5;
-                }
-                background: var(--sub-2);
-            }
+           
             .startDate{
                 border-left: 0px;
             }
@@ -145,4 +156,3 @@
 
         }
     }
-} 

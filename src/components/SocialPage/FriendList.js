@@ -3,6 +3,8 @@ import styled from "styled-components";
 import userImage from "./UserImage.png";
 import homeImage from "./home.png";
 import unfollow from "./unfollow.png";
+import axios from "axios";
+import API from "../../utils/api";
 
 const View = styled.div`
   display: flex;
@@ -38,14 +40,14 @@ const UserBox = styled.div`
 `;
 
 const UserImage = styled.span`
-  width: 66rem;
-  height: 66rem;
+  width: 63rem;
+  height: 63rem;
   border-radius: 50%;
   vertical-align: middle;
 `;
 
 const UserName = styled.span`
-  font-family: "NotoSansKR-Medium";
+  font-family: "NotoSansKR-Light";
   font-style: normal;
   font-weight: 700;
   font-size: 18rem;
@@ -60,14 +62,45 @@ const HomeImage = styled.span`
   padding-top: 1rem;
 `;
 
-const Unfollow = styled.span`
+const Unfollow = styled.button`
   vertical-align: middle;
   padding-left: 40rem;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+`;
+
+const ShadowBox = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%
+  background-color: var(--black);
+  opacity: 0.7;
+`;
+
+const UnfollowBox = styled.div`
+  position: center;
+  background-color: var(--white);
+  width: 400rem;
+  height: 292rem;
+  border-radius: 50rem;
 `;
 
 function FriendList() {
+
+  let [modal, setModal] = useState(false);
+
+  API
+    .get(`/api/v1/friends`)
+    .then((res) => {
+      console.log(res.data)
+    });
+
   return (
     <View>
+      <ShadowBox>
+        <unfollowBox></unfollowBox>
+      </ShadowBox>
       <Container>
         <MenuText>친구 목록</MenuText>
       </Container>
@@ -79,8 +112,13 @@ function FriendList() {
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
-        <Unfollow>
-          <img src={unfollow} />
+        <Unfollow onClick={()=>{setModal(true)}}>
+          {
+            modal === true
+            ? <unfollowBox/>
+            :null
+          }
+          <img src={unfollow}  />
         </Unfollow>
       </UserBox>
       <UserBox>

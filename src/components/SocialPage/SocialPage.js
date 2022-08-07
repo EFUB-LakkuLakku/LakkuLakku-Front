@@ -7,6 +7,7 @@ const Box = styled.div`
   flex: 0.75;
   display: flex;
   flex-direction: column;
+  background-color: var(--white);
 `;
 
 function SocialPage() {
