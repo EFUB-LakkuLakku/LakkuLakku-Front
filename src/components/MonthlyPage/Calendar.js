@@ -74,11 +74,9 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
       const cloneDay = day;
 
       function createDiary() {
-        
         const date = `2022-${formattedMonth}-${cloneFormattedDate}`;
         const nickname = localStorage.getItem("nickname");
         
-
         //다이어리 생성
         API
           .post(

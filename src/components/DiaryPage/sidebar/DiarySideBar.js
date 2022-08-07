@@ -269,7 +269,7 @@ function StickerSideBar({ sideBarType }) {
                     return new_state;
                   });
                 }}
-                stickers={Stickers}
+                stickers={categoryStickers[idx].stickerList}
               >
                 {category}
               </DropdownMenu>

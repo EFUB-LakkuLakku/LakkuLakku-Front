@@ -9,6 +9,7 @@ const Container = styled.div`
   height: 29rem;
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 function Logo() {
