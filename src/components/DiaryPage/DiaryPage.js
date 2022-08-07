@@ -3,7 +3,7 @@ import styled from "styled-components";
 import DiaryEditPage from "./DiaryEditPage";
 import DiaryViewPage from "./DiaryViewPage";
 import { useParams } from "react-router-dom";
-
+import DiaryService from "../../api/DiaryService";
 //flex 설정 덮어씌우기 -> 더 좋은 방법이 있다면 추후에 수정하기
 const View = styled.div`
   display: flex;
@@ -52,14 +52,33 @@ const DiaryBottomBar = styled.div`
 `;
 
 function DiaryPage() {
-  const { nickname } = useParams(); // 현재 유저 닉네임 정보
+  const { nickname, date } = useParams(); // 현재 유저 닉네임 정보
 
   const [isEditing, setIsEditing] = useState(false); //수정모드인지 아닌지
+  const [diaryInfo, setDiaryInfo] = useState();
 
+  // 다이어리 정보 조회
+  React.useEffect(() => {
+    DiaryService.getDiary(date)
+      .then((res) => {
+        if (res.status == 200) {
+          setDiaryInfo(res.data);
+          console.log(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err, "실패하였습니다");
+      });
+  }, []);
+  
   return isEditing ? (
-    <DiaryEditPage isEditing={isEditing} setIsEditing={setIsEditing} />
+    <DiaryEditPage
+      isEditing={isEditing}
+      setIsEditing={setIsEditing}
+      diaryInfo={diaryInfo}
+    />
   ) : (
-    <DiaryViewPage setIsEditing={setIsEditing} />
+    <DiaryViewPage setIsEditing={setIsEditing} diaryInfo={diaryInfo} />
   );
 }
 

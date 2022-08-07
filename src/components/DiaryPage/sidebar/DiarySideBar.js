@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import DropdownMenu from "./DropdownMenu";
 import PaperDropdownMenu from "./PaperDropdownMenu";
 import API from "../../../utils/api";
-
+import DiaryService from "../../../api/DiaryService";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -154,9 +154,15 @@ const CategoryText = styled.text`
 
 function DiarySideBar({ sideBarType, paper, setPaper }) {
   if (sideBarType === "sticker")
-  return <StickerSideBar sideBarType={sideBarType} />;
+    return <StickerSideBar sideBarType={sideBarType} />;
   else if (sideBarType === "paper")
-  return <PaperSideBar sideBarType={sideBarType} paper={paper} setPaper={setPaper} />;
+    return (
+      <PaperSideBar
+        sideBarType={sideBarType}
+        paper={paper}
+        setPaper={setPaper}
+      />
+    );
 }
 
 function StickerSideBar({ sideBarType }) {
@@ -164,7 +170,8 @@ function StickerSideBar({ sideBarType }) {
   const [currentTab, setCurrentTab] = useState(0);
   const dispatch = useDispatch();
   const categories = ["베이직", "큐트", "키치", "보테니컬"];
-
+  const [Stickers, setStickers] = useState([]);
+  const [categoryStickers, setCategoryStickers] = useState([]);
   const [categoryOpen, setCategoryOpen] = useState([
     false,
     false,
@@ -172,10 +179,31 @@ function StickerSideBar({ sideBarType }) {
     false,
   ]);
 
+  useEffect(() => {
+    DiaryService.getDiarySticker()
+      .then((res) => {
+        if (res.status == 200) setStickers(res.data);
+      })
+      .catch((err) => {
+        console.log(err, "스티커를 가져오지 못했습니다.");
+      });
+
+    DiaryService.getCategoryDiarySticker()
+      .then((res) => {
+        if (res.status == 200) {
+          setCategoryStickers(res.data);
+          console.log(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err, "카테고리 스티커를 가져오지 못했습니다.");
+      });
+  }, []);
+
   return (
     <Container sideBarType={sideBarType}>
       <Tab>
-        <ImgWrapper> 
+        <ImgWrapper>
           {currentTab == 0 ? (
             <ImgBox src={ClockOnSVG} width="24rem" height="24rem" />
           ) : (
@@ -187,7 +215,7 @@ function StickerSideBar({ sideBarType }) {
             />
           )}
         </ImgWrapper>
-        <ImgWrapper> 
+        <ImgWrapper>
           {currentTab == 1 ? (
             <ImgBox src={ListOnSVG} width="24rem" height="24rem" />
           ) : (
@@ -202,7 +230,7 @@ function StickerSideBar({ sideBarType }) {
       </Tab>
 
       {currentTab == 0 ? (
-        <ListWrapper> 
+        <ListWrapper>
           {Stickers.map((sticker) => {
             return (
               <StickerContainer>
@@ -227,7 +255,7 @@ function StickerSideBar({ sideBarType }) {
           })}
         </ListWrapper>
       ) : (
-        <CategoryContainer> 
+        <CategoryContainer>
           <CategoryText>테마</CategoryText>
           {categories.map((category, idx) => {
             return (
@@ -253,7 +281,6 @@ function StickerSideBar({ sideBarType }) {
   );
 }
 
-
 function PaperSideBar({ sideBarType, paper, setPaper }) {
   // 0번 : 랜덤, 1번 : 카테고리별 스티커 목록
   const [currentTab, setCurrentTab] = useState(0);
@@ -265,8 +292,6 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
     false,
     false,
   ]);
-
-
 
   const [paperImgs, setPaperImgs] = useState([]); //추가
   const [allPaperImgs, setAllPaperImgs] = useState([]);
@@ -300,12 +325,6 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
       setAllPaperImgs(allPapers); 
 
     } //api 연결
-
-
-  useEffect(() => {
-    getPapers();
-  });  
-  
 
 
 
@@ -354,8 +373,8 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
                       src: paperdata.url,
                       x: 0,
                       y: 0,
-                      id: paperdata.id
-                    }) 
+                      id: paperdata.id,
+                    })
                   }
                 />
               </PaperContainer>
@@ -368,7 +387,8 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
           {categories.map((category, idx) => {
             return (
               <PaperDropdownMenu
-                paper={paper} setPaper={setPaper}
+                paper={paper}
+                setPaper={setPaper}
                 selected={categoryOpen[idx]}
                 onClick={() => {
                   //idx번째 dropdown 메뉴 toggle
@@ -378,7 +398,9 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
                     return new_state;
                   });
                 }}
-                selectedPaperImgs={paperImgs[idx].templateList.map(paper => paper)}  
+                selectedPaperImgs={paperImgs[idx].templateList.map(
+                  (paper) => paper
+                )}
               >
                 {category}
               </PaperDropdownMenu>

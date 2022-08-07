@@ -24,8 +24,8 @@ const Profile = () => {
   useEffect(() => {
     editedInfo();
 
-    console.log(info.user.id);
-    console.log(info.user.bio);
+    //console.log(info.user.id);
+    //console.log(info.user.bio);
     console.log(info.user.profileImageUrl);
 
 

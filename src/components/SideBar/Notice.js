@@ -3,6 +3,7 @@ import theme from "../../styles/theme";
 import styled from "styled-components";
 import Bell from "../../assets/bell.svg";
 import { Link } from "react-router-dom";
+import AuthService from "../../api/AuthService";
 
 const Container = styled.div`
   flex: 0.365;
@@ -49,7 +50,10 @@ const ImgBox = styled.img.attrs({
   margin: 12rem;
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link).attrs(({ src, onClick }) => ({
+  src: src,
+  onClick: onClick,
+}))`
   box-sizing: border-box;
   display: block;
   color: black;
@@ -60,6 +64,23 @@ const StyledLink = styled(Link)`
   font-size: 14rem;
   margin: 3rem;
 `;
+
+const StyledButton = styled.button.attrs(({ src, onClick }) => ({
+  src: src,
+  onClick: onClick,
+}))`
+  box-sizing: border-box;
+  display: block;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  font-family: "NotoSansKR-Regular";
+  font-weight: 600;
+  font-size: 14rem;
+  margin: 3rem;
+  background-color: transparent;
+  border: none;
+`;
 const LinkWrapper = styled.div`
   display: flex;
   flex: 2;
@@ -68,8 +89,21 @@ const LinkWrapper = styled.div`
   align-items: center;
 `;
 
+const _logoutHandler = () => {
+  AuthService.logout()
+    .then((res) => {
+      if (res.status == 200) {
+        console.log("로그아웃이 완료되었습니다.");
+        window.location.href = "/"; //루트로 이동
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
 function Notice() {
   const [notice, SetNotice] = useState([]);
+  const token = localStorage.getItem("accesstoken");
+  const nickname = localStorage.getItem("nickname");
   return (
     <Container>
       <TitleWrapper>
@@ -89,13 +123,14 @@ function Notice() {
         <SmallText>
           <b>냥냥</b>님이 댓글에 이모지를 추가하였습니...
         </SmallText>
+
         <SmallText>
           <b>왈왈이</b>님이 댓글에 이모지를 추가하였습...
         </SmallText>
       </TextWrapper>
       <LinkWrapper>
-        <StyledLink to={"/logout"}>로그아웃 </StyledLink> |
-        <StyledLink to={"setting"}>설정</StyledLink>
+        <StyledButton onClick={_logoutHandler}>로그아웃 </StyledButton> |
+        <StyledLink to={"setting"}> 설정</StyledLink>
       </LinkWrapper>
     </Container>
   );

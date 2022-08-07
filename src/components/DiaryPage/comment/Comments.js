@@ -3,6 +3,7 @@ import CommentForm from "./CommentForm";
 import Comment from "./Comment";
 import "./comment.css";
 import API from "../../../utils/api";
+import { useLocation } from "react-router-dom";
 
 const Comments = () => {
   const init = {
@@ -19,19 +20,31 @@ const Comments = () => {
   const [diaryId, setDiaryId] = useState("");
   const [diaryDate, setDiaryDate] = useState("");
   const [currentUserId, setCurrentUserId] = useState("");
+  const { pathname } = useLocation();
+  const params = pathname.split("/");
+  const dates = params[4];
 
   async function getComments() {
     try {
-      //날짜부분 나중에 민경님이 넘겨주시면 변수로 넣기
-      const response = await API.get("/api/v1/diaries/2022-08-05");
+      const response = await API.get(`/api/v1/diaries/${dates}`, {
+        params: { nickname: localStorage.getItem("nickname") },
+      });
       setDiaryId(response.data.diary.id);
       setDiaryDate(response.data.diary.date);
       setBackendComments(response.data.commentList);
-      console.log(response.data.commentList);
+      //console.log(response.data.commentList);
 
-      //임시 유저 아이디 설정, 나중에 유진님이 아이디 로컬에 저장하면 그걸로 설정
-      setCurrentUserId("2e4a6815-a207-4372-b6cd-a049ae00e979");
-      console.log(currentUserId);
+      const id = localStorage.getItem("id");
+      setCurrentUserId(id);
+      //console.log(currentUserId);
+
+      const user = {
+        userId: id,
+        avatar: localStorage.getItem("profileImage"),
+        username: localStorage.getItem("nickname"),
+      };
+      //console.log(user);
+      setUserProfile(user);
     } catch (err) {
       console.error(err);
     }
@@ -45,16 +58,9 @@ const Comments = () => {
         isSecret: false,
         parentId: parentId,
       });
-      console.log(response.data);
+      //console.log(response.data);
 
       //임시 프로필 설정 -> 유진님이 저장해주시면, getcomment 부분으로 옮겨서 조회할때 받아오기
-      const user = {
-        userId: response.data.userId,
-        avatar: response.data.profileImageUrl,
-        username: response.data.nickname,
-      };
-      console.log(user);
-      setUserProfile(user);
 
       setBackendComments([response.data, ...backendComments]);
       setActiveComment(null);
@@ -114,7 +120,7 @@ const Comments = () => {
     getComments();
   }, []);
 
-  rootComments.map((rootComment) => console.log(rootComment.userId));
+  //rootComments.map((rootComment) => console.log(rootComment.userId));
   return (
     <div className="comments">
       <CommentForm

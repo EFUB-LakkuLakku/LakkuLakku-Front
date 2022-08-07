@@ -3,9 +3,12 @@ import EmojiSVG from "../../../assets/plus-square.svg";
 import Picker from "emoji-picker-react";
 import "./EmojiPicker.css";
 
-export const EmojiPicker = ({ disabled }) => {
+export const EmojiPicker = ({ disabled, titleEmoji }) => {
   const [showEmojiPicker, togglePicker] = useState(() => false);
-  const [chosenEmoji, setChosenEmoji] = useState(null);
+  const [chosenEmoji, setChosenEmoji] = useState({
+    emoji: titleEmoji,
+  });
+  console.log(titleEmoji);
   const toggleEmojiPicker = () => togglePicker((prev) => !prev);
   const onEmojiClick = (e, emojiObject) => {
     console.log(emojiObject);
@@ -20,8 +23,11 @@ export const EmojiPicker = ({ disabled }) => {
 
   return (
     <div ref={refPicker} className="EmojiPicker">
-      {chosenEmoji ? (
-        <span className="Emoji__Container" onClick={() => togglePicker(true)}>
+      {chosenEmoji.emoji ? (
+        <span
+          className="Emoji__Container"
+          onClick={() => (disabled ? null : togglePicker(true))}
+        >
           {chosenEmoji.emoji}
         </span>
       ) : (

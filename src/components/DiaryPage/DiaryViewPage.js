@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
 import styled from "styled-components";
 import DiaryTopBar from "./top/DiaryTopBar";
 import DiaryHeader from "./top/DiaryHeader";
@@ -8,7 +9,10 @@ import Comments from "./comment/Comments";
 import Like from "./Like";
 import Chat from "./Chat";
 
-import { useParams } from "react-router-dom";
+import DiaryService from "../../api/DiaryService";
+import { useParams, useLocation } from "react-router-dom";
+
+import API from "../../utils/api";
 
 //flex 설정 덮어씌우기 -> 더 좋은 방법이 있다면 추후에 수정하기
 const View = styled.div`
@@ -57,13 +61,33 @@ const DiaryBottomBar = styled.div`
   background-color: var(--sub-2);
 `;
 
-function DiaryViewPage({ setIsEditing }) {
-  const { nickname } = useParams(); // 현재 유저 닉네임 정보
+function DiaryViewPage({ setIsEditing, diaryInfo }) {
+  const [like, setLike] = useState(false); // 유저가 좋아요 눌렀는지 여부
+  const [chatCnt, setChatCnt] = useState(diaryInfo?.diary.cntComment); // 댓글 카운트
 
+  useEffect(() => {
+    checkLike(); // 좋아요 구하기
+  }, []);
+
+  // 현재 사용자(nickname)가 다이어리 주인(owner)의 다이어리에 좋아요를 눌렀는지 여부
+  const checkLike = (nickname, owner) => {
+    const { likeList } = diaryInfo.diary;
+
+    var check = false;
+    for (var i = 0; i < likeList.length; i++) {
+      if (likeList[i].isLike) check = true;
+    }
+    setLike(true);
+  };
   return (
     <View>
       <DiaryTopBar setIsEditing={setIsEditing} isEditing={false} />
-      <DiaryHeader setIsEditing={setIsEditing} />
+      <DiaryHeader
+        setIsEditing={setIsEditing}
+        titleEmoji={diaryInfo?.diary.titleEmoji}
+        title={diaryInfo?.diary.title}
+        onlyView={true}
+      />
       <Container>
         <ImgBox
           src={SampleImg}
@@ -72,8 +96,9 @@ function DiaryViewPage({ setIsEditing }) {
           height={"679rem"}
         />
         <InfoBox>
-          <Like like={false} like_cnt={100} />
-          <Chat chat_cnt={10} />
+          <Like like={false} like_cnt={diaryInfo?.likeList.length} />
+
+          <Chat chat_cnt={chatCnt} />
         </InfoBox>
         <Comments />
       </Container>

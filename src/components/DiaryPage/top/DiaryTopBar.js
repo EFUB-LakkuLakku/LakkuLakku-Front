@@ -17,6 +17,7 @@ import FontSize from "./FontSize";
 import FontWeight from "./FontWeight";
 import ColorWheel from "./ColorWheel";
 
+import DiaryService from "../../../api/DiaryService";
 
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
@@ -122,12 +123,6 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
     alert(" 수정모드진입");
     setIsEditing(true); // 수정모드진입
   };
-  const deleteDiary = () => {
-    // 1. 다이어리 정말 삭제할건지 묻는 경고 모달창
-    // 2. 다이어리 삭제 요청
-    // 3. 먼슬리 페이지로 리다이렉트
-    alert("정말로 삭제하시겠습니까?");
-  };
 
   const { nickname } = useParams(); // 현재 유저 닉네임 정보
   const { pathname } = useLocation();
@@ -157,7 +152,25 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
     var path = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
     return path;
   };
+  const deleteDiary = () => {
+    // 1. 다이어리 정말 삭제할건지 묻는 경고 모달창
+    // 2. 다이어리 삭제 요청
+    // 3. 먼슬리 페이지로 리다이렉트
+    const ans = window.confirm("정말로 삭제하시겠습니까?");
+    console.log(ans);
+    if (ans) {
+      const nickname = localStorage.getItem("nickname");
 
+      DiaryService.deleteDiary(date)
+        .then((res) => {
+          if (res.status == 200) {
+            console.log("다이어리가 삭제되었습니다.");
+            window.location.href = `/main/${nickname}`;
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  };
   //탑바 우측 부분 아이콘
   const right =
     isEditing == false ? (

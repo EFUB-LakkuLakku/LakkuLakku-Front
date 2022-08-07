@@ -17,7 +17,6 @@ const Wrapper = styled.div`
   /** 하위요소 absolute 속성값을 이용하기 위해 position: relative 로 설정 */
   position: relative;
   /* 그림자 효과 */
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 export default Wrapper;

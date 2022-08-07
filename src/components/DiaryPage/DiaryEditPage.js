@@ -42,7 +42,7 @@ const Container = styled.div`
   height: 759rem;
 `;
 
-function DiaryEditPage({ setIsEditing, isEditing }) {
+function DiaryEditPage({ setIsEditing, isEditing, diaryInfo }) {
   const { nickname } = useParams(); // 현재 유저 닉네임 정보
 
   // undefined: 맨 처음 상태, null : 사이드바 닫힌상태, sticker : 스티커용 사이드바 오픈된 상태, paper : 속지용 사이드바 오픈된 상태
@@ -55,9 +55,18 @@ function DiaryEditPage({ setIsEditing, isEditing }) {
       <DiaryTopBar setIsEditing={setIsEditing} isEditing={isEditing}   showTextMenu={showTextMenu} />
 
       <Container>
-        <DiarySideBar sideBarType={sideBarType} paper={paper} setPaper={setPaper} />
+        <DiarySideBar
+          sideBarType={sideBarType}
+          paper={paper}
+          setPaper={setPaper}
+        />
         <ContentWrapper>
-          <DiaryHeader />
+          <DiaryHeader
+            setIsEditing={setIsEditing}
+            titleEmoji={diaryInfo?.diary.titleEmoji}
+            title={diaryInfo?.diary.title}
+            onlyView={false}
+          />
           <Content id={"stage-parent"}>
             <Canvas paper={paper} setPaper={setPaper} />
           </Content>

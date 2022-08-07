@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Heart from "../../assets/heart.svg";
-
+import HeartFill from "../../assets/heart-fill.svg";
 // 좋아요, 채팅 수 감싸는 컨테이너
 const Wrapper = styled.div`
   display: flex;
@@ -38,7 +38,12 @@ export default function Like({ like, like_cnt }) {
 
   return (
     <Wrapper>
-      <ImgBox src={Heart} width={"24rem"} height={"24rem"} />
+      {like === true ? (
+        <ImgBox src={HeartFill} width={"24rem"} height={"24rem"} />
+      ) : (
+        <ImgBox src={Heart} width={"24rem"} height={"24rem"} />
+      )}
+
       <Text>{like_cnt}개</Text>
     </Wrapper>
   );
