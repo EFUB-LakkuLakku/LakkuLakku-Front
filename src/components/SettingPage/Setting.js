@@ -73,13 +73,16 @@ const Setting = () => {
   
 
 
-    const copyUid = (e) => {
-        e.preventDefault()
-        e.clipboardData.setData("Text", '1234abcd')
-      } 
-
-
     const id = localStorage.getItem('id');
+
+    const copyUid = () => {
+        window.navigator.clipboard.writeText(id).then(() => {
+            alert("복사었습니다.");
+          });
+          
+         } 
+
+
     
 
     return (
