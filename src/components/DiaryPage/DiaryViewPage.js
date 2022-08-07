@@ -8,7 +8,7 @@ import DiaryTabbar from "./DiaryTabbar";
 import Comments from "./comment/Comments";
 import Like from "./Like";
 import Chat from "./Chat";
-
+import ChatContainer from "./ChatContainer";
 import DiaryService from "../../api/DiaryService";
 import { useParams, useLocation } from "react-router-dom";
 
@@ -63,7 +63,6 @@ const DiaryBottomBar = styled.div`
 
 function DiaryViewPage({ setIsEditing, diaryInfo }) {
   const [like, setLike] = useState(false); // 유저가 좋아요 눌렀는지 여부
-  const [chatCnt, setChatCnt] = useState(diaryInfo?.diary.cntComment); // 댓글 카운트
 
   useEffect(() => {
     checkLike(); // 좋아요 구하기
@@ -105,9 +104,9 @@ function DiaryViewPage({ setIsEditing, diaryInfo }) {
             diary={diaryInfo?.diary}
           />
 
-          <Chat chat_cnt={chatCnt} />
+          <ChatContainer cntComment={0} />
         </InfoBox>
-        <Comments />
+        <Comments cntComments={0} />
       </Container>
       <DiaryBottomBar />
     </View>

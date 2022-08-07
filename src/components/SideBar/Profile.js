@@ -14,22 +14,23 @@ const Profile = () => {
 
   const nickname = localStorage.getItem("nickname");
 
-  const editedInfo = () => {
+  const editInfo = () => {
     API.get(`/api/v1/home/`, { params: { nickname: nickname } })
-      .then((res) => setInfo(res.data))
+      .then((res) => {
+        if (res.status == 200) {
+          if (res.data.user === info.user) return; //무한 실행문제 해결
+
+          setInfo(res.data);
+          localStorage.setItem("id", res.data.user.id);
+          localStorage.setItem("profileImage", res.data.user.profileImageUrl);
+        }
+      })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    editedInfo();
-
-    //console.log(info.user.id);
-    //console.log(info.user.bio);
-    console.log(info.user.profileImageUrl);
-
-    localStorage.setItem("id", info.user.id);
-    localStorage.setItem("profileImage", info.user.profileImageUrl);
-  }, []);
+    editInfo();
+  }, [info]);
 
   /*
   const editedInfo = async () => {

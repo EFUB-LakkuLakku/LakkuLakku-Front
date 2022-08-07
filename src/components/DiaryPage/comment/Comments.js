@@ -4,6 +4,8 @@ import Comment from "./Comment";
 import "./comment.css";
 import API from "../../../utils/api";
 import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { plusComment, minusComment } from "../../../modules/diary";
 
 const Comments = () => {
   const init = {
@@ -29,6 +31,7 @@ const Comments = () => {
       const response = await API.get(`/api/v1/diaries/${dates}`, {
         params: { nickname: localStorage.getItem("nickname") },
       });
+
       setDiaryId(response.data.diary.id);
       setDiaryDate(response.data.diary.date);
       setBackendComments(response.data.commentList);
@@ -59,7 +62,7 @@ const Comments = () => {
         parentId: parentId,
       });
       //console.log(response.data);
-
+      dispatch(plusComment()); // 댓글 수 증가
       //임시 프로필 설정 -> 유진님이 저장해주시면, getcomment 부분으로 옮겨서 조회할때 받아오기
 
       setBackendComments([response.data, ...backendComments]);
@@ -98,7 +101,7 @@ const Comments = () => {
       const response = await API.delete(
         `/api/v1/diaries/${diaryDate}/comments/${commentId}`
       );
-
+      dispatch(minusComment()); //댓글 수 감소
       const updatedBackendComments = backendComments.filter(
         (backendComment) => backendComment.id !== commentId
       );
@@ -119,7 +122,7 @@ const Comments = () => {
   useEffect(() => {
     getComments();
   }, []);
-
+  const dispatch = useDispatch();
   //rootComments.map((rootComment) => console.log(rootComment.userId));
   return (
     <div className="comments">
