@@ -70,6 +70,7 @@ function DiaryPage() {
         console.log(err, "실패하였습니다");
       });
   }, []);
+  
   return isEditing ? (
     <DiaryEditPage
       isEditing={isEditing}

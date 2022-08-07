@@ -4,6 +4,8 @@ import ClockOnSVG from "../../../assets/clock.svg";
 import ListOnSVG from "../../../assets/list.svg";
 import ListOffSVG from "../../../assets/list-off.svg";
 import ClockOffSVG from "../../../assets/clock-off.svg";
+import GridOnSVG from "../../../assets/grid.svg";
+import GridOffSVG from "../../../assets/grid-off.svg";
 import Stickers from "../../../db/stickers.json";
 //import Papers from "../../../db/papers.json";
 import { addStickerToPanel } from "../../../modules/sticker";
@@ -79,6 +81,18 @@ const ImgBox = styled.img.attrs(({ src, onClick, width, height }) => ({
   color: red;
 `;
 
+const PaperImgBox = styled.img.attrs(({ src, onClick, width, height }) => ({
+  src: src,
+  onClick: onClick,
+}))`
+  cursor: pointer;
+  width: width;
+  height: height;
+  color: red;
+  border-radius: 6rem;
+`;
+
+
 const ImgWrapper = styled.div`
   width: 50%;
   height: 100%;
@@ -113,7 +127,7 @@ const PaperContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10rem;
+  margin: 20rem;
 `;
 
 const CategoryContainer = styled.div`
@@ -282,23 +296,47 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
   const [paperImgs, setPaperImgs] = useState([]); //추가
   const [allPaperImgs, setAllPaperImgs] = useState([]);
 
-  useEffect(() => {
-    API.get(`/api/v1/diaries/edit/templates`)
-      .then((res) => setPaperImgs(res.data))
-      .catch((err) => console.log(err));
+  const getPapers = async () => {
+      await API.get(`/api/v1/diaries/edit/templates`)
+      .then(res => setPaperImgs(res.data))
+      .catch(err=> console.log(err))
 
-    console.log(paperImgs.templateList);
-  }); //api 연결
+      //console.log(paperImgs);
+      //console.log(paperImgs[0].templateList[0].url);  //paperImgs[0].templateList[0] 활용하기~
+
+
+      const basicPapers = paperImgs[0].templateList.map(paper => paper);
+      //console.log(basicPapers);
+      const botanicalPapers = paperImgs[1].templateList.map(paper => paper);
+      const cutePapers = paperImgs[2].templateList.map(paper => paper);
+      const kitschPapers = paperImgs[3].templateList.map(paper => paper);
+
+
+      const allPapers = basicPapers.concat(botanicalPapers,cutePapers,kitschPapers);
+      //console.log(allPapers);
+
+      /*
+      function shuffle(array) {
+        array.sort(() => Math.random() - 0.5);
+      }
+      shuffle(allPapers);
+      */
+
+      setAllPaperImgs(allPapers); 
+
+    } //api 연결
+
+
 
   return (
     <Container sideBarType={sideBarType}>
       <Tab>
         <ImgWrapper>
           {currentTab == 0 ? (
-            <ImgBox src={ClockOnSVG} width="24rem" height="24rem" />
+            <ImgBox src={GridOnSVG} width="24rem" height="24rem" />
           ) : (
             <ImgBox
-              src={ClockOffSVG}
+              src={GridOffSVG}
               width="24rem"
               height="24rem"
               onClick={() => setCurrentTab(0)}
@@ -324,7 +362,7 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
           {allPaperImgs.map((paperdata) => {
             return (
               <PaperContainer>
-                <ImgBox
+                <PaperImgBox
                   id={paperdata.id}
                   src={paperdata.url}
                   width="263rem"

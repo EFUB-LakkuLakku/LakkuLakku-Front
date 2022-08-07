@@ -47,11 +47,12 @@ function DiaryEditPage({ setIsEditing, isEditing, diaryInfo }) {
 
   // undefined: 맨 처음 상태, null : 사이드바 닫힌상태, sticker : 스티커용 사이드바 오픈된 상태, paper : 속지용 사이드바 오픈된 상태
   const [sideBarType, setsideBarType] = useState(undefined);
-  const [paper, setPaper] = useState([]);
+  const [paper,setPaper] = useState([]);
+  const [showTextMenu, setShowTextMenu] = useState(false);
 
   return (
     <View>
-      <DiaryTopBar setIsEditing={setIsEditing} isEditing={isEditing} />
+      <DiaryTopBar setIsEditing={setIsEditing} isEditing={isEditing}   showTextMenu={showTextMenu} />
 
       <Container>
         <DiarySideBar
@@ -71,7 +72,7 @@ function DiaryEditPage({ setIsEditing, isEditing, diaryInfo }) {
           </Content>
         </ContentWrapper>
       </Container>
-      <DiaryTabbar setsideBarType={setsideBarType} />
+      <DiaryTabbar setsideBarType={setsideBarType}   setShowTextMenu={setShowTextMenu} />
     </View>
   );
 }
