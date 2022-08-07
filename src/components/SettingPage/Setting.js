@@ -8,7 +8,6 @@ const Setting = () => {
     const [currentPassword, setCurrentPassword] = useState(''); 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [uid, setUid] = useState('');
 
     //const [currentPasswordError, setCurrentPasswordError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
@@ -80,7 +79,7 @@ const Setting = () => {
       } 
 
 
-
+    const id = localStorage.getItem('id');
     
 
     return (
@@ -138,7 +137,7 @@ const Setting = () => {
 
             <UidBox>
                 <UidHeader>UID</UidHeader> 
-                <UidText>1FW283JGKWL10</UidText> {/* {uid}로 바꾸기, 백엔드에 있는 uid props로? 가져오기 */}
+                <UidText>{id}</UidText> {/* {uid}로 바꾸기, 백엔드에 있는 uid props로? 가져오기 */}
                 <CopyBtn onClick={copyUid} >복사</CopyBtn> 
             </UidBox>
         </SettingBox>
@@ -237,7 +236,7 @@ const UidBox = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    width: 338rem;
+    width: 450rem;
 `;
 
 const UidHeader = styled.div`

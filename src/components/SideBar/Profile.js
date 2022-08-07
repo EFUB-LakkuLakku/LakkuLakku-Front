@@ -13,25 +13,23 @@ const Profile = () => {
   const nickname = localStorage.getItem("nickname");
 
 
-  const editedInfo = async () => {
-    await API.get(`/api/v1/home/`, { params: {"nickname" : nickname} })
-    .then(res => setInfo(res.data))
-    .then(res => console.log(res))
-    .catch(err=> console.log(err))
-
-    }; 
+  const editedInfo = () => {
+    API.get(`/api/v1/home/`, { params: { nickname: nickname } })
+      .then((res) => setInfo(res.data))
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
     editedInfo();
 
     //console.log(info.user.id);
     //console.log(info.user.bio);
-    console.log(info.user.profileImageUrl);
+    //console.log(info.user.profileImageUrl);
 
 
     localStorage.setItem("id", info.user.id)
     localStorage.setItem("profileImage", info.user.profileImageUrl);
-  });  
+  }, [info]);  
 
   /*
   const editedInfo = async () => {

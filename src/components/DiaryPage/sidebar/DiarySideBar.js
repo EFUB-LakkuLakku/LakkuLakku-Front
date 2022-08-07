@@ -92,7 +92,6 @@ const PaperImgBox = styled.img.attrs(({ src, onClick, width, height }) => ({
   border-radius: 6rem;
 `;
 
-
 const ImgWrapper = styled.div`
   width: 50%;
   height: 100%;
@@ -269,7 +268,7 @@ function StickerSideBar({ sideBarType }) {
                     return new_state;
                   });
                 }}
-                stickers={Stickers}
+                stickers={categoryStickers[idx].stickerList}
               >
                 {category}
               </DropdownMenu>
@@ -326,7 +325,9 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
 
     } //api 연결
 
-
+    useEffect(() => {
+      getPapers();
+    });  
 
   return (
     <Container sideBarType={sideBarType}>

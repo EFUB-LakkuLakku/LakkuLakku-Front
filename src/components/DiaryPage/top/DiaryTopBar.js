@@ -110,6 +110,8 @@ const ColorWheelBox = styled.div`
   position:fixed;
   top:150rem;
 
+  z-index: 99;
+
 `;
 
 

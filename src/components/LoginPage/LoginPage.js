@@ -109,11 +109,12 @@ function LoginPage() {
       });
       console.log(response.data);
 
-      const { accessToken } = response.data.accessToken;
-      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      const token = response.data.accessToken;
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
       localStorage.setItem("refreshToken", response.data.refreshToken);
-      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("accessToken", token);
+
       localStorage.setItem("email", email);
       localStorage.setItem("nickname", response.data.nickname);
 
