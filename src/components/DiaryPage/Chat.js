@@ -32,11 +32,11 @@ const ImgBox = styled.img.attrs(({ src, alt, width, height }) => ({
   margin-right: 6px;
 `;
 
-export default function Chat({ chat_cnt }) {
+export default function Chat({ cntComment }) {
   return (
     <Wrapper>
       <ImgBox src={ChatIcon} width={"24rem"} height={"24rem"} />
-      <Text>{chat_cnt}개</Text>
+      <Text>{cntComment}개</Text>
     </Wrapper>
   );
 }
