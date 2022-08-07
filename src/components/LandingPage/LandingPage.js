@@ -4,13 +4,26 @@ import { YellowButton } from "../LoginPage/../SignupPage/index";
 import bigLogo from "../../assets/icon.svg";
 import textLogo from "./TextLogo.png";
 import { useNavigate } from "react-router-dom";
-
+import { css } from "styled-components";
 const View = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
+
+  ${css`
+    animation: 0.7s fadein forwards;
+  `}
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
 `;
 
 const Text = styled.span`
