@@ -1,8 +1,7 @@
 [[redirects]]
-  from = "/*"
+  from = "/proxy/*"
   to = "https://lakku-lakku.com/:splat"
   status = 200
-  headers = {Access-Control-Allow-Origin = "*"}
   
 [[headers]]
   for = "/*"
