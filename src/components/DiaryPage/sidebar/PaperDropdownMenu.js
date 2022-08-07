@@ -28,7 +28,7 @@ const ImgWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background-color: var(--w50);
-  margin: 25rem 10rem;
+  margin: 15rem 10rem;
   border-radius: 5px;
 `;
 const ImgBox = styled.img.attrs(({ src, onClick, width, height }) => ({
@@ -39,6 +39,7 @@ const ImgBox = styled.img.attrs(({ src, onClick, width, height }) => ({
   width: width;
   height: height;
   color: red;
+  border-radius: 6rem;
 `;
 //스티커 목록
 const ListWrapper = styled.div`

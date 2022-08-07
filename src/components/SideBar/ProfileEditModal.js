@@ -63,6 +63,7 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsO
         formData.append("nickname", nicknameInfo);
         formData.append("image", image);
         formData.append("bio", bio);
+        formData.append("url", "");
 
         console.log(nicknameInfo);
         console.log(image); //더 알아보기
