@@ -101,7 +101,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
             if (status === 409) {
               //다이어리 조회
               axios
-                .get(`/api/v1/diaries/${date}`, {
+                .get(`/api/v1/diaries/${date}?nickname=${nickname}`, {
                   headers: {
                     Authorization: `Bearer ${token}`,
                   },
