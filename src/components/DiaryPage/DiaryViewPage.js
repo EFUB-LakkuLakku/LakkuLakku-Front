@@ -99,9 +99,9 @@ function DiaryViewPage({ setIsEditing, diaryInfo }) {
         />
         <InfoBox>
           <Like
-            like={like}
+            like={false}
             setLike={setLike}
-            like_cnt={diaryInfo?.diary.cntLike}
+            like_cnt={0}
             diary={diaryInfo?.diary}
           />
 

@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { SideBar } from "../index";
 import styled from "styled-components";
 import { Route, Routes } from "react-router-dom";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import HomeService from "../../api/HomeService";
+import axios from "axios";
+
 import {
   MonthlyPage,
   SettingPage,
@@ -26,10 +28,61 @@ export default function MainPage() {
   const params = pathname.split("/");
   //console.log(params);
   const isDiaryPage = params[3] === "diary" ? true : false;
-  const userNickName = params[2];
+  const { nickname } = useParams(); //다이어리 오너
+
   // 0번 : 다이어리 탭, 1번: 친구탭
   const [currentTab, setCurrentTab] = React.useState(0); // 다이어리탭을 기본으로
+  const [mainInfo, setMainInfo] = useState();
+  const loginUser = localStorage.getItem("nickname");
+  useEffect(() => {
+    /*
+    const token = localStorage.getItem("accessToken");
 
+    //token = JSON.stringify(token);
+
+    axios.get("url", {
+      params: {
+        id: 123
+      }
+    })
+    .then(function (response) {
+         // response  
+    }).catch(function (error) {
+        // 오류발생시 실행
+    }).then(function() {
+        // 항상 실행
+    });
+    
+    const token = localStorage.getItem("accessToken");
+    axios({
+      url: "https://lakku-lakku.com/api/v1/home", // 통신할 웹문서
+      method: "get", // 통신할 방식
+      data: {
+        // 인자로 보낼 데이터
+        nickname: nickname,
+      },
+
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        console.log("다이어리조회 성공", res);
+      })
+      .catch((err) => {
+        console.log("실패", err);
+      });
+*/
+    /*
+    HomeService.getHomeMain(loginUser)
+      .then((res) => {
+        if (res.status === 200) {
+          setMainInfo(mainInfo);
+        }
+      })
+      .catch((err) => console.log(err, "메인정보 받아오기 실패"));
+      */
+  }, []);
   return (
     <View>
       {/** 다이어리 페이지가 아닐 경우에만 탭바 보이기 */}
@@ -37,7 +90,7 @@ export default function MainPage() {
         <Tabbar
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
-          userNickName={userNickName}
+          userNickName={nickname}
         />
       )}
 

@@ -45,7 +45,9 @@ export default function Like({ like, like_cnt, diary }) {
     color: var(--b800);
   `;
 
+  console.log(diary.id);
   const onClickHandler = () => {
+    /*
     DiaryService.likeToggleDiary(date, diary.id)
       .then((res) => {
         if (res.status == 200) {
@@ -58,6 +60,12 @@ export default function Like({ like, like_cnt, diary }) {
         }
       })
       .catch((err) => console.log("좋아요실패", err));
+      */
+    const tmp = { ...likeInfo };
+    tmp.like = !tmp.like;
+    if (tmp.like) tmp.like_cnt += 1;
+    else tmp.like_cnt -= 1;
+    setLikeInfo(tmp);
   };
 
   return (

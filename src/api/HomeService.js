@@ -1,7 +1,7 @@
 import API from "../utils/api";
 
 const HomeService = {
-  getHomeMain: () => API.get("/api/v1/home"),
+  getHomeMain: (nickname) => API.get("/api/v1/home", { nickname: nickname }),
 };
 
 export default HomeService;

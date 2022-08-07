@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { YellowButton } from "../LoginPage/../SignupPage/index";
 import bigLogo from "../../assets/icon.svg";
 import textLogo from "./TextLogo.png";
+import { useNavigate } from "react-router-dom";
 
 const View = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ const JoinText = styled.span`
   letter-spacing: -0.02em;
   font-feature-settings: "calt" off;
   margin-left: 10rem;
+  cursor: pointer;
 `;
 
 const IntroText = styled.div`
@@ -56,6 +58,7 @@ const SmallGap = styled.div`
 `;
 
 function LoginPage() {
+  const navigate = useNavigate();
   return (
     <View>
       <img src={bigLogo} />
@@ -67,9 +70,22 @@ function LoginPage() {
       <IntroText>간단하게 나만의 다이어리를 작성하며</IntroText>
       <IntroText>여러분의 라이프를 꾸며보세요.</IntroText>
       <Gap />
-      <YellowButton>로그인</YellowButton>
+      <YellowButton
+        onClick={() => {
+          navigate("/login");
+        }}
+      >
+        로그인
+      </YellowButton>
       <Text>
-        계정이 없으신가요? <JoinText>회원가입</JoinText>{" "}
+        계정이 없으신가요?{" "}
+        <JoinText
+          onClick={() => {
+            navigate("/register");
+          }}
+        >
+          회원가입
+        </JoinText>{" "}
       </Text>
     </View>
   );
