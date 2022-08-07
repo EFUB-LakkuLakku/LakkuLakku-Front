@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { format, addMonths, subMonths, getDate } from "date-fns";
+import React, { useEffect, useState } from "react";
+import { format, addMonths, subMonths, getDate, getDay } from "date-fns";
 import { startOfMonth, endOfMonth, startOfWeek, endOfWeek } from "date-fns";
 import { isSameMonth, isSameDay, addDays, parse } from "date-fns";
 import "./style.scss";
@@ -7,7 +7,7 @@ import styled from "styled-components";
 import theme from "../../styles/theme";
 import leftArrow from "./left.png";
 import rightArrow from "./right.png";
-import emoji from "./emoji.png";
+import axios from "axios";
 
 const Container = styled.div`
   width: 1050rem;
@@ -61,12 +61,67 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
   let days = [];
   let day = startDate;
 
-  console.log(getDate(startDate));
-
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       const formattedDate = format(day, "d");
+      const cloneFormattedDate = format(day, "dd");
+      const formattedMonth = format(currentMonth, "MM");
+      const formattedYear = format(currentMonth, "yyyy");
       const cloneDay = day;
+
+      function createDiary() {
+        const token = localStorage.getItem("accessToken");
+
+        const date = `2022-${formattedMonth}-${cloneFormattedDate}`;
+        const nickname = localStorage.getItem("nickname");
+        //다이어리 생성
+        axios
+          .post(
+            `/api/v1/diaries/${date}`,
+            {
+              message: "",
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+
+          .then((res) => {
+            console.log(res.data);
+            window.location.href = `/main/${nickname}/diary/${formattedYear}-${formattedMonth}-${cloneFormattedDate}`;
+          })
+          .catch((err) => {
+            const {
+              config,
+              response: { status },
+            } = err;
+
+            if (status === 409) {
+              //다이어리 조회
+              axios
+                .get(`/api/v1/diaries/${date}?nickname=${nickname}`, {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                })
+                .then((res) => {
+                  console.log(res.data);
+                  window.location.href = `/main/${nickname}/diary/${formattedYear}-${formattedMonth}-${cloneFormattedDate}`;
+                });
+            }
+          });
+      }
+
+      // if(day.getDate() === formattedDate){
+      //   days.push(
+      //     <div>
+      //       <div className= "diaryTitle">dkdk</div>
+      //       <div className="diaryEmoji"></div>
+      //     </div>
+      //   )
+      // }
 
       days.push(
         <div
@@ -83,18 +138,12 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
               : null
           }`}
           key={day}
-          onClick={() => onDateClick(parse(cloneDay))}
+          onClick={() => {
+            createDiary();
+          }}
         >
           <div
             className={isSameDay(day, selectedDate) ? "selectedCircle" : null}
-          ></div>
-
-          <div
-            className={isSameDay(day, selectedDate) ? "diaryTitle" : null}
-          ></div>
-
-          <div
-            className={isSameDay(day, selectedDate) ? "diaryEmoji" : null}
           ></div>
 
           <span
@@ -117,6 +166,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
         {days}
       </div>
     );
+
     days = [];
   }
   return <div className="body">{rows}</div>;
@@ -135,6 +185,7 @@ function Calendar() {
   const onDateClick = (day) => {
     setSelectedDate(day);
   };
+
   return (
     <div className="calendar">
       <Container>

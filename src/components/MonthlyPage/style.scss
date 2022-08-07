@@ -6,28 +6,29 @@
     .header {
         @include common.size(100%, 7%);
         @include common.flex-row(space-between, baseline);
+        padding-top: 15rem;
         
         .text {
             font-size: 24rem;
             padding-left: 20rem;
+        
         }
         .textMonth {
             padding-left: 10rem;
+            
         }
         .col.col-first {
             @include common.size(80%, 100%);
             @include common.flex-column(center, flex-start);
             
             
+            
         }
         .col.col-end {
-            @include common.size(20%, 100%);
             @include common.flex-row(flex-end, baseline);
             img {
-                width: 24rem;
-                height: 25.7rem;
-                padding-top: 11%;
-                padding-right: 15%;
+                padding-top: 3rem;
+                padding-right: 40rem;
             }
         }
     }
@@ -98,8 +99,9 @@
             }
 
             .diaryTitle{
-                margin: 3px;
+                position:absolute;
                 margin-top: 5px;
+                margin-right: 30px;
                 width : 104rem;
                 height : 26rem;
                 border-radius: 10%;
@@ -112,7 +114,7 @@
                 background-image: url(./emoji.png);
                 width : 76rem;
                 height : 75rem;
-                margin-top: 35px;
+                margin-top: 38px;
                 margin-right: 35px;
             }
 

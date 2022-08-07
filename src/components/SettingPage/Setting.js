@@ -1,28 +1,28 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 import theme from "../../styles/theme";
+import API from '../../utils/api';
 
 
 const Setting = () => {
-    const [currentPassword, setCurrentPassword] = useState(''); //props로 백엔드에서 받아온 현재 비밀번호 받아오기!
+    const [currentPassword, setCurrentPassword] = useState(''); 
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [uid, setUid] = useState('');
 
-    const [currentPasswordError, setCurrentPasswordError] = useState(false);
+    //const [currentPasswordError, setCurrentPasswordError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
 
 
     const onChangeCurrentPassword = (e) => {
-        if ( !e.target.value || 'tlsdbwls17' === e.target.value) setCurrentPasswordError(false); //props로 받아온 현재 비밀번호 넣기
-        else setCurrentPasswordError(true);
+        //if ( !e.target.value || 'tlsdbwls17' === e.target.value) setCurrentPasswordError(false); 
+        //else setCurrentPasswordError(true);
         setCurrentPassword(e.target.value);
     };
 
     const onChangePassword = (e) => {
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
         if ((!e.target.value || (passwordRegex.test(e.target.value)))) setPasswordError(false);
         else setPasswordError(true);
 
@@ -38,7 +38,7 @@ const Setting = () => {
     };
 
 
-
+    /*
     const passwordValidation = () => {
         if(!currentPassword) setCurrentPasswordError(true);
         if(!password) setPasswordError(true);
@@ -47,11 +47,30 @@ const Setting = () => {
         if(password && currentPassword && confirmPassword && !currentPasswordError && !passwordError && !confirmPasswordError) return true;
         else return false;
     }
+    */
 
 
-    const submitPassword = (e) => {
-        if(passwordValidation()) return; //새 비밀번호를 백엔드에 submit하는 코드 넣기
-    }
+    //const submitPassword = (e) => {
+    //    if(passwordValidation()) return; //새 비밀번호를 백엔드에 submit하는 코드 넣기
+    //}
+
+    const submitPassword = async () => {         
+
+        await API.put(`/api/v1/settings`, {
+          "beforePassword" : currentPassword, 
+          "afterPassword" : password,
+          "checkAfterPassword" : confirmPassword
+         } )
+        .then(res => console.log((res.data)))
+        .catch(err=> console.error(err));
+
+        alert("수정되었습니다.")
+
+        setCurrentPassword("");
+        setPassword("");
+        setConfirmPassword("");
+      }
+  
 
 
     const copyUid = (e) => {
@@ -60,6 +79,8 @@ const Setting = () => {
       } 
 
 
+    const id = localStorage.getItem('id');
+    
 
     return (
         <SettingBox>
@@ -76,7 +97,7 @@ const Setting = () => {
                         onChange={onChangeCurrentPassword}
                         required
                     />
-                    {currentPasswordError && <Error>비밀번호를 정확하게 입력해주세요.</Error>}
+                    {/* {currentPasswordError && <Error>비밀번호를 정확하게 입력해주세요.</Error>} */}
                 </PwSection>
 
                 <PwSection>
@@ -85,10 +106,11 @@ const Setting = () => {
                         placeholder="새 비밀번호를 입력해 주세요"
                         type="password"
                         onChange={onChangePassword}
+                        minLength={8}
                         maxLength={16}
                         required
                     />
-                    {passwordError && <Error>16자 이내의 영문자 및 숫자와 ?,!,.,,특수문자로 입력해주세요.</Error>}
+                    {passwordError && <Error>8자 이상, 16자 이내의 영문자 및 숫자와 특수문자(!@#$%^*+=-)로 입력해주세요.</Error>}
                 </PwSection>
 
                 <PwSection>
@@ -99,6 +121,7 @@ const Setting = () => {
                         type="password"
                         className='inputandbutton__input'
                         onChange={onChangeConfirmPassword}
+                        minLength={8}
                         maxLength={16}
                         required
                         />
@@ -114,7 +137,7 @@ const Setting = () => {
 
             <UidBox>
                 <UidHeader>UID</UidHeader> 
-                <UidText>1FW283JGKWL10</UidText> {/* {uid}로 바꾸기, 백엔드에 있는 uid props로? 가져오기 */}
+                <UidText>{id}</UidText> {/* {uid}로 바꾸기, 백엔드에 있는 uid props로? 가져오기 */}
                 <CopyBtn onClick={copyUid} >복사</CopyBtn> 
             </UidBox>
         </SettingBox>
@@ -135,7 +158,7 @@ const SettingBox = styled.div`
 
     border-top-right-radius: 30rem;
     border-bottom-right-radius: 30rem;
-    border: 1rem solid #D3CEC4;
+    border: 1rem solid ${theme.border};
 `;
 
 const Header = styled.div`
@@ -213,7 +236,7 @@ const UidBox = styled.div`
     align-items: center;
     justify-content: space-between;
 
-    width: 338rem;
+    width: 450rem;
 `;
 
 const UidHeader = styled.div`

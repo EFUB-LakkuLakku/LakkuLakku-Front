@@ -1,14 +1,36 @@
 import React, { useState, useEffect } from "react";
 import DefaultImg from "../../assets/DefaultImg.png";
+//import { ReactComponent as DefaultImg } from '../assets/default_img.svg'
+import ProfileEditModal from "./ProfileEditModal";
 import styled from "styled-components";
+import theme from "../../styles/theme";
+import API from "../../utils/api";
 
 const Profile = () => {
   const [info, setInfo] = useState({
-    image: DefaultImg,
-    bio: "나는 오늘도 내일을 산다..",
-  }); //초깃값에 여러개 넣기 //나중에 초깃값에 '' 넣기!
-  const [nickname, setNickname] = useState("발발이"); //나중에 초깃값에 '' 넣기!
+    user: { profileImageUrl: null, bio: "" },
+  }); //초기값!!
   const [showModal, setShowModal] = useState(false);
+
+  const nickname = localStorage.getItem("nickname");
+
+  const editInfo = () => {
+    API.get(`/api/v1/home/`, { params: { nickname: nickname } })
+      .then((res) => {
+        if (res.status == 200) {
+          if (res.data.user === info.user) return; //무한 실행문제 해결
+
+          setInfo(res.data);
+          localStorage.setItem("id", res.data.user.id);
+          localStorage.setItem("profileImage", res.data.user.profileImageUrl);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    editInfo();
+  }, [info]);
 
   /*
   const editedInfo = async () => {
@@ -21,16 +43,17 @@ const Profile = () => {
       editedInfo();
     }, [info]);  
   */
-
   //nickname 백엔드에서 get해오기
-
-  const openModal = () => {
-    setShowModal(true);
-  };
 
   return (
     <ProfileBox>
-      <ProfileImg src={info.image} />
+      <ProfileImg
+        src={
+          info.user.profileImageUrl === null
+            ? DefaultImg
+            : info.user.profileImageUrl
+        }
+      />
 
       <Nickname>
         {" "}
@@ -39,20 +62,30 @@ const Profile = () => {
 
       <BioBox>
         <BioHeader>자기소개</BioHeader>
-        <Bio> {info.bio} </Bio>
+        <Bio> {info.user.bio} </Bio>
       </BioBox>
 
       <BtnBox onClick={(e) => e.stopPropagation()}>
-        <ProfileEditBtn onClick={openModal}>프로필 수정</ProfileEditBtn>
+        <ProfileEditBtn onClick={() => setShowModal(true)}>
+          프로필 수정
+        </ProfileEditBtn>
       </BtnBox>
-      {/* {showModal && <ProfileEditModal imageInfo={info.image} bioInfo={info.bio} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} */}
+      {showModal && (
+        <ProfileEditModal
+          imageInfo={info.user.profileImageUrl}
+          bioInfo={info.user.bio}
+          nicknameInfo={info.user.nickname}
+          isOpenModal={showModal}
+          setIsOpenModal={setShowModal}
+        />
+      )}
     </ProfileBox>
   );
 };
 
 const ProfileBox = styled.div`
   flex: 0.635;
-  background-color: #fffbf2;
+  background-color: ${theme.background};
   border-top-left-radius: 30rem;
   border-bottom: none;
 
@@ -122,11 +155,11 @@ const ProfileEditBtn = styled.button`
   width: 84rem;
   height: 24rem;
 
-  background-color: #ffe898;
+  background-color: ${theme.main};
   border-radius: 17rem;
   border: none;
 
-  font-size: 10rem;
+  font-size: 12rem;
   font-family: "NotoSansKR-Bold";
 `;
 
