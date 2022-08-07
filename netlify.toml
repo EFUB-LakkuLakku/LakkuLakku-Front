@@ -3,7 +3,4 @@
   to = "https://lakku-lakku.com/:splat"
   status = 200
   
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Access-Control-Allow-Origin = "*"
+
