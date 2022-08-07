@@ -1,5 +1,10 @@
 [[redirects]]
   from = "/*"
-  to = "https://lakku-lakku.com/api/:splat"
+  to = "<cross-origin-url>"
   status = 200
   force = true
+  headers = {X-From = "Netlify"}
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
