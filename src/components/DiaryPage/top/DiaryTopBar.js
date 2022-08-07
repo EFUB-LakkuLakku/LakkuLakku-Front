@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import Right from "../../../assets/right-arrow.svg";
 import Left from "../../../assets/left-arrow.svg";
@@ -6,8 +6,20 @@ import Edit from "../../../assets/edit.svg";
 import Trash from "../../../assets/trash.svg";
 import Close from "../../../assets/close.svg";
 import Save from "../../../assets/save.svg";
+import AlignCenter from "../../../assets/align-center.svg";
+import AlignLeft from "../../../assets/align-left.svg";
+import AlignRight from "../../../assets/align-right.svg";
+import AlignJustify from "../../../assets/align-justify.svg";
+import ColorIcon from "../../../assets/coloricon.svg";
+
+import FontStyle from "./FontStyle";
+import FontSize from "./FontSize";
+import FontWeight from "./FontWeight";
+import ColorWheel from "./ColorWheel";
+
 
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const Container = styled.div`
   width: 100%;
@@ -38,7 +50,72 @@ const ImgBox = styled.img.attrs(({ src, alt, onClick }) => ({
 
 const ImgContainer = styled.div``;
 
-export default function DiaryTopBar({ setIsEditing, isEditing }) {
+
+const TextMenuContainer = styled.div`
+  width: 920rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const TextMenuBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+`;
+
+const MenuName = styled.div`
+  margin-right: 19rem;
+
+  font-size: 16rem;
+  font-family: "NotoSansKR-Bold";
+  color: #8B681A;
+`;
+
+const AlignIcon = styled.img.attrs(({ src, alt, onClick }) => ({
+  src: src,
+  alt: alt,
+  onClick: onClick,
+}))`
+  width: 24rem;
+  height: 26rem;
+  cursor: pointer;
+  margin-right: 20rem;
+  padding: 4rem;
+  border-radius: 5rem;
+  font-size: 24rem;
+
+  &:hover {
+    background-color: #D3CEC4;
+  }
+`;
+
+const ColorBtn = styled.button`
+  border: none;
+  background-color: transparent;
+  padding: 0;
+`;
+
+const ColorWheelBox = styled.div`
+  background-color: #D3CEC4;
+  padding: 30rem;
+  padding-left: 15rem;
+  border-radius: 20rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position:fixed;
+  top:150rem;
+
+`;
+
+
+
+
+export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
+
   const navigate = useNavigate();
 
   const editDiary = () => {
@@ -97,6 +174,44 @@ export default function DiaryTopBar({ setIsEditing, isEditing }) {
       </ImgContainer>
     );
 
+    const [showColorWheel,setShowColorWheel] = useState(false);
+
+  const TextMenu = (
+    <TextMenuContainer>
+      <TextMenuBox>
+        <MenuName>서체</MenuName>
+        <FontStyle />
+      </TextMenuBox>
+
+      <TextMenuBox>
+        <MenuName>굵기</MenuName>
+        <FontWeight />
+      </TextMenuBox>
+
+      <TextMenuBox>
+        <MenuName>크기</MenuName>
+        <FontSize />
+      </TextMenuBox>
+
+
+      <TextMenuBox>
+        <MenuName>정렬</MenuName>
+        <AlignIcon src={AlignRight} alt="align-right" ></AlignIcon> {/* onClick={} */}
+        <AlignIcon src={AlignCenter} alt="align-center" ></AlignIcon>
+        <AlignIcon src={AlignLeft} alt="align-left" ></AlignIcon>
+        <AlignIcon src={AlignJustify} alt="align-justify"></AlignIcon>
+      </TextMenuBox>
+
+      <TextMenuBox>
+        <MenuName>색상</MenuName>
+        <ColorBtn onClick={()=>setShowColorWheel((prev) => !prev)}><img src={ColorIcon} alt="coloricon" /></ColorBtn>
+        {showColorWheel && <ColorWheelBox><ColorWheel /></ColorWheelBox>}
+      </TextMenuBox>
+    </TextMenuContainer>
+  ) 
+  
+  
+
   return (
     <Container>
       <ImgContainer>
@@ -119,6 +234,8 @@ export default function DiaryTopBar({ setIsEditing, isEditing }) {
           }}
         />
       </ImgContainer>
+
+      { (showTextMenu === true) && TextMenu }
 
       {right}
     </Container>

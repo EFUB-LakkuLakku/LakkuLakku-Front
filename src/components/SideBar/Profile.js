@@ -10,22 +10,27 @@ const Profile = () => {
   const [info, setInfo] = useState( { user: { profileImageUrl: DefaultImg, bio: "" } } ); //초기값!!
   const [showModal, setShowModal] = useState(false);
 
+  const nickname = localStorage.getItem("nickname");
 
 
   const editedInfo = async () => {
-    await API.get(`/api/v1/home/`)
+    await API.get(`/api/v1/home/`, { params: {"nickname" : nickname} })
     .then(res => setInfo(res.data))
     .then(res => console.log(res))
     .catch(err=> console.log(err))
-  };  //api 연결  //bio만 수정된 게 반영 안됨
+
+    }; 
 
   useEffect(() => {
     editedInfo();
-    
-    localStorage.setItem("id", info.user.id);
-    localStorage.setItem("profileImage", info.user.profileImageUrl);
-    localStorage.setItem("nickname", info.user.nickname);
 
+    console.log(info.user.id);
+    console.log(info.user.bio);
+    console.log(info.user.profileImageUrl);
+
+
+    localStorage.setItem("id", info.user.id)
+    localStorage.setItem("profileImage", info.user.profileImageUrl);
   });  
 
   /*
@@ -45,9 +50,9 @@ const Profile = () => {
   return (
     <ProfileBox>
       
-        <ProfileImg src={info.user.profileImageUrl} />
+        <ProfileImg src={info.user.profileImageUrl==null || "/static/media/DefaultImg.1f5cb49d7f0d48ad6a14.png" ? DefaultImg : info.user.profileImageUrl} />
         
-        <Nickname> <span style={{color: '#8b681a'}}>{info.user.nickname}</span>의 먼슬리 다이어리</Nickname>
+        <Nickname> <span style={{color: '#8b681a'}}>{nickname}</span>의 먼슬리 다이어리</Nickname>
 
         <BioBox>
             <BioHeader>자기소개</BioHeader>
@@ -59,7 +64,7 @@ const Profile = () => {
             프로필 수정
             </ProfileEditBtn>
         </BtnBox>
-        {showModal && <ProfileEditModal imageInfo={info.user.profileImageUrl} bioInfo={info.user.bio} nicknameInfo={info.user.nickname} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} 
+        {showModal && <ProfileEditModal imageInfo={info.user.profileImageUrl== null || "/static/media/DefaultImg.1f5cb49d7f0d48ad6a14.png" ? DefaultImg : info.user.profileImageUrl} bioInfo={info.user.bio} nicknameInfo={info.user.nickname} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} 
 
     </ProfileBox>
   );

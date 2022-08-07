@@ -13,6 +13,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteStickerOnPanel } from "../../../modules/sticker";
 import { deleteImageOnPanel } from "../../../modules/image";
 
+import { StickyNote } from "./StickyNote";
+
 export default function Canvas({ type, paper, setPaper }) {
   // 다이어리 요소들 조회하는 api 요청을 Canvas 내부에서 보내기.
 
@@ -21,6 +23,14 @@ export default function Canvas({ type, paper, setPaper }) {
   const images = useSelector((state) => state.image);
   const [selectedId, selectShape] = React.useState(null);
   const [background] = useImage(paper.src); // 속지
+
+
+  const [text, setText] = useState(""); //Click to transform. Double click to edit.
+  const [width, setWidth] = useState(200);
+  const [height, setHeight] = useState(200);
+  const [selected, setSelected] = useState(false);
+
+
 
   // 빈 땅 클릭했을때 포커스 해제
   const checkDeselect = (e) => {
@@ -43,8 +53,34 @@ export default function Canvas({ type, paper, setPaper }) {
         }}
         onMouseDown={checkDeselect}
         onTouchStart={checkDeselect}
+
+        onClick={(e) => {
+          if (e.currentTarget._id === e.target._id) {
+            setSelected(false); //캔버스 빈데 클릭하면 텍스트 노선택
+          }
+        }}  
       >
         <Layer>
+          <StickyNote //<텍스트> //하위 컴포넌트로 props 전달
+            x={50}
+            y={50} //이 x,y좌표를 고정시켜두면 안됨!
+            text={text}
+            onTextChange={(value) => setText(value)}
+            width={width}
+            height={height}
+            selected={selected}
+            onTextResize={(newWidth, newHeight) => {
+              setWidth(newWidth);
+              setHeight(newHeight);
+            }}
+            onClick={() => {
+              setSelected(!selected);
+            }}
+            onTextClick={(newSelected) => {
+              setSelected(newSelected);
+            }}
+          />
+
           <KonvaImage
             image={background}
             id="backgroundImage"
