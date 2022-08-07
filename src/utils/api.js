@@ -21,7 +21,6 @@ const API = token
   ? axios.create({
       baseURL: BASE_URL, // 기본 서버 주소 입력
       headers: {
-        "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`,
       },
 
