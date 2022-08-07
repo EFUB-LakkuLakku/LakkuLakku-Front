@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Right from "../../../assets/right-arrow.svg";
 import Left from "../../../assets/left-arrow.svg";
@@ -51,7 +51,6 @@ const ImgBox = styled.img.attrs(({ src, alt, onClick }) => ({
 
 const ImgContainer = styled.div``;
 
-
 const TextMenuContainer = styled.div`
   width: 920rem;
   display: flex;
@@ -63,7 +62,6 @@ const TextMenuBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
 `;
 
 const MenuName = styled.div`
@@ -71,7 +69,7 @@ const MenuName = styled.div`
 
   font-size: 16rem;
   font-family: "NotoSansKR-Bold";
-  color: #8B681A;
+  color: #8b681a;
 `;
 
 const AlignIcon = styled.img.attrs(({ src, alt, onClick }) => ({
@@ -88,7 +86,7 @@ const AlignIcon = styled.img.attrs(({ src, alt, onClick }) => ({
   font-size: 24rem;
 
   &:hover {
-    background-color: #D3CEC4;
+    background-color: #d3cec4;
   }
 `;
 
@@ -99,7 +97,7 @@ const ColorBtn = styled.button`
 `;
 
 const ColorWheelBox = styled.div`
-  background-color: #D3CEC4;
+  background-color: #d3cec4;
   padding: 30rem;
   padding-left: 15rem;
   border-radius: 20rem;
@@ -107,18 +105,13 @@ const ColorWheelBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  position:fixed;
-  top:150rem;
+  position: fixed;
+  top: 150rem;
 
   z-index: 99;
-
 `;
 
-
-
-
 export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
-
   const navigate = useNavigate();
 
   const editDiary = () => {
@@ -151,7 +144,9 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
   const getDay = (current, offset) => {
     const d = new Date(current);
     d.setDate(d.getDate() + offset);
-    var path = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+    const month = (d.getMonth() + 1).toString().padStart(2, "0");
+    const date = d.getDate().toString().padStart(2, "0");
+    var path = d.getFullYear() + "-" + month + "-" + date;
     return path;
   };
   const deleteDiary = () => {
@@ -189,7 +184,7 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
       </ImgContainer>
     );
 
-    const [showColorWheel,setShowColorWheel] = useState(false);
+  const [showColorWheel, setShowColorWheel] = useState(false);
 
   const TextMenu = (
     <TextMenuContainer>
@@ -208,24 +203,28 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
         <FontSize />
       </TextMenuBox>
 
-
       <TextMenuBox>
         <MenuName>정렬</MenuName>
-        <AlignIcon src={AlignRight} alt="align-right" ></AlignIcon> {/* onClick={} */}
-        <AlignIcon src={AlignCenter} alt="align-center" ></AlignIcon>
-        <AlignIcon src={AlignLeft} alt="align-left" ></AlignIcon>
+        <AlignIcon src={AlignRight} alt="align-right"></AlignIcon>{" "}
+        {/* onClick={} */}
+        <AlignIcon src={AlignCenter} alt="align-center"></AlignIcon>
+        <AlignIcon src={AlignLeft} alt="align-left"></AlignIcon>
         <AlignIcon src={AlignJustify} alt="align-justify"></AlignIcon>
       </TextMenuBox>
 
       <TextMenuBox>
         <MenuName>색상</MenuName>
-        <ColorBtn onClick={()=>setShowColorWheel((prev) => !prev)}><img src={ColorIcon} alt="coloricon" /></ColorBtn>
-        {showColorWheel && <ColorWheelBox><ColorWheel /></ColorWheelBox>}
+        <ColorBtn onClick={() => setShowColorWheel((prev) => !prev)}>
+          <img src={ColorIcon} alt="coloricon" />
+        </ColorBtn>
+        {showColorWheel && (
+          <ColorWheelBox>
+            <ColorWheel />
+          </ColorWheelBox>
+        )}
       </TextMenuBox>
     </TextMenuContainer>
-  ) 
-  
-  
+  );
 
   return (
     <Container>
@@ -250,7 +249,7 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
         />
       </ImgContainer>
 
-      { (showTextMenu === true) && TextMenu }
+      {showTextMenu === true && TextMenu}
 
       {right}
     </Container>
