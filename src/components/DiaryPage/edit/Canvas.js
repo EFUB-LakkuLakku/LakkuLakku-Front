@@ -24,9 +24,7 @@ export default function Canvas({ type, paper, setPaper }) {
   const images = useSelector((state) => state.image);
 
   const [selectedId, selectShape] = React.useState(null);
-  const [background] = useImage(
-    "https://s3.ap-northeast-2.amazonaws.com/lakku-lakku.com/template/kitsch/%E1%84%8F%E1%85%B5%E1%84%8E%E1%85%B5_1.jpg"
-  ); // 속지
+  const [background] = useImage(paper.src); // 속지
 
 
   const [text, setText] = useState(""); //Click to transform. Double click to edit.
