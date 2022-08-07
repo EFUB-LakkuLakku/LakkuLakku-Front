@@ -21,7 +21,7 @@ const API = token
   ? axios.create({
       baseURL: BASE_URL, // 기본 서버 주소 입력
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ajEwMDNAZ21haWwuY29tIiwicm9sZXMiOiJVU0VSIiwiaWF0IjoxNjU5ODU1NjYzLCJleHAiOjE2NTk4NjI4NjN9.qEvHlRmGLOEU3lF5T9As5RPrMdrDSoI5ATriy7pN7so`,
       },
 
       withCredentials: false, // 이거 반드시 false 로 설정해야 서버에서 wildcard (*) 썼을때 오류 안나도록 할 수 있음
