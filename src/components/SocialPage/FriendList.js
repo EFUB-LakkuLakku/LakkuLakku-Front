@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import userImage from "./UserImage.png";
+import userImage2 from "./UserImage2.png";
+import userImage3 from "./UserImage3.png";
+import userImage4 from "./UserImage4.png";
+import userImage5 from "./UserImage5.png";
 import homeImage from "./home.png";
 import unfollow from "./unfollow.png";
+import axios from "axios";
+import API from "../../utils/api";
 
 const View = styled.div`
   display: flex;
@@ -33,24 +39,26 @@ const MenuText = styled.span`
 `;
 
 const UserBox = styled.div`
-  text-align: center;
-  margin-top: 20rem;
+
+  margin-top: 22rem;
+  margin-left: 110rem;
 `;
 
 const UserImage = styled.span`
-  width: 66rem;
-  height: 66rem;
+  width: 63rem;
+  height: 63rem;
   border-radius: 50%;
   vertical-align: middle;
 `;
 
 const UserName = styled.span`
-  font-family: "NotoSansKR-Medium";
+  font-family: "NotoSansKR-Light";
   font-style: normal;
   font-weight: 700;
   font-size: 18rem;
+  display: inline-block;
+  width: 160rem;
 
-  vertical-align: middle;
   margin-left: 40rem;
 `;
 
@@ -60,14 +68,45 @@ const HomeImage = styled.span`
   padding-top: 1rem;
 `;
 
-const Unfollow = styled.span`
+const Unfollow = styled.button`
   vertical-align: middle;
   padding-left: 40rem;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+`;
+
+const ShadowBox = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%
+  background-color: var(--black);
+  opacity: 0.7;
+`;
+
+const UnfollowBox = styled.div`
+  position: center;
+  background-color: var(--white);
+  width: 400rem;
+  height: 292rem;
+  border-radius: 50rem;
 `;
 
 function FriendList() {
+
+  let [modal, setModal] = useState(false);
+
+  API
+    .get(`/api/v1/friends`)
+    .then((res) => {
+      console.log(res.data)
+    });
+
   return (
     <View>
+      <ShadowBox>
+        <unfollowBox></unfollowBox>
+      </ShadowBox>
       <Container>
         <MenuText>친구 목록</MenuText>
       </Container>
@@ -79,15 +118,20 @@ function FriendList() {
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
-        <Unfollow>
-          <img src={unfollow} />
+        <Unfollow onClick={()=>{setModal(true)}}>
+          {
+            modal === true
+            ? <unfollowBox/>
+            :null
+          }
+          <img src={unfollow}  />
         </Unfollow>
       </UserBox>
       <UserBox>
         <UserImage>
-          <img src={userImage} />
+          <img src={userImage2} />
         </UserImage>
-        <UserName>왈왈이왈왈이왈왈</UserName>
+        <UserName>킁킁이      </UserName>
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
@@ -97,9 +141,9 @@ function FriendList() {
       </UserBox>
       <UserBox>
         <UserImage>
-          <img src={userImage} />
+          <img src={userImage3} />
         </UserImage>
-        <UserName>왈왈이왈왈이왈왈</UserName>
+        <UserName>냥냥이</UserName>
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
@@ -109,9 +153,9 @@ function FriendList() {
       </UserBox>
       <UserBox>
         <UserImage>
-          <img src={userImage} />
+          <img src={userImage4} />
         </UserImage>
-        <UserName>왈왈이왈왈이왈왈</UserName>
+        <UserName>라꾸라꾸</UserName>
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
@@ -121,9 +165,9 @@ function FriendList() {
       </UserBox>
       <UserBox>
         <UserImage>
-          <img src={userImage} />
+          <img src={userImage5} />
         </UserImage>
-        <UserName>왈왈이왈왈이왈왈</UserName>
+        <UserName>어쩔티비티비</UserName>
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>

@@ -8,6 +8,8 @@ import theme from "../../styles/theme";
 import leftArrow from "./left.png";
 import rightArrow from "./right.png";
 import axios from "axios";
+import API from "../../utils/api";
+import { render } from "@testing-library/react";
 
 const Container = styled.div`
   width: 1050rem;
@@ -61,6 +63,8 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
   let days = [];
   let day = startDate;
 
+
+
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       const formattedDate = format(day, "d");
@@ -70,24 +74,18 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
       const cloneDay = day;
 
       function createDiary() {
-        const token = localStorage.getItem("accessToken");
-
         const date = `2022-${formattedMonth}-${cloneFormattedDate}`;
         const nickname = localStorage.getItem("nickname");
+        
         //다이어리 생성
-        axios
+        API
           .post(
             `/api/v1/diaries/${date}`,
             {
               message: "",
             },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+           
           )
-
           .then((res) => {
             console.log(res.data);
             window.location.href = `/main/${nickname}/diary/${formattedYear}-${formattedMonth}-${cloneFormattedDate}`;
@@ -100,12 +98,9 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
 
             if (status === 409) {
               //다이어리 조회
-              axios
-                .get(`/api/v1/diaries/${date}?nickname=${nickname}`, {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                })
+              API.get(`/api/v1/diaries/${date}`, {
+                params: { nickname: localStorage.getItem("nickname") },
+              })
                 .then((res) => {
                   console.log(res.data);
                   window.location.href = `/main/${nickname}/diary/${formattedYear}-${formattedMonth}-${cloneFormattedDate}`;
@@ -114,15 +109,17 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
           });
       }
 
-      // if(day.getDate() === formattedDate){
-      //   days.push(
-      //     <div>
-      //       <div className= "diaryTitle">dkdk</div>
-      //       <div className="diaryEmoji"></div>
-      //     </div>
-      //   )
-      // }
-
+      //홈API 조회
+      API.get('/api/v1/home', {
+        params: { nickname: localStorage.getItem("nickname") },
+      })
+          .then((res) => {
+            const diaryDate = res.data.diary.date
+            const title = res.data.diary.title
+            console.log(res.data);
+            
+          });
+      
       days.push(
         <div
           className={`col cell ${
@@ -146,6 +143,18 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
             className={isSameDay(day, selectedDate) ? "selectedCircle" : null}
           ></div>
 
+          <div
+            className={isSameDay(day, selectedDate) ? "diaryTitle" : null}
+          ></div>
+
+          <div
+            className={isSameDay(day, selectedDate) ? "diaryEmoji" : null}
+          ></div>
+
+          
+              {/* <div className= "diaryTitle">{title}</div>
+              <div className="diaryEmoji"></div> */}
+
           <span
             className={`dateText + ${
               format(currentMonth, "M") !== format(day, "M")
@@ -161,6 +170,9 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
       );
       day = addDays(day, 1);
     }
+
+    
+      
     rows.push(
       <div className="row" key={day}>
         {days}
