@@ -1,7 +1,8 @@
 [[redirects]]
-  from = "/api/*"
+  from = "/*"
   to = "https://lakku-lakku.com/:splat"
   status = 200
+  headers = {Access-Control-Allow-Origin = "*"}
   
 [[headers]]
   for = "/*"
