@@ -1,2 +1,2 @@
-/api/* https://lakku-lakku.com/api/:splat 200
+/api/* https://lakku-lakku.com/:splat 200
 /* /index.html 200
