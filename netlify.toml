@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/*"
+  to = "https://lakku-lakku.com/api/:splat"
+  status = 200
+  force = true
