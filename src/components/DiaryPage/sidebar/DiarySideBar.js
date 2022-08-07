@@ -92,7 +92,6 @@ const PaperImgBox = styled.img.attrs(({ src, onClick, width, height }) => ({
   border-radius: 6rem;
 `;
 
-
 const ImgWrapper = styled.div`
   width: 50%;
   height: 100%;
@@ -297,36 +296,10 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
   const [allPaperImgs, setAllPaperImgs] = useState([]);
 
   const getPapers = async () => {
-      await API.get(`/api/v1/diaries/edit/templates`)
-      .then(res => setPaperImgs(res.data))
-      .catch(err=> console.log(err))
-
-      //console.log(paperImgs);
-      //console.log(paperImgs[0].templateList[0].url);  //paperImgs[0].templateList[0] 활용하기~
-
-
-      const basicPapers = paperImgs[0].templateList.map(paper => paper);
-      //console.log(basicPapers);
-      const botanicalPapers = paperImgs[1].templateList.map(paper => paper);
-      const cutePapers = paperImgs[2].templateList.map(paper => paper);
-      const kitschPapers = paperImgs[3].templateList.map(paper => paper);
-
-
-      const allPapers = basicPapers.concat(botanicalPapers,cutePapers,kitschPapers);
-      //console.log(allPapers);
-
-      /*
-      function shuffle(array) {
-        array.sort(() => Math.random() - 0.5);
-      }
-      shuffle(allPapers);
-      */
-
-      setAllPaperImgs(allPapers); 
-
-    } //api 연결
-
-
+    await API.get(`/api/v1/diaries/edit/templates`)
+      .then((res) => setPaperImgs(res.data))
+      .catch((err) => console.log(err));
+  }; //api 연결
 
   return (
     <Container sideBarType={sideBarType}>
@@ -398,9 +371,7 @@ function PaperSideBar({ sideBarType, paper, setPaper }) {
                     return new_state;
                   });
                 }}
-                selectedPaperImgs={paperImgs[idx].templateList.map(
-                  (paper) => paper
-                )}
+                selectedPaperImgs={paperImgs[idx].templateList}
               >
                 {category}
               </PaperDropdownMenu>

@@ -98,9 +98,12 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
 
             if (status === 409) {
               //다이어리 조회
-              API.get(`/api/v1/diaries/${date}`, {
-                params: { nickname: localStorage.getItem("nickname") },
-              })
+              axios
+                .get(`/api/v1/diaries/${date}?nickname=${nickname}`, {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                })
                 .then((res) => {
                   console.log(res.data);
                   window.location.href = `/main/${nickname}/diary/${formattedYear}-${formattedMonth}-${cloneFormattedDate}`;
