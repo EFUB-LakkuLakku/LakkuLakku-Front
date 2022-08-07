@@ -70,12 +70,10 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
       const cloneDay = day;
 
       function createDiary() {
-        const token =
-          "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoZWVqaW5AZ21haWwuY29tIiwicm9sZXMiOiJVU0VSIiwiaWF0IjoxNjU5Nzc5MjAzLCJleHAiOjE2NTk3ODY0MDN9.4eL8rMLBY8f9n0b52eQoiIm6ZgoqkmzQwrBxppvqIUQ";
+        const token = localStorage.getItem("accessToken");
 
         const date = `2022-${formattedMonth}-${cloneFormattedDate}`;
         const nickname = localStorage.getItem("nickname");
-
         //다이어리 생성
         axios
           .post(

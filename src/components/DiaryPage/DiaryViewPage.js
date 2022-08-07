@@ -71,13 +71,15 @@ function DiaryViewPage({ setIsEditing, diaryInfo }) {
 
   // 현재 사용자(nickname)가 다이어리 주인(owner)의 다이어리에 좋아요를 눌렀는지 여부
   const checkLike = (nickname, owner) => {
-    const { likeList } = diaryInfo.diary;
+    const { likeList } = diaryInfo;
 
     var check = false;
     for (var i = 0; i < likeList.length; i++) {
-      if (likeList[i].isLike) check = true;
+      if (likeList[i].isLike) {
+        setLike(true);
+        return;
+      }
     }
-    setLike(true);
   };
   return (
     <View>
@@ -96,7 +98,12 @@ function DiaryViewPage({ setIsEditing, diaryInfo }) {
           height={"679rem"}
         />
         <InfoBox>
-          <Like like={false} like_cnt={diaryInfo?.likeList.length} />
+          <Like
+            like={like}
+            setLike={setLike}
+            like_cnt={diaryInfo?.diary.cntLike}
+            diary={diaryInfo?.diary}
+          />
 
           <Chat chat_cnt={chatCnt} />
         </InfoBox>
