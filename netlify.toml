@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/api/**"
+  from = "/api/*"
   to = "https://lakku-lakku.com/api/v1/:splat"
   status = 200
   
