@@ -66,9 +66,9 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsO
         formData.append("url", "");
 
         console.log(nicknameInfo);
-        console.log(image); //더 알아보기
+        console.log(image); 
         console.log(bio);
-        console.log(formData); //더 알아보기
+        console.log(formData); 
 
         await API.put(`/api/v1/profile`, formData )
         .then(res => console.log((res.data)))
@@ -118,12 +118,12 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsO
                         style={{display: "none"}}
                     />
                     <UploadedImgBox>
-                        <UploadedImg src={image} ref={uploadedImage} />
+                        <UploadedImg src={image===null ? DefaultImg : image} ref={uploadedImage} />
                     </UploadedImgBox>
                     
                     <BtnBox>
                         <ChangeBtn onClick={() => imageUploader.current.click()}>이미지 변경</ChangeBtn> {/*누르면 이미지 업로드하는 버튼*/}
-                        <ChangeBtn onClick={() => setImage(DefaultImg)}>기본 이미지로 변경</ChangeBtn>
+                        <ChangeBtn onClick={() => setImage(null)}>기본 이미지로 변경</ChangeBtn>
                     </BtnBox>
                 </ImgBox>
 
