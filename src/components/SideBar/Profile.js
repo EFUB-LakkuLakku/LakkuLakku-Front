@@ -7,7 +7,7 @@ import theme from "../../styles/theme";
 import API from '../../utils/api';
 
 const Profile = () => {
-  const [info, setInfo] = useState( { user: { profileImageUrl: DefaultImg, bio: "" } } ); //초기값!!
+  const [info, setInfo] = useState( { user: { profileImageUrl: null, bio: "" } } ); //초기값!!
   const [showModal, setShowModal] = useState(false);
 
   const nickname = localStorage.getItem("nickname");
@@ -50,7 +50,7 @@ const Profile = () => {
   return (
     <ProfileBox>
       
-        <ProfileImg src={info.user.profileImageUrl==null || "/static/media/DefaultImg.1f5cb49d7f0d48ad6a14.png" ? DefaultImg : info.user.profileImageUrl} />
+        <ProfileImg src={info.user.profileImageUrl===null  ? DefaultImg : info.user.profileImageUrl} />
         
         <Nickname> <span style={{color: '#8b681a'}}>{nickname}</span>의 먼슬리 다이어리</Nickname>
 
@@ -64,7 +64,7 @@ const Profile = () => {
             프로필 수정
             </ProfileEditBtn>
         </BtnBox>
-        {showModal && <ProfileEditModal imageInfo={info.user.profileImageUrl== null || "/static/media/DefaultImg.1f5cb49d7f0d48ad6a14.png" ? DefaultImg : info.user.profileImageUrl} bioInfo={info.user.bio} nicknameInfo={info.user.nickname} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} 
+        {showModal && <ProfileEditModal imageInfo={info.user.profileImageUrl} bioInfo={info.user.bio} nicknameInfo={info.user.nickname} isOpenModal={showModal} setIsOpenModal={setShowModal}/>} 
 
     </ProfileBox>
   );
