@@ -5,6 +5,7 @@ import TypeIcon from "../../assets/type.svg";
 import ImageIcon from "../../assets/image.svg";
 import PaperClipIcon from "../../assets/paperclip.svg";
 import { addImageToPanel } from "../../modules/image";
+import { addNoteToPanel } from "../../modules/note";
 import { useDispatch } from "react-redux";
 
 const Wrapper = styled.div`
@@ -61,6 +62,7 @@ export default function DiaryTabbar({ setsideBarType, setShowTextMenu }) {
     ImgInput.current.click();
   };
 
+
   return (
     <Wrapper>
       <BtnWrapper
@@ -73,6 +75,7 @@ export default function DiaryTabbar({ setsideBarType, setShowTextMenu }) {
       <BtnWrapper
         onClick={() => {
         setShowTextMenu(true);
+        dispatch(addNoteToPanel());
       }}
      >     
         <ImgBox src={TypeIcon} />

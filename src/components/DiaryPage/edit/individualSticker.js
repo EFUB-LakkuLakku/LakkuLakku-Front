@@ -29,6 +29,7 @@ export const IndividualSticker = ({
   const stickerHeight = stickerImage
     ? (image.width * stickerImage.height) / stickerImage.width
     : 0;
+  
   /*
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
@@ -38,7 +39,8 @@ export const IndividualSticker = ({
       }
     });
   });
-*/
+  */
+
   return (
     <>
       <KonvaImage

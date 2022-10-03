@@ -1,12 +1,12 @@
+import { Transform } from "konva/lib/Util";
 import React from "react";
 import { Html } from "react-konva-utils";
 
-function getStyle(width, height) {
+function getStyle(x, y, width, height, rotation) {
   const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
   const baseStyle = {
-    //더블클릭했을 때  style
-    width: `${width}px`,
-    height: `${height}px`,
+    width: `${width + 6}px`,
+    height: `${height + 10}px`,
     border: "none",
     padding: "0px",
     margin: "0px",
@@ -14,8 +14,12 @@ function getStyle(width, height) {
     outline: "none",
     resize: "none",
     colour: "black",
-    fontSize: "24px", //더블클릭하면 바뀌는 폰트사이즈
-    fontFamily: "sans-serif"
+    fontSize: "24px",
+    fontFamily: "sans-serif",
+    top: `${x}px`,
+    left: `${y}px`,
+    transform: `rotateZ(${rotation}deg)`, //아래 꺼랑 같이 적용!!
+    transformOrigin: "left top"
   };
   if (isFirefox) {
     return baseStyle;
@@ -31,16 +35,17 @@ export function EditableTextInput({
   y,
   width,
   height,
+  rotation,
   value,
-  onChange,
+  onTextChange,
   onKeyDown
 }) {
-  const style = getStyle(width, height);
+  const style = getStyle(x, y, width, height, rotation);
   return (
     <Html groupProps={{ x, y }} divProps={{ style: { opacity: 1 } }}>
       <textarea
         value={value}
-        onChange={onChange}
+        onChange={(e) => onTextChange(e)}
         onKeyDown={onKeyDown}
         style={style}
       />
