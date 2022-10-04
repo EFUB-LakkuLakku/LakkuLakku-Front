@@ -10,7 +10,7 @@ import rightArrow from "./right.png";
 import axios from "axios";
 import API from "../../utils/api";
 import { render } from "@testing-library/react";
-
+import HomeService from "../../api/HomeService";
 const Container = styled.div`
   width: 1050rem;
   height: 75rem;
@@ -20,7 +20,7 @@ const Container = styled.div`
   font-weight: 700;
   font-size: 20px;
 `;
-
+const nickname = localStorage.getItem("nickname");
 const RenderHeader = ({ currentMonth, prevMonth, nextMonth }) => {
   return (
     <div className="header row">
@@ -63,8 +63,6 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
   let days = [];
   let day = startDate;
 
-
-
   while (day <= endDate) {
     for (let i = 0; i < 7; i++) {
       const formattedDate = format(day, "d");
@@ -75,17 +73,11 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
 
       function createDiary() {
         const date = `2022-${formattedMonth}-${cloneFormattedDate}`;
-        const nickname = localStorage.getItem("nickname");
-        
+
         //다이어리 생성
-        API
-          .post(
-            `/api/v1/diaries/${date}`,
-            {
-              message: "",
-            },
-           
-          )
+        API.post(`/api/v1/diaries/${date}`, {
+          message: "",
+        })
           .then((res) => {
             console.log(res.data);
             window.location.href = `/main/${nickname}/diary/${formattedYear}-${formattedMonth}-${cloneFormattedDate}`;
@@ -100,26 +92,27 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
               //다이어리 조회
               API.get(`/api/v1/diaries/${date}`, {
                 params: { nickname: localStorage.getItem("nickname") },
-              })
-                .then((res) => {
-                  console.log(res.data);
-                  window.location.href = `/main/${nickname}/diary/${formattedYear}-${formattedMonth}-${cloneFormattedDate}`;
-                });
+              }).then((res) => {
+                console.log(res.data);
+                window.location.href = `/main/${nickname}/diary/${formattedYear}-${formattedMonth}-${cloneFormattedDate}`;
+              });
             }
           });
       }
 
       //홈API 조회
-      API.get('/api/v1/home', {
-        params: { nickname: localStorage.getItem("nickname") },
-      })
-          .then((res) => {
-            const diaryDate = res.data.diary.date
-            const title = res.data.diary.title
+
+      HomeService.getMonthly(nickname)
+        .then((res) => {
+          if (res.status == 200) {
+            const diaryDate = res.data.diary.date;
+            const title = res.data.diary.title;
             console.log(res.data);
-            
-          });
-      
+          } else {
+            console.log("failed ");
+          }
+        })
+        .catch((err) => console.log(err));
       days.push(
         <div
           className={`col cell ${
@@ -151,8 +144,7 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
             className={isSameDay(day, selectedDate) ? "diaryEmoji" : null}
           ></div>
 
-          
-              {/* <div className= "diaryTitle">{title}</div>
+          {/* <div className= "diaryTitle">{title}</div>
               <div className="diaryEmoji"></div> */}
 
           <span
@@ -171,8 +163,6 @@ const RenderCells = ({ currentMonth, selectedDate, onDateClick }) => {
       day = addDays(day, 1);
     }
 
-    
-      
     rows.push(
       <div className="row" key={day}>
         {days}
@@ -196,6 +186,7 @@ function Calendar() {
   };
   const onDateClick = (day) => {
     setSelectedDate(day);
+    console.log("click");
   };
 
   return (

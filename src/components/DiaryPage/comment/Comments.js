@@ -61,10 +61,7 @@ const Comments = () => {
         isSecret: false,
         parentId: parentId,
       });
-      //console.log(response.data);
       dispatch(plusComment()); // 댓글 수 증가
-      //임시 프로필 설정 -> 유진님이 저장해주시면, getcomment 부분으로 옮겨서 조회할때 받아오기
-
       setBackendComments([response.data, ...backendComments]);
       setActiveComment(null);
     } catch (err) {
