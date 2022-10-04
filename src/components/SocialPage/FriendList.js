@@ -39,7 +39,6 @@ const MenuText = styled.span`
 `;
 
 const UserBox = styled.div`
-
   margin-top: 22rem;
   margin-left: 110rem;
 `;
@@ -77,9 +76,11 @@ const Unfollow = styled.button`
 `;
 
 const ModalBackground = styled.div`
-  
   position: fixed;
-  top:0; left: 0; bottom: 0; right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   background: rgba(0, 0, 0, 0.6);
 
   z-index: 100; //수정
@@ -87,9 +88,9 @@ const ModalBackground = styled.div`
 
 const UnfollowBox = styled.div`
   position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: var(--white);
   width: 400rem;
   height: 292rem;
@@ -109,7 +110,7 @@ const ModalBtn = styled.button`
   border: none;
   background-color: white;
   cursor: pointer;
-  color: #FF0000;
+  color: #ff0000;
 `;
 
 const CancelBtn = styled.button`
@@ -126,7 +127,6 @@ const CancelBtn = styled.button`
   background-color: white;
   cursor: pointer;
 `;
-
 
 const ModalLine = styled.div`
 
@@ -148,8 +148,6 @@ const ModalText = styled.div`
 }
 `;
 
-
-
 const ModalUserImage = styled.div`
   margin-left: 160rem;
   margin-top: 30rem;
@@ -161,17 +159,14 @@ const ModalUserImage = styled.div`
 `;
 
 function FriendList() {
-
   const [isModal, setIsModal] = useState(false);
   const ModalHandler = () => {
     setIsModal((prev) => !prev);
   };
 
-  API
-    .get(`/api/v1/friends`)
-    .then((res) => {
-      console.log(res.data)
-    });
+  API.get(`/api/v1/friends`).then((res) => {
+    console.log(res.data);
+  });
 
   return (
     <View>
@@ -188,30 +183,34 @@ function FriendList() {
         </HomeImage>
         {isModal ? (
           <>
-          <Unfollow ><img src={unfollow} /></Unfollow>
-          <ModalBackground>
-            
-            <UnfollowBox>
-              <ModalUserImage><img src={userImage} /></ModalUserImage>
-              <ModalText>왈왈이왈왈이왈왈님과 연결을 끊겠습니까?</ModalText>
-              <ModalLine><ModalBtn onClick={ModalHandler}>친구 끊기</ModalBtn></ModalLine>
-              
-              <CancelBtn onClick={ModalHandler}>취소</CancelBtn>
-            </UnfollowBox>
-          </ModalBackground>
+            <Unfollow>
+              <img src={unfollow} />
+            </Unfollow>
+            <ModalBackground>
+              <UnfollowBox>
+                <ModalUserImage>
+                  <img src={userImage} />
+                </ModalUserImage>
+                <ModalText>왈왈이왈왈이왈왈님과 연결을 끊겠습니까?</ModalText>
+                <ModalLine>
+                  <ModalBtn onClick={ModalHandler}>친구 끊기</ModalBtn>
+                </ModalLine>
+
+                <CancelBtn onClick={ModalHandler}>취소</CancelBtn>
+              </UnfollowBox>
+            </ModalBackground>
           </>
-          
         ) : (
-          <Unfollow onClick={ModalHandler}><img src={unfollow} /></Unfollow>
+          <Unfollow onClick={ModalHandler}>
+            <img src={unfollow} />
+          </Unfollow>
         )}
-
-
       </UserBox>
       <UserBox>
         <UserImage>
           <img src={userImage2} />
         </UserImage>
-        <UserName>킁킁이      </UserName>
+        <UserName>킁킁이 </UserName>
         <HomeImage>
           <img src={homeImage} />
         </HomeImage>
