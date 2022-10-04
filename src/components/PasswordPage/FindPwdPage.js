@@ -77,9 +77,11 @@ export default function FindPwdPage() {
 
     AuthService.checkVerificationCode(body)
       .then((res) => {
-        if (res.status == 200) {
+        console.log(res);
+        if (res.status == 201) {
           alert("코드 인증이 완료되었습니다.");
           check = true;
+          localStorage.setItem("accessToken", res.data.accessToken);
         } else {
           alert("코드 인증에 실패하였습니다. 다시 시도해주세요.");
         }
@@ -116,9 +118,7 @@ export default function FindPwdPage() {
         </Input>
         <div>
           <Gap height={30} />
-          <YellowButton onClick={_handleSendEmail}>
-            임시 비밀번호 받기
-          </YellowButton>
+          <YellowButton onClick={_handleSendEmail}>인증 코드 받기</YellowButton>
         </div>
       </Row>
       <Row>
@@ -133,9 +133,7 @@ export default function FindPwdPage() {
         </Input>
         <div>
           <Gap height={30} />
-          <YellowButton onClick={() => _checkVerificationCode()}>
-            확인
-          </YellowButton>
+          <YellowButton onClick={_checkVerificationCode}>확인</YellowButton>
         </div>
       </Row>
       <Gap height={120} />

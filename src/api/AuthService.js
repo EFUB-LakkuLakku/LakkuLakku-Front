@@ -7,6 +7,8 @@ const AuthService = {
     API.post(`/api/v1/users/certification/sends`, { email: email }),
   checkVerificationCode: (body) =>
     API.post("/api/v1/users/certification/comfirms", body),
+  changePassword: (body) =>
+    API.post("/api/v1/users/certification/new-password", body),
 };
 
 export default AuthService;
