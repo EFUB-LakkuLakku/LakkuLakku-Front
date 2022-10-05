@@ -11,10 +11,10 @@ localStorage.setItem(
 localStorage.setItem("nickname", "flowersayo");
 */
 
-const token = localStorage.getItem("accessToken");
+const token = sessionStorage.getItem("accessToken");
 console.log("현재토큰값", token);
 
-const nickname = localStorage.getItem("nickname");
+const nickname = sessionStorage.getItem("nickname");
 
 //token이 없을때에는 일반 axios 요청
 const API = token
