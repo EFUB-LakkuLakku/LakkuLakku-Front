@@ -6,6 +6,8 @@ import {
   MainPage,
   Tabbar,
   DiaryPage,
+  FindPwdPage,
+  ChangePwdPage,
 } from "./components/index";
 import React from "react";
 import { Route, Routes, Link } from "react-router-dom";
@@ -31,7 +33,8 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
-
+          <Route path="/password" element={<FindPwdPage />} />
+          <Route path="/changePassword" element={<ChangePwdPage />} />
           <Route path="/register" element={<SignupPage />} />
           <Route path="/main/:nickname/*" element={<MainPage />} />
           {/**MainPage는 사이드바 사용하는 페이지 */}
