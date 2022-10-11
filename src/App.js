@@ -6,6 +6,8 @@ import {
   MainPage,
   Tabbar,
   DiaryPage,
+  FindPwdPage,
+  ChangePwdPage,
 } from "./components/index";
 import React from "react";
 import { Route, Routes, Link } from "react-router-dom";
@@ -32,6 +34,7 @@ function App() {
 
       <Wrapper>
         <Routes>
+
           <Route
             path="/"
             element={
@@ -55,6 +58,7 @@ function App() {
             path="/main/:nickname/*"
             element={<PrivateRoute component={<MainPage />} />}
           />
+
           {/**MainPage는 사이드바 사용하는 페이지 */}
         </Routes>
       </Wrapper>

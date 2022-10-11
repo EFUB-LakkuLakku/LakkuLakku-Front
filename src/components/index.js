@@ -8,7 +8,8 @@ import SideBar from "./SideBar/SideBar";
 import Tabbar from "./common/Tabbar";
 import SocialPage from "./SocialPage/SocialPage";
 import MainPage from "./MainPage/MainPage";
-
+import FindPwdPage from "./PasswordPage/FindPwdPage";
+import ChangePwdPage from "./PasswordPage/ChangePwdPage";
 export {
   SideBar,
   MonthlyPage,
@@ -20,4 +21,6 @@ export {
   SocialPage,
   MainPage,
   Tabbar,
+  FindPwdPage,
+  ChangePwdPage,
 };
