@@ -17,6 +17,9 @@ import Logo from "./components/common/Logo";
 import "./App.css";
 import styled from "styled-components";
 
+import PrivateRoute from "./utils/privateRoute";
+import PublicRoute from "./utils/publicRoute";
+
 const LogoContainer = styled.div`
   width: 1380rem;
   margin-top: 30rem;
@@ -31,12 +34,31 @@ function App() {
 
       <Wrapper>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/password" element={<FindPwdPage />} />
-          <Route path="/changePassword" element={<ChangePwdPage />} />
-          <Route path="/register" element={<SignupPage />} />
-          <Route path="/main/:nickname/*" element={<MainPage />} />
+
+          <Route
+            path="/"
+            element={
+              <PublicRoute restricted={false} component={<LandingPage />} />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute restricted={true} component={<LoginPage />} />
+            }
+          />
+
+          <Route
+            path="/register"
+            element={
+              <PublicRoute restricted={true} component={<SignupPage />} />
+            }
+          />
+          <Route
+            path="/main/:nickname/*"
+            element={<PrivateRoute component={<MainPage />} />}
+          />
+
           {/**MainPage는 사이드바 사용하는 페이지 */}
         </Routes>
       </Wrapper>

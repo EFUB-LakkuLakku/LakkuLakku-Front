@@ -1,10 +1,22 @@
 import axios, { AxiosInstance } from "axios";
 import { BASE_URL } from "../constants/Config";
 
-const token = localStorage.getItem("accessToken");
+
+/*
+로컬 테스트용
+localStorage.setItem(
+  "accessToken",
+  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmbG93ZXJzYXlvQGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY1OTgwNTQ2OSwiZXhwIjoxNjU5ODEyNjY5fQ.g5B2oEj_dOvECKOV0D3QyMM2cxoCu7KE7BhaAyFOjU0"
+);
+
+localStorage.setItem("nickname", "flowersayo");
+*/
+
+const token = sessionStorage.getItem("accessToken");
+
 console.log("현재토큰값", token);
 
-const nickname = localStorage.getItem("nickname");
+const nickname = sessionStorage.getItem("nickname");
 
 //token이 없을때에는 일반 axios 요청
 const API = token
