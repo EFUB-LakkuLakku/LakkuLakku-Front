@@ -97,6 +97,10 @@ const _logoutHandler = () => {
     .then((res) => {
       if (res.status == 200) {
         console.log("로그아웃이 완료되었습니다.");
+        //세션 스토리지 싹 비워주기
+        sessionStorage.removeItem("accessToken");
+        sessionStorage.removeItem("email");
+        sessionStorage.removeItem("nickname");
         window.location.href = "/"; //루트로 이동
       }
     })

@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `;
 
 const Gap = styled.div`
-  height: 80rem;
+  height: ${({ height }) => (height ? height : "90rem")};
 `;
 
 const WarningTag = styled.p`
@@ -35,6 +35,18 @@ const actions = {
   EmailCheck: "EmailCheck",
   PasswordCheck: "PasswordCheck",
 };
+
+const TextButton = styled.span`
+  font-family: "NotoSansKR-Medium";
+  font-style: normal;
+  font-size: 14rem;
+  font-weight: 700;
+  line-height: 22rem;
+  letter-spacing: -0.02em;
+  font-feature-settings: "calt" off;
+  margin-left: 10rem;
+  cursor: pointer;
+`;
 
 const reducer = (warningAlert, action) => {
   const { EmailCheck, PasswordCheck } = actions;
@@ -57,10 +69,10 @@ const reducer = (warningAlert, action) => {
 };
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [warningAlert, dispatch] = useReducer(reducer, initialState);
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
-  const navigate = useNavigate();
 
   axios.interceptors.response.use(
     (response) => {
@@ -74,24 +86,16 @@ function LoginPage() {
       if (status === 401) {
         if (error.response.data.code === "TOKEN_VALIDATE_FAILURE") {
           const originalRequest = config;
-          const refreshToken = localStorage.getItem("refreshToken");
-          const email = localStorage.getItem("email");
+          const email = sessionStorage.getItem("email");
 
-          const res = await axios.get("/api/v1/users/re-issue", {
-            params: {
-              email: email,
-              refreshToken: refreshToken,
-            },
+          const res = await axios.post("/api/v1/users/re-issue", {
+            email: email,
           });
 
           const newAccessToken = res.data.accessToken;
-          const newRefreshtoekn = res.data.refreshToken;
 
-          localStorage.setItem("accessToken", newAccessToken);
-          localStorage.setItem("refreshToken", newRefreshtoekn);
+          sessionStorage.setItem("accessToken", newAccessToken);
 
-          axios.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return axios(originalRequest);
         } else if (error.response.data.code === "REFRESHTOKEN_EXPIRED") {
           navigate("/login");
@@ -103,22 +107,26 @@ function LoginPage() {
 
   async function getLoginUser() {
     try {
-      const response = await axios.post("/api/v1/users/login", {
-        email: email,
-        password: password,
-      });
+      const response = await axios.post(
+        "/api/v1/users/login",
+        {
+          email: email,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(response.data);
-
+      console.log(response.headers);
       const token = response.data.accessToken;
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      localStorage.setItem("refreshToken", response.data.refreshToken);
-      localStorage.setItem("accessToken", token);
+      sessionStorage.setItem("accessToken", token);
 
-      localStorage.setItem("email", email);
-      localStorage.setItem("nickname", response.data.nickname);
+      sessionStorage.setItem("email", email);
+      sessionStorage.setItem("nickname", response.data.nickname);
 
-      const nickname = localStorage.getItem("nickname");
+      const nickname = sessionStorage.getItem("nickname");
       await navigate(`/main/${nickname}`);
     } catch (err) {
       console.error(err.response);
@@ -188,7 +196,10 @@ function LoginPage() {
       <WarningTag>{warningAlert.passwordAlert.msg}</WarningTag>
       <Gap />
       <YellowButton onClick={CheckId}>로그인</YellowButton>
-      <SmallText weight="bold">비밀번호 찾기</SmallText>
+      <Gap height={"30rem"} />
+      <TextButton weight="bold" onClick={() => navigate("/password")}>
+        비밀번호 찾기
+      </TextButton>
       <Gap />
     </Wrapper>
   );
