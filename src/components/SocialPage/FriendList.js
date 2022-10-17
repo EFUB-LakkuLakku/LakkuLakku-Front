@@ -10,6 +10,9 @@ import unfollow from "./unfollow.png";
 import axios from "axios";
 import API from "../../utils/api";
 import FriendService from "../../api/FriendService";
+import DefaultImg from "../../assets/DefaultImg.png";
+import { height } from "@mui/system";
+
 const View = styled.div`
   display: flex;
   flex-direction: column;
@@ -65,6 +68,7 @@ const HomeImage = styled.span`
   vertical-align: middle;
   padding-left: 350rem;
   padding-top: 1rem;
+  cursor: pointer;
 `;
 
 const Unfollow = styled.button`
@@ -154,13 +158,13 @@ const ModalUserImage = styled.div`
 `;
 
 function FriendList() {
-  const [isModal, setIsModal] = useState(false);
+  const [modalvisible, setModalvisible] = useState(false);
   const [Friends, setFriends] = useState([]);
   const ModalHandler = () => {
-    setIsModal((prev) => !prev);
+    setModalvisible((prev) => !prev);
   };
 
-  useEffect(() => {
+  const fetchFriend = () => {
     FriendService.getFriends()
       .then((res) => {
         if (res.status == 200) {
@@ -171,7 +175,30 @@ function FriendList() {
         }
       })
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchFriend();
   }, []);
+
+  const _deleteFriend = (friend) => {
+    FriendService.deleteFriend(friend.uid)
+      .then((res) => {
+        if (res.status == 200) {
+          alert(`${friend.nickname}님과의 친구 연결이 끊겼습니다.`);
+          fetchFriend();
+        } else {
+          alert("친구 끊기에 실패했습니다.");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const _moveToFriendHome = (nickname) => {
+    //nickname을 지닌 유저의 홈화면으로 이동
+
+    window.location.href = `http://localhost:3000/main/${nickname}`;
+  };
 
   return (
     <View>
@@ -182,37 +209,60 @@ function FriendList() {
       {Friends.map((friend) => (
         <UserBox>
           <UserImage>
-            <img src={friend.profileImageUrl} />
+            <img
+              src={
+                friend.profileImageUrl == null
+                  ? DefaultImg
+                  : friend.profileImageUrl
+              }
+              height={66}
+              width={66}
+              style={{ borderRadius: "50px" }}
+            />
           </UserImage>
           <UserName> {friend.nickname}</UserName>
-          <HomeImage>
+          <HomeImage onClick={() => _moveToFriendHome(friend.nickname)}>
             <img src={homeImage} />
           </HomeImage>
+          <Unfollow onClick={() => setModalvisible(true)}>
+            <img src={unfollow} />
+          </Unfollow>
 
-          {isModal ? (
-            <>
-              <Unfollow>
-                <img src={unfollow} />
-              </Unfollow>
-              <ModalBackground>
-                <UnfollowBox>
-                  <ModalUserImage>
-                    <img src={userImage} />
-                  </ModalUserImage>
-                  <ModalText>왈왈이왈왈이왈왈님과 연결을 끊겠습니까?</ModalText>
-                  <ModalLine>
-                    <ModalBtn onClick={ModalHandler}>친구 끊기</ModalBtn>
-                  </ModalLine>
+          {
+            /*친구 끊기 모달*/
+            modalvisible && (
+              <>
+                <ModalBackground>
+                  <UnfollowBox>
+                    <ModalUserImage>
+                      <img
+                        src={
+                          friend.profileImageUrl == null
+                            ? DefaultImg
+                            : friend.profileImageUrl
+                        }
+                        height={90}
+                        width={90}
+                        style={{ borderRadius: "50px" }}
+                      />
+                    </ModalUserImage>
+                    <ModalText>
+                      {friend.nickname}님과 연결을 끊겠습니까?
+                    </ModalText>
+                    <ModalLine>
+                      <ModalBtn onClick={() => _deleteFriend(friend)}>
+                        친구 끊기
+                      </ModalBtn>
+                    </ModalLine>
 
-                  <CancelBtn onClick={ModalHandler}>취소</CancelBtn>
-                </UnfollowBox>
-              </ModalBackground>
-            </>
-          ) : (
-            <Unfollow onClick={ModalHandler}>
-              <img src={unfollow} />
-            </Unfollow>
-          )}
+                    <CancelBtn onClick={() => setModalvisible(false)}>
+                      취소
+                    </CancelBtn>
+                  </UnfollowBox>
+                </ModalBackground>
+              </>
+            )
+          }
         </UserBox>
       ))}
     </View>

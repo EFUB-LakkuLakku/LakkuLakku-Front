@@ -1,16 +1,16 @@
-import React,{useState,useEffect,useCallback,useMemo} from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import styled from "styled-components";
 import searchIcon from "./search.png";
 import userImage from "./UserImage.png";
 import follow from "./follow.png";
 import axios from "axios";
 import API from "../../utils/api";
-
+import FriendService from "../../api/FriendService";
+import { createFilterOptions } from "@mui/material";
 const View = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0.365;
-
 `;
 
 const Container = styled.div`
@@ -69,20 +69,17 @@ const SearchText = styled.input`
   margin-left: 40rem;
 
   color: var(--black);
-  border:none;
+  border: none;
 
-  :focus
-  {
+  :focus {
     outline: none;
   }
 
-  ::placeholder
-  {
+  ::placeholder {
     color: var(--w400);
     font-family: "NotoSansKR-Light";
     font-weight: 700;
   }
-
 `;
 
 const ResultBox = styled.div`
@@ -90,7 +87,6 @@ const ResultBox = styled.div`
   height: 106rem;
   background: var(--w200);
   margin-left: 115rem;
-
 `;
 
 const UserImage = styled.span`
@@ -116,11 +112,12 @@ const UserName = styled.span`
 `;
 
 const Follow = styled.span`
-  position: absolute;  
+  position: absolute;
   vertical-align: middle;
   padding-left: 40rem;
   margin-left: 650rem;
   margin-top: 25rem;
+  cursor: pointer;
 `;
 
 const NoneResult = styled.div`
@@ -132,90 +129,94 @@ const NoneResult = styled.div`
 
   margin-left: 120rem;
   margin-top: 40rem;
-
 `;
-
-
 
 function NoResult(props) {
   return (
     <ResultBox>
       <NoneResult>해당하는 사용자를 찾을 수 없습니다.</NoneResult>
     </ResultBox>
-  )
+  );
 }
 
-function YesResult(props) {
+function YesResult(friend) {
+  const addFriend = (e) => {
+    var uid = friend.uid;
+    FriendService.addFriend(uid)
+      .then((res) => {
+        if (res.status == 200) {
+          alert("친구가 추가되었습니다.");
+        } else {
+          alert("친구 추가에 실패했습니다.");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <ResultBox>
-       <UserImage>
-          <img src={userImage} />
-        </UserImage>
-        <UserName>왈왈이왈왈이왈왈</UserName>
-        <Follow>
-          <img src={follow} />
-        </Follow>
+      <UserImage>
+        <img src={friend.profileImageUrl} />
+      </UserImage>
+      <UserName>{friend.nickname}</UserName>
+      <Follow>
+        <img src={follow} onClick={addFriend} />
+      </Follow>
     </ResultBox>
-  )
+  );
 }
 
-
 function Search() {
-
   const [isModal, setIsModal] = useState(false);
+  const [friendInfo, setFriendInfo] = useState(null);
+  const [findSuccess, setFindSuccess] = useState(undefined);
   const ModalHandler = () => {
     setIsModal((prev) => !prev);
   };
 
-  return(
+  const [uid, setUid] = useState("");
+
+  const searchFriendByUid = (uid) => {
+    setUid(uid);
+    FriendService.searchFriend(uid)
+      .then((res) => {
+        if (res.status == 200) {
+          console.log(res.data);
+          setFindSuccess(true);
+          setFriendInfo(res.data);
+        } else {
+          console.log("search fail");
+          setFindSuccess(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  return (
     <View>
-    <Container>
-      <MenuText>친구 추가</MenuText>
-    </Container>
-      {isModal ? (
-        <>
-        <SearchBar>
-        <SearchIcon id='uid' type="submit" >
+      <Container>
+        <MenuText>친구 추가</MenuText>
+      </Container>
+
+      <SearchBar>
+        <SearchIcon id="uid" type="submit">
           <img src={searchIcon} />
         </SearchIcon>
-        <SearchText type="text" placeholder="UID 번호 검색하기" onChange={handleChange}/>
+        <SearchText
+          type="text"
+          placeholder="UID 번호 검색하기"
+          onChange={(e) => searchFriendByUid(e.target.value)}
+          value={uid}
+        />
       </SearchBar>
+
+      {findSuccess == true ? (
+        YesResult(friendInfo)
+      ) : (
         <ResultBox>
-        <NoneResult>해당하는 사용자를 찾을 수 없습니다.</NoneResult>
-      </ResultBox>
-        </>
-        
-      ):(
-        <SearchBar>
-        <SearchIcon id='uid' type="submit" onClick={ModalHandler}>
-          <img src={searchIcon} />
-        </SearchIcon>
-        <SearchText type="text" placeholder="UID 번호 검색하기" onChange={handleChange}/>
-      </SearchBar>
+          <NoneResult>해당하는 사용자를 찾을 수 없습니다.</NoneResult>
+        </ResultBox>
       )}
-      
-  </View>
-  )
-
-  function handleChange() 
-  {
-    const uid = document.getElementById('uid').value;  
-    localStorage.setItem("uid", uid);}
-
-  function handleSearch()
-  {
-    API.post('/api/v1/friends/search',
-    {
-      uid: localStorage.getItem("uid")
-    },
-    
-  )
-    .then((res)=>{
-        console.log(res.data)
-  })
-
-}
-
+    </View>
+  );
 }
 
 export default Search;
