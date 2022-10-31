@@ -20,7 +20,7 @@ const initialState = {
 
 //3.리듀서 함수
 function diary(state = initialState, action) {
-  console.log("리두서");
+  console.log("리듀서");
   switch (action.type) {
     case PLUSCOMMENT:
       var copy = { ...state };

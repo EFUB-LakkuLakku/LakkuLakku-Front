@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ResizableText } from "./ResizableText";
 import { EditableTextInput } from "./EditableTextInput";
 
-const RETURN_KEY = 13;
-const ESCAPE_KEY = 27;
+//const RETURN_KEY = 13;  //엔터시 줄바꿈되도록, 없애기
+//const ESCAPE_KEY = 27;
 
 export function EditableText({
   note,
@@ -17,11 +17,13 @@ export function EditableText({
   setIsTransforming,
   onToggleTransform
 }) {
+  /*
   function handleEscapeKeys(e) {
     if ((e.keyCode === RETURN_KEY && !e.shiftKey) || e.keyCode === ESCAPE_KEY) {
       setIsEditing(!isEditing);
     }
   }
+  */
 
   if (isEditing) {
     return (
@@ -35,7 +37,7 @@ export function EditableText({
         onTextChange={(e) =>
           onChange({ ...note, content: e.currentTarget.value })
         }
-        onKeyDown={handleEscapeKeys}
+        //onKeyDown={handleEscapeKeys}
       />
     );
   }
