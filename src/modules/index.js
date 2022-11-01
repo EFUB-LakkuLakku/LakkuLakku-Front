@@ -4,6 +4,8 @@ import image from "./image";
 import paper from "./paper";
 import diary from "./diary";
 import note from "./note";
+import selectedId from "./selectedId";
+
 
 // 하나의 리듀서로 만듬
 const rootReducer = combineReducers({
@@ -11,7 +13,8 @@ const rootReducer = combineReducers({
   image,
   paper,
   diary,
-  note
+  note,
+  selectedId
 });
 
 export default rootReducer;

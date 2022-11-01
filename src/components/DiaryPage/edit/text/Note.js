@@ -5,7 +5,6 @@ export function Note({
   note,
   onDelete,
   isSelected,
-  selectShape,
   onChange
 }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -24,7 +23,6 @@ export function Note({
       note={note}
       onDelete={onDelete}
       isSelected={isSelected}
-      selectShape={selectShape}
       onChange={onChange}
       isEditing={isEditing}
       isTransforming={isTransforming}

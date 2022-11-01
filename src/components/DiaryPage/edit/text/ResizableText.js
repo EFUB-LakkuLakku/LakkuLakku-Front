@@ -1,5 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Text, Transformer } from "react-konva";
+import { changeSelectedId } from "../../../../modules/selectedId"
+import { useDispatch, useSelector } from "react-redux";
 
 export function ResizableText({
   note,
@@ -8,14 +10,22 @@ export function ResizableText({
   width,
   text,
   rotation,
+  style,
+  weight,
+  size,
+  align,
+  color,
   onDelete,
   isSelected, 
-  selectShape,
   isTransforming,
   onChange,
   setIsEditing,
   setIsTransforming
 }) {
+
+  const selectedId = useSelector((state) => state.selectedId.selectedId); //*
+  const dispatch = useDispatch();
+
   const textRef = useRef(null);
   const transformerRef = useRef(null);
 
@@ -55,22 +65,22 @@ export function ResizableText({
         perfectDrawEnabled={false}
         onWheel={onDelete}
         onClick={() => {
-          selectShape(note.id);
+          dispatch(changeSelectedId(note.id)); //*
           setIsTransforming(true);
           setIsEditing(false);
         }} 
         onTap={() => {
-          selectShape(note.id);
+          dispatch(changeSelectedId(note.id)); //*
           setIsTransforming(true);
           setIsEditing(false);
         }}
         onDblClick={() => {
-          selectShape(note.id);
+          dispatch(changeSelectedId(note.id)); //*
           setIsEditing(true);
           setIsTransforming(false);
         }} 
         onDblTap={() => {
-          selectShape(note.id);
+          dispatch(changeSelectedId(note.id)); //*
           setIsEditing(true);
           setIsTransforming(false);
         }}

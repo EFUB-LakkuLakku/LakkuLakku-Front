@@ -9,7 +9,6 @@ export function EditableText({
   note,
   onDelete,
   isSelected,
-  selectShape,
   onChange,
   isEditing,
   isTransforming,
@@ -34,6 +33,13 @@ export function EditableText({
         height={note.height}
         value={note.content}
         rotation={note.rotation}
+        //
+        textstyle={note.style}
+        weight={note.weight}
+        size={note.size}
+        align={note.align}
+        color={note.color}
+        //
         onTextChange={(e) =>
           onChange({ ...note, content: e.currentTarget.value })
         }
@@ -49,9 +55,15 @@ export function EditableText({
       width={note.width}
       text={note.content}
       rotation={note.rotation}
+      //
+      style={note.style}
+      weight={note.weight}
+      size={note.size}
+      align={note.align}
+      color={note.color}
+      //      
       onDelete={onDelete}
       isSelected={isSelected}
-      selectShape={selectShape}
       isTransforming={isTransforming} 
       setIsEditing={setIsEditing}
       setIsTransforming={setIsTransforming}

@@ -15,6 +15,7 @@ import { deleteImageOnPanel, changeImage } from "../../../modules/image";
 
 import { Note } from "./text/Note";
 import { changeNote, deleteNoteOnPanel } from "../../../modules/note";
+import { changeSelectedId } from "../../../modules/selectedId"; //*
 
 
 export default function Canvas({ type, paper, setPaper }) {
@@ -25,8 +26,8 @@ export default function Canvas({ type, paper, setPaper }) {
   const stickers = useSelector((state) => state.sticker);
   const images = useSelector((state) => state.image);
   const notes = useSelector((state) => state.note); //캔버스에 존재하는 노트들
+  const selectedId = useSelector((state) => state.selectedId.selectedId); //*
 
-  const [selectedId, selectShape] = React.useState(null);
   const [background] = useImage(paper.src); // 속지
 
 
@@ -36,7 +37,7 @@ export default function Canvas({ type, paper, setPaper }) {
 
     const clickedOnEmpty = e.target.attrs.id == "backgroundImage"; // 배경을 클릭했다면
 
-    if (clickedOnEmpty) selectShape(null);
+    if (clickedOnEmpty) dispatch(changeSelectedId(null)); //*;
   };
 
   return (
@@ -74,7 +75,7 @@ export default function Canvas({ type, paper, setPaper }) {
                   isSelected={sticker.id === selectedId}
                   image={sticker}
                   onSelect={() => {
-                    selectShape(sticker.id);
+                    dispatch(changeSelectedId(sticker.id)); //*
                   }}
                   onChange={(newAttrs) => {
                     // 변경된 크기값으로 적용
@@ -97,7 +98,7 @@ export default function Canvas({ type, paper, setPaper }) {
                   image={image}
                   isSelected={image.id === selectedId}
                   onSelect={() => {
-                    selectShape(image.id);
+                    dispatch(changeSelectedId(image.id)); //*
                   }}
                   onChange={(newAttrs) => {
                     // 변경된 크기값으로 적용
@@ -116,7 +117,6 @@ export default function Canvas({ type, paper, setPaper }) {
                   note={note}
                   onDelete={() => dispatch(deleteNoteOnPanel(i))}
                   isSelected={note.id === selectedId}
-                  selectShape={selectShape}
                   onChange={(newAttrs) => {
                     dispatch(changeNote(i, newAttrs));
                   }}
