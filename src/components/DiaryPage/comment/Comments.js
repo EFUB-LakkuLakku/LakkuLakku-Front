@@ -32,6 +32,7 @@ const Comments = () => {
         params: { nickname: localStorage.getItem("nickname") },
       });
 
+      console.log(response.data);
       setDiaryId(response.data.diary.id);
       setDiaryDate(response.data.diary.date);
       setBackendComments(response.data.commentList);

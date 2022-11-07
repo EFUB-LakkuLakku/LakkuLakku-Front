@@ -72,6 +72,7 @@ function LoginPage() {
         response: { status },
       } = error;
       if (status === 401) {
+        console.log("토큰 끝");
         if (error.response.data.code === "TOKEN_VALIDATE_FAILURE") {
           const originalRequest = config;
           const email = sessionStorage.getItem("email");
@@ -80,6 +81,7 @@ function LoginPage() {
             email: email,
           });
 
+          console.log("토큰 변경 완료");
           const newAccessToken = res.data.accessToken;
 
           sessionStorage.setItem("accessToken", newAccessToken);
