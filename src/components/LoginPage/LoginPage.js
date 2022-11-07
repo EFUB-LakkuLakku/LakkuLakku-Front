@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 `;
 
 const Gap = styled.div`
-  height: 80rem;
+  height: ${({ height }) => (height ? height : "90rem")};
 `;
 
 const WarningTag = styled.p`
@@ -35,6 +35,18 @@ const actions = {
   EmailCheck: "EmailCheck",
   PasswordCheck: "PasswordCheck",
 };
+
+const TextButton = styled.span`
+  font-family: "NotoSansKR-Medium";
+  font-style: normal;
+  font-size: 14rem;
+  font-weight: 700;
+  line-height: 22rem;
+  letter-spacing: -0.02em;
+  font-feature-settings: "calt" off;
+  margin-left: 10rem;
+  cursor: pointer;
+`;
 
 const reducer = (warningAlert, action) => {
   const { EmailCheck, PasswordCheck } = actions;
@@ -57,10 +69,10 @@ const reducer = (warningAlert, action) => {
 };
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [warningAlert, dispatch] = useReducer(reducer, initialState);
   const [email, SetEmail] = useState("");
   const [password, SetPassword] = useState("");
-  const navigate = useNavigate();
 
   axios.interceptors.response.use(
     (response) => {
@@ -186,7 +198,10 @@ function LoginPage() {
       <WarningTag>{warningAlert.passwordAlert.msg}</WarningTag>
       <Gap />
       <YellowButton onClick={CheckId}>로그인</YellowButton>
-      <SmallText weight="bold">비밀번호 찾기</SmallText>
+      <Gap height={"30rem"} />
+      <TextButton weight="bold" onClick={() => navigate("/password")}>
+        비밀번호 찾기
+      </TextButton>
       <Gap />
     </Wrapper>
   );

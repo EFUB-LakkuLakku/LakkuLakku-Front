@@ -1,6 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 import { BASE_URL } from "../constants/Config";
 
+
 /*
 로컬 테스트용
 localStorage.setItem(
@@ -12,6 +13,7 @@ localStorage.setItem("nickname", "flowersayo");
 */
 
 const token = sessionStorage.getItem("accessToken");
+
 console.log("현재토큰값", token);
 
 const nickname = sessionStorage.getItem("nickname");
