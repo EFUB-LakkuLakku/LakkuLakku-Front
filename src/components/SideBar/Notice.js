@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import theme from "../../styles/theme";
 import styled from "styled-components";
 import Bell from "../../assets/bell.svg";
 import { Link } from "react-router-dom";
 import AuthService from "../../api/AuthService";
-
+import HomeService from "../../api/HomeService";
+import getNickname from "../../utils/getNickname";
+import getToken from "../../utils/getToken";
 const Container = styled.div`
   flex: 0.365;
   display: flex;
@@ -108,9 +110,21 @@ const _logoutHandler = () => {
 };
 
 function Notice() {
-  const [notices, SetNotices] = useState([]);
-  const token = localStorage.getItem("accessToken");
-  const nickname = localStorage.getItem("nickname");
+  const [notices, setNotices] = useState([]);
+  const token = getToken();
+  const nickname = getNickname();
+
+  useEffect(() => {
+    HomeService.getAlarm(nickname).then((res) => {
+      console.log(res.status);
+      if (res.status == 200) {
+        console.log(res.data);
+        setNotices(res.data);
+      } else {
+        alert("알림 정보 가져오기에 실패하였습니다. 다시 시도해주세요.");
+      }
+    });
+  }, []);
   return (
     <Container>
       <TitleWrapper>
@@ -120,11 +134,7 @@ function Notice() {
       <TextWrapper>
         {notices &&
           notices.map((notice) => {
-            return (
-              <SmallText>
-                <b>라꾸</b>님이 새 친구가 되었습니다
-              </SmallText>
-            );
+            return <SmallText key={notice.id}>{notice.message}</SmallText>;
           })}
       </TextWrapper>
       <LinkWrapper>
