@@ -19,16 +19,15 @@ const refresh = async (config) => {
     console.log("토큰을 재발급합니다!");
 
     //재발급 요청
-    const res = await axios.post(
-      "https://lakku-lakku.com/api/v1/users/re-issue",
-      body
-    );
+    const res = await axios.post(`${BASE_URL}/api/v1/users/re-issue`, body);
     console.log("재발급 성공", res.data.accessToken);
     sessionStorage.setItem("accessToken", res.data.accessToken);
+
     sessionStorage.setItem(
       "expiresAt",
-      moment().add(3, "minute").format("yyyy-MM-DD HH:mm:ss")
+      moment().add(1, "hour").format("yyyy-MM-DD HH:mm:ss") //유효기간 : 1시간
     );
+
     config.headers["Authorization"] = `Bearer ${token}`; // 토큰 교체
   }
 
