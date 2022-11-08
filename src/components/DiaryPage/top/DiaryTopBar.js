@@ -156,7 +156,7 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
     const ans = window.confirm("정말로 삭제하시겠습니까?");
     console.log(ans);
     if (ans) {
-      const nickname = localStorage.getItem("nickname");
+      const nickname = sessionStorage.getItem("nickname");
 
       DiaryService.deleteDiary(date)
         .then((res) => {

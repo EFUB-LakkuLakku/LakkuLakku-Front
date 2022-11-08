@@ -6,31 +6,41 @@ import styled from "styled-components";
 import theme from "../../styles/theme";
 import API from "../../utils/api";
 
+
 const Profile = () => {
-  const [info, setInfo] = useState({
-    user: { profileImageUrl: null, bio: "" },
-  }); //초기값!!
+  const [info, setInfo] = useState({ profileImageUrl: null, bio: "" }); //초기값!!
   const [showModal, setShowModal] = useState(false);
 
-  const nickname = localStorage.getItem("nickname");
+  const nickname = sessionStorage.getItem("nickname"); //session strorage로 수정!!
 
   const editInfo = () => {
-    API.get(`/api/v1/home/`, { params: { nickname: nickname } })
+    API.get(`/api/v1/home/user?nickname=${nickname}`)
       .then((res) => {
+        console.log(res.data);
+        
+        /*
         if (res.status == 200) {
           if (res.data.user === info.user) return; //무한 실행문제 해결
+          
 
           setInfo(res.data);
-          localStorage.setItem("id", res.data.user.id);
-          localStorage.setItem("profileImage", res.data.user.profileImageUrl);
+          localStorage.setItem("id", res.data.id);
+          localStorage.setItem("profileImage", res.data.profileImageUrl);
         }
+        */
+        setInfo(res.data); //** 이거 고쳐보자~~~
+        sessionStorage.setItem("id", res.data.id); //session strorage로 수정!!
+        sessionStorage.setItem("profileImage", res.data.profileImageUrl); //session strorage로 수정!!
+
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
     editInfo();
-  }, [info]);
+    //console.log(info);
+  }, [info]); //, [info]
+
 
   /*
   const editedInfo = async () => {
@@ -49,32 +59,31 @@ const Profile = () => {
     <ProfileBox>
       <ProfileImg
         src={
-          info.user.profileImageUrl === null
+          info.profileImageUrl == null
             ? DefaultImg
-            : info.user.profileImageUrl
+            : info.profileImageUrl
         }
       />
 
       <Nickname>
-        {" "}
         <span style={{ color: "#8b681a" }}>{nickname}</span>의 먼슬리 다이어리
       </Nickname>
 
       <BioBox>
         <BioHeader>자기소개</BioHeader>
-        <Bio> {info.user.bio} </Bio>
+        <Bio> {info.bio} </Bio>
       </BioBox>
 
       <BtnBox onClick={(e) => e.stopPropagation()}>
-        <ProfileEditBtn onClick={() => setShowModal(true)}>
+        <ProfileEditBtn onClick={() => setShowModal(true)}> {/*() => setShowModal(true)*/}
           프로필 수정
         </ProfileEditBtn>
       </BtnBox>
       {showModal && (
         <ProfileEditModal
-          imageInfo={info.user.profileImageUrl}
-          bioInfo={info.user.bio}
-          nicknameInfo={info.user.nickname}
+          imageInfo={info.profileImageUrl}
+          bioInfo={info.bio}
+          nicknameInfo={info.nickname}
           isOpenModal={showModal}
           setIsOpenModal={setShowModal}
         />
