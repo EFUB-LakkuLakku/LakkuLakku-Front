@@ -79,8 +79,9 @@ const RenderCells = ({ diaries, currentMonth, selectedDate, onDateClick }) => {
           if (d.date == date) {
             console.log(date);
 
-            var defaultTitle = "미정";
-            var defaultEmoji = "❓";
+            var defaultTitle = "제목";
+
+            var defaultEmoji = "🌙";
             if (d.title == "") {
               d.title = defaultTitle;
             }
