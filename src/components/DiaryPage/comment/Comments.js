@@ -28,8 +28,8 @@ const Comments = () => {
 
   async function getComments() {
     try {
-      const response = await API.get(`/api/v1/diaries/${dates}`, {
-        params: { nickname: localStorage.getItem("nickname") },
+      const response = await API.get(`/api/v1/diaries/comments/${dates}`, {
+        params: { nickname: sessionStorage.getItem("nickname") },
       });
 
       setDiaryId(response.data.diary.id);
@@ -37,14 +37,14 @@ const Comments = () => {
       setBackendComments(response.data.commentList);
       //console.log(response.data.commentList);
 
-      const id = localStorage.getItem("id");
-      setCurrentUserId(id);
+      const id = sessionStorage.getItem("id");
+      //setCurrentUserId(id);
       //console.log(currentUserId);
 
       const user = {
         userId: id,
-        avatar: localStorage.getItem("profileImage"),
-        username: localStorage.getItem("nickname"),
+        avatar: sessionStorage.getItem("profileImage"),
+        username: sessionStorage.getItem("nickname"),
       };
       //console.log(user);
       setUserProfile(user);

@@ -143,9 +143,9 @@ function SignupPage() {
 
   async function getDuplicateEmail() {
     try {
-      const response = await axios.get(
-        `/api/v1/users/signup/email?email=${email}`
-      );
+      const response = await axios.post("/api/v1/users/signup/email", {
+        email: email,
+      });
       console.log(response);
       alert("사용 가능한 이메일입니다.");
     } catch (err) {
@@ -162,9 +162,9 @@ function SignupPage() {
 
   async function getDuplicateNickname() {
     try {
-      const response = await axios.get(
-        `/api/v1/users/signup/nickname?nickname=${nickname}`
-      );
+      const response = await axios.post("/api/v1/users/signup/nickname", {
+        nickname: nickname,
+      });
       console.log(response);
       alert("사용 가능한 닉네임입니다.");
     } catch (err) {
