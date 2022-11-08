@@ -11,7 +11,7 @@ const Profile = () => {
   const [info, setInfo] = useState({ profileImageUrl: null, bio: "" }); //초기값!!
   const [showModal, setShowModal] = useState(false);
 
-  const nickname = localStorage.getItem("nickname"); //session strorage로 수정!!
+  const nickname = sessionStorage.getItem("nickname"); //session strorage로 수정!!
 
   const editInfo = () => {
     API.get(`/api/v1/home/user?nickname=${nickname}`)
@@ -29,8 +29,8 @@ const Profile = () => {
         }
         */
         setInfo(res.data); //** 이거 고쳐보자~~~
-        localStorage.setItem("id", res.data.id); //session strorage로 수정!!
-        localStorage.setItem("profileImage", res.data.profileImageUrl); //session strorage로 수정!!
+        sessionStorage.setItem("id", res.data.id); //session strorage로 수정!!
+        sessionStorage.setItem("profileImage", res.data.profileImageUrl); //session strorage로 수정!!
 
       })
       .catch((err) => console.log(err));

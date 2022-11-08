@@ -73,7 +73,7 @@ const Setting = () => {
   
 
 
-    const id = localStorage.getItem('id');  //session strorage로 수정!!
+    const id = sessionStorage.getItem('id');  //session strorage로 수정!!
 
     const copyUid = () => {
         window.navigator.clipboard.writeText(id).then(() => {
