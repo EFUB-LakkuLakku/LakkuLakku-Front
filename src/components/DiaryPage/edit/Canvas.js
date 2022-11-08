@@ -13,7 +13,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { deleteStickerOnPanel, changeSticker } from "../../../modules/sticker";
 import { deleteImageOnPanel, changeImage } from "../../../modules/image";
 
-import { StickyNote } from "./StickyNote";
+import { Note } from "./text/Note";
+import { changeNote, deleteNoteOnPanel } from "../../../modules/note";
+import { changeSelectedId } from "../../../modules/selectedId"; //*
+
 
 export default function Canvas({ type, paper, setPaper }) {
   // 다이어리 요소들 조회하는 api 요청을 Canvas 내부에서 보내기.
@@ -22,16 +25,10 @@ export default function Canvas({ type, paper, setPaper }) {
 
   const stickers = useSelector((state) => state.sticker);
   const images = useSelector((state) => state.image);
+  const notes = useSelector((state) => state.note); //캔버스에 존재하는 노트들
+  const selectedId = useSelector((state) => state.selectedId.selectedId); //*
 
-  const [selectedId, selectShape] = React.useState(null);
   const [background] = useImage(paper.src); // 속지
-
-
-  const [text, setText] = useState(""); //Click to transform. Double click to edit.
-  const [width, setWidth] = useState(200);
-  const [height, setHeight] = useState(200);
-  const [selected, setSelected] = useState(false);
-
 
 
   // 빈 땅 클릭했을때 포커스 해제
@@ -40,7 +37,7 @@ export default function Canvas({ type, paper, setPaper }) {
 
     const clickedOnEmpty = e.target.attrs.id == "backgroundImage"; // 배경을 클릭했다면
 
-    if (clickedOnEmpty) selectShape(null);
+    if (clickedOnEmpty) dispatch(changeSelectedId(null)); //*;
   };
 
   return (
@@ -55,33 +52,8 @@ export default function Canvas({ type, paper, setPaper }) {
         }}
         onMouseDown={checkDeselect}
         onTouchStart={checkDeselect}
-
-        onClick={(e) => {
-          if (e.currentTarget._id === e.target._id) {
-            setSelected(false); //캔버스 빈데 클릭하면 텍스트 노선택
-          }
-        }}  
       >
         <Layer>
-          <StickyNote //<텍스트> //하위 컴포넌트로 props 전달
-            x={50}
-            y={50} //이 x,y좌표를 고정시켜두면 안됨!
-            text={text}
-            onTextChange={(value) => setText(value)}
-            width={width}
-            height={height}
-            selected={selected}
-            onTextResize={(newWidth, newHeight) => {
-              setWidth(newWidth);
-              setHeight(newHeight);
-            }}
-            onClick={() => {
-              setSelected(!selected);
-            }}
-            onTextClick={(newSelected) => {
-              setSelected(newSelected);
-            }}
-          />
 
           <KonvaImage
             image={background}
@@ -89,6 +61,7 @@ export default function Canvas({ type, paper, setPaper }) {
             width={1380* 0.685}
             height={674 * 0.9}
           />
+          
           {stickers &&
             stickers.map((sticker, i) => {
               return (
@@ -102,7 +75,7 @@ export default function Canvas({ type, paper, setPaper }) {
                   isSelected={sticker.id === selectedId}
                   image={sticker}
                   onSelect={() => {
-                    selectShape(sticker.id);
+                    dispatch(changeSelectedId(sticker.id)); //*
                   }}
                   onChange={(newAttrs) => {
                     // 변경된 크기값으로 적용
@@ -125,7 +98,7 @@ export default function Canvas({ type, paper, setPaper }) {
                   image={image}
                   isSelected={image.id === selectedId}
                   onSelect={() => {
-                    selectShape(image.id);
+                    dispatch(changeSelectedId(image.id)); //*
                   }}
                   onChange={(newAttrs) => {
                     // 변경된 크기값으로 적용
@@ -135,7 +108,22 @@ export default function Canvas({ type, paper, setPaper }) {
               );
             })}
 
-          {/**텍스트추가 */}
+          {notes && 
+            notes.map((note, i) => {
+            //캔버스에 존재하는 노트들 하나하나!!
+              return (
+                <Note
+                  key={i}
+                  note={note}
+                  onDelete={() => dispatch(deleteNoteOnPanel(i))}
+                  isSelected={note.id === selectedId}
+                  onChange={(newAttrs) => {
+                    dispatch(changeNote(i, newAttrs));
+                  }}
+                />
+              );
+          })}
+
         </Layer>
       </Stage>
     </div>
