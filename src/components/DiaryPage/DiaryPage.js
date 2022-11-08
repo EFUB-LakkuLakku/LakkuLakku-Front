@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import DiaryEditPage from "./DiaryEditPage";
 import DiaryViewPage from "./DiaryViewPage";
 import { useParams } from "react-router-dom";
 import DiaryService from "../../api/DiaryService";
+
 //flex 설정 덮어씌우기 -> 더 좋은 방법이 있다면 추후에 수정하기
 const View = styled.div`
   display: flex;
@@ -209,6 +210,25 @@ function DiaryPage() {
       });
   }, []);
 */
+
+  const fetchDiary = () => {
+    DiaryService.getDiary(date, nickname)
+      .then((res) => {
+        if (res.status == 200) {
+          console.log(res.data);
+          setDiaryInfo(res.data);
+          console.log(diaryInfo.diary.id);
+        } else {
+          console.log("실패");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchDiary();
+    //checkLike(); // 좋아요 구하기
+  }, []);
   return isEditing ? (
     <DiaryEditPage
       isEditing={isEditing}

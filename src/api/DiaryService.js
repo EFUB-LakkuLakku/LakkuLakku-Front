@@ -11,7 +11,10 @@ const DiaryService = {
     }),
   getDiary: (date, nickname) =>
     API.get(`/api/v1/diaries/${date}?nickname=${nickname}`),
-  createDiary: (date) => API.post(`/api/v1/diaries/${date}`),
+  createDiary: (date) =>
+    API.post(`/api/v1/diaries/${date}`, {
+      message: "",
+    }),
   deleteDiary: (date) => API.delete(`/api/v1/diaries/${date}`),
 };
 
