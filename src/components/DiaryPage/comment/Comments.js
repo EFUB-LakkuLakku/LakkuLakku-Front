@@ -32,14 +32,16 @@ const Comments = () => {
         params: { nickname: sessionStorage.getItem("nickname") },
       });
 
-      setDiaryId(response.data.diary.id);
-      setDiaryDate(response.data.diary.date);
-      setBackendComments(response.data.commentList);
+      console.log(response.data);
+
+      //setDiaryId(response.data.diary.id);
+      //setDiaryDate(response.data.diary.date);
+      //setBackendComments(response.data.commentList);
       //console.log(response.data.commentList);
 
       const id = sessionStorage.getItem("id");
-      //setCurrentUserId(id);
-      //console.log(currentUserId);
+      setCurrentUserId(id);
+      console.log(currentUserId);
 
       const user = {
         userId: id,

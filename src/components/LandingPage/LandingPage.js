@@ -70,8 +70,9 @@ const SmallGap = styled.div`
   height: 35rem;
 `;
 
-function LoginPage() {
+function LandingPage() {
   const navigate = useNavigate();
+  //sessionStorage.clear();
   return (
     <View>
       <img src={bigLogo} />
@@ -104,4 +105,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default LandingPage;
