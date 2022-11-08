@@ -2,14 +2,14 @@ import axios, { AxiosInstance } from "axios";
 import { BASE_URL } from "../constants/Config";
 
 
-/*로컬 테스트용
+//로컬 테스트용
 sessionStorage.setItem(
   "accessToken",
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ajEwMDNAZ21haWwuY29tIiwicm9sZXMiOiJVU0VSIiwiaWF0IjoxNjY3ODg2NzY5LCJleHAiOjE2Njc4OTM5Njl9.M1cOomFK3YBmrlGw_SO9nWH2YG5x_esG5lwIp_Z_vU4"
+  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ajEwMDNAZ21haWwuY29tIiwicm9sZXMiOiJVU0VSIiwiaWF0IjoxNjY3ODk0NjA1LCJleHAiOjE2Njc5MDE4MDV9.c-R_-EhZst9VmnTcRFB1U0S7svSyOMLTWO_mAwbNRBQ"
 );
 
 sessionStorage.setItem("nickname", "유잔");
-*/
+
 
 
 const token = sessionStorage.getItem("accessToken");

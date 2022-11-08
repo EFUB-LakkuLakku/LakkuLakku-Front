@@ -9,13 +9,18 @@ import "./canvas.css";
 import { Image as KonvaImage, Layer, Stage } from "react-konva";
 import useImage from "use-image";
 import { IndividualSticker } from "./individualSticker";
-import { useSelector, useDispatch } from "react-redux";
+import { ReactReduxContext, Provider, useSelector, useDispatch } from "react-redux";
 import { deleteStickerOnPanel, changeSticker } from "../../../modules/sticker";
 import { deleteImageOnPanel, changeImage } from "../../../modules/image";
 
 import { Note } from "./text/Note";
 import { changeNote, deleteNoteOnPanel } from "../../../modules/note";
 import { changeSelectedId } from "../../../modules/selectedId"; //*
+
+import { legacy_createStore as createStore } from "redux";
+import rootReducer from "../../../modules/index"
+
+const store = createStore(rootReducer);
 
 
 export default function Canvas({ type, paper, setPaper }) {
@@ -40,92 +45,101 @@ export default function Canvas({ type, paper, setPaper }) {
     if (clickedOnEmpty) dispatch(changeSelectedId(null)); //*;
   };
 
-  return (
-    <div style={{ width: "100%", height: "674rem" }}>
-      <Stage
-        width={945}
-        height={674 * 0.9}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-        onMouseDown={checkDeselect}
-        onTouchStart={checkDeselect}
-      >
-        <Layer>
+  return (    
+    <ReactReduxContext.Consumer>
+      {({ store }) => (
 
-          <KonvaImage
-            image={background}
-            id="backgroundImage"
-            width={1380* 0.685}
+        <div style={{ width: "100%", height: "674rem" }}>
+          <Stage
+            width={945}
             height={674 * 0.9}
-          />
-          
-          {stickers &&
-            stickers.map((sticker, i) => {
-              return (
-                <IndividualSticker
-                  key={i}
-                  onDelete={() => dispatch(deleteStickerOnPanel(i))}
-                  onDragEnd={(event) => {
-                    sticker.x = event.target.x();
-                    sticker.y = event.target.y();
-                  }}
-                  isSelected={sticker.id === selectedId}
-                  image={sticker}
-                  onSelect={() => {
-                    dispatch(changeSelectedId(sticker.id)); //*
-                  }}
-                  onChange={(newAttrs) => {
-                    // 변경된 크기값으로 적용
-                    dispatch(changeSticker(i, newAttrs));
-                  }}
-                />
-              );
-            })}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onMouseDown={checkDeselect}
+            onTouchStart={checkDeselect}
+          >
+            <Provider store={store}>
+              <Layer>
 
-          {images &&
-            images.map((image, i) => {
-              return (
-                <IndividualSticker
-                  onDelete={() => dispatch(deleteImageOnPanel(i))}
-                  onDragEnd={(event) => {
-                    image.x = event.target.x();
-                    image.y = event.target.y();
-                  }}
-                  key={i}
-                  image={image}
-                  isSelected={image.id === selectedId}
-                  onSelect={() => {
-                    dispatch(changeSelectedId(image.id)); //*
-                  }}
-                  onChange={(newAttrs) => {
-                    // 변경된 크기값으로 적용
-                    dispatch(changeImage(i, newAttrs));
-                  }}
+                <KonvaImage
+                  image={background}
+                  id="backgroundImage"
+                  width={1380* 0.685}
+                  height={674 * 0.9}
                 />
-              );
-            })}
+                
+                {stickers &&
+                  stickers.map((sticker, i) => {
+                    return (
+                      <IndividualSticker
+                        key={i}
+                        onDelete={() => dispatch(deleteStickerOnPanel(i))}
+                        onDragEnd={(event) => {
+                          sticker.x = event.target.x();
+                          sticker.y = event.target.y();
+                        }}
+                        isSelected={sticker.id === selectedId}
+                        image={sticker}
+                        onSelect={() => {
+                          dispatch(changeSelectedId(sticker.id)); //*
+                        }}
+                        onChange={(newAttrs) => {
+                          // 변경된 크기값으로 적용
+                          dispatch(changeSticker(i, newAttrs));
+                        }}
+                      />
+                    );
+                  })}
 
-          {notes && 
-            notes.map((note, i) => {
-            //캔버스에 존재하는 노트들 하나하나!!
-              return (
-                <Note
-                  key={i}
-                  note={note}
-                  onDelete={() => dispatch(deleteNoteOnPanel(i))}
-                  isSelected={note.id === selectedId}
-                  onChange={(newAttrs) => {
-                    dispatch(changeNote(i, newAttrs));
-                  }}
-                />
-              );
-          })}
+                {images &&
+                  images.map((image, i) => {
+                    return (
+                      <IndividualSticker
+                        onDelete={() => dispatch(deleteImageOnPanel(i))}
+                        onDragEnd={(event) => {
+                          image.x = event.target.x();
+                          image.y = event.target.y();
+                        }}
+                        key={i}
+                        image={image}
+                        isSelected={image.id === selectedId}
+                        onSelect={() => {
+                          dispatch(changeSelectedId(image.id)); //*
+                        }}
+                        onChange={(newAttrs) => {
+                          // 변경된 크기값으로 적용
+                          dispatch(changeImage(i, newAttrs));
+                        }}
+                      />
+                    );
+                  })}
 
-        </Layer>
-      </Stage>
-    </div>
+                {notes && 
+                  notes.map((note, i) => {
+                  //캔버스에 존재하는 노트들 하나하나!!
+                    return (
+                      <Note
+                        key={i}
+                        note={note}
+                        onDelete={() => dispatch(deleteNoteOnPanel(i))}
+                        isSelected={note.id === selectedId}
+                        onChange={(newAttrs) => {
+                          dispatch(changeNote(i, newAttrs));
+                        }}
+                      />
+                    );
+                })}
+
+              </Layer>
+            </Provider>
+          </Stage>      
+        </div>
+
+      )}
+      </ReactReduxContext.Consumer>
+      
   );
 }
