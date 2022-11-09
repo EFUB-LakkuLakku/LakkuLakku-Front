@@ -1,9 +1,11 @@
 import React from 'react';
 import { Dropdown, Selection } from 'react-dropdown-now';
 import 'react-dropdown-now/style.css';
+import { useDispatch } from "react-redux";
 
 const FontStyle = () => {
 
+    const dispatch = useDispatch();
 
     return (
         <Dropdown
@@ -12,7 +14,7 @@ const FontStyle = () => {
             options={['본고딕', '나눔 고딕 코딩', '감자꽃마을', '본명조', '나눔 손글씨 붓체', '나눔 손글씨 펜체']}
             value="본고딕"
             onChange={(value) => console.log('change!', value)}
-            onSelect={(value) => console.log('selected!', value)} // always fires once a selection happens even if there is no change
+            onSelect={(value) => console.log('selected!', value)} //* value값 이용해서 dispatch! // always fires once a selection happens even if there is no change
             //onClose={(closedBySelection) => console.log('closedBySelection?:', closedBySelection)}
             //onOpen={() => console.log('open!')}
         />

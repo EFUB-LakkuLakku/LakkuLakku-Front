@@ -50,7 +50,7 @@ function note(state = initialState, action) {
 
     case CHANGENOTE:
       const afterNote = state.slice(); //배열 복제
-      afterNote[action.idx] = action.newAttrs; // 특정 스티커의 속성값 변경
+      afterNote[action.idx].size = action.newAttrs; //수정 필요! // 특정 스티커의 속성값 변경
       return afterNote;
 
     default:

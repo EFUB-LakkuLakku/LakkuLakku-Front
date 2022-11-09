@@ -59,9 +59,18 @@ export function ResizableText({
         rotation={rotation}
         text={text}
         ref={textRef}
+        //
         fill="black" //서체
         fontFamily="sans-serif" //서체
-        fontSize={24} //서체
+        fontSize={24} //수정 필요
+        /*
+        fill={color}
+        fontFamily={style}
+        fontSize={size}
+        fontStyle={weight}
+        align={align}
+        */
+        //
         perfectDrawEnabled={false}
         onWheel={onDelete}
         onClick={() => {

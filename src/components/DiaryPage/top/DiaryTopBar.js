@@ -205,7 +205,7 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
 
       <TextMenuBox>
         <MenuName>정렬</MenuName>
-        <AlignIcon src={AlignRight} alt="align-right"></AlignIcon>{" "}
+        <AlignIcon src={AlignRight} alt="align-right"></AlignIcon>
         {/* onClick={} */}
         <AlignIcon src={AlignCenter} alt="align-center"></AlignIcon>
         <AlignIcon src={AlignLeft} alt="align-left"></AlignIcon>
