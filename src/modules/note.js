@@ -39,7 +39,13 @@ function note(state = initialState, action) {
           width: 200,
           height: 200,
           rotation: 0, //0도부터 시작
-          content: default_content
+          content: default_content,
+          //
+          style: "sans-serif",
+          weight: "normal",
+          size: 24,
+          align: "left",
+          color: "#000000"      
         }
       ];
 
@@ -50,7 +56,7 @@ function note(state = initialState, action) {
 
     case CHANGENOTE:
       const afterNote = state.slice(); //배열 복제
-      afterNote[action.idx].size = action.newAttrs; //수정 필요! // 특정 스티커의 속성값 변경
+      afterNote[action.idx] = action.newAttrs; //수정 필요! // 특정 스티커의 속성값 변경
       return afterNote;
 
     default:

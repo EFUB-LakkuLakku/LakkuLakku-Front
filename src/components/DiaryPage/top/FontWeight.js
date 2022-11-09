@@ -13,10 +13,10 @@ const FontWeight = () => {
         <Dropdown
             placeholder="Select an option"
             className="my-className"
-            options={['보통', '굵음']}
+            options={[ {label:'보통', value:'normal'}, {label:'굵음', value: 'bold'} ]}
             value="Regular"
             onChange={(value) => console.log('change!', value)}
-            onSelect={(value) => console.log('selected!', value)} //* value값 이용해서 dispatch! // always fires once a selection happens even if there is no change
+            onSelect={(value) => {console.log('selected!', value); dispatch(changeNote(selectedId, {weight: value} ));}} //* value값 이용해서 dispatch! // always fires once a selection happens even if there is no change
             //onClose={(closedBySelection) => console.log('closedBySelection?:', closedBySelection)}
             //onOpen={() => console.log('open!')}
         />
