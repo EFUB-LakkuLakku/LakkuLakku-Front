@@ -72,6 +72,7 @@ export function ResizableText({
           dispatch(changeSelectedId(note.id)); //*
           setIsTransforming(true);
           setIsEditing(false);
+          console.log(note.id);
         }} 
         onTap={() => {
           dispatch(changeSelectedId(note.id)); //*

@@ -2,6 +2,8 @@
 const ADDNOTE = "note/ADD";
 const DELETENOTE = "note/DELETE";
 const CHANGENOTE = "note/CHANGE";
+const CHANGEFONT = "note/FONTCHANGE";
+
 
 //2.액션 생성 함수
 export const addNoteToPanel = () => ({
@@ -20,6 +22,13 @@ export const changeNote = (idx, newAttrs) => ({
   idx,
   newAttrs
 });
+
+export const changeFont = (idx, newAttrs) => ({
+  type: CHANGEFONT,
+  idx,
+  newAttrs
+});
+
 
 //초기상태
 const initialState = [];
@@ -57,8 +66,20 @@ function note(state = initialState, action) {
     case CHANGENOTE:
       const afterNote = state.slice(); //배열 복제
       afterNote[action.idx] = action.newAttrs; //수정 필요! // 특정 스티커의 속성값 변경
-      return afterNote;
-
+      return afterNote; //afterNote
+  
+    case CHANGEFONT:
+      const afterFont = state.slice(); //배열 복제
+      const selectedNoteIndex = afterFont.map(x => {
+        if (x.id == action.idx) {
+          return afterFont.indexOf(x); 
+        }
+      });
+      //afterNote.splice(selectedNoteIndex, 1);
+      const newSelectedNote = Object.assign(afterFont[selectedNoteIndex], action.newAttrs); 
+      afterFont.concat(newSelectedNote);
+      return afterFont;
+     
     default:
       return state;
   }
