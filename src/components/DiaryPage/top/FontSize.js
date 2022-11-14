@@ -13,7 +13,7 @@ const FontSize = () => {
         <Dropdown
             placeholder="Select an option"
             className="my-className"
-            options={['20', '22', '24','26','28']}
+            options={['16', '20', '24','28','32']}
             value="24"
             onChange={(value) => console.log('change!', value)}
             onSelect={(value) => { console.log('selected!', value); dispatch(changeFont(selectedId, {size: parseInt(value.value)} )); } } //* value값 이용해서 dispatch! // always fires once a selection happens even if there is no change
