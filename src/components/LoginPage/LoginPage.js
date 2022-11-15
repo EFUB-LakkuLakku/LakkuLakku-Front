@@ -2,6 +2,7 @@ import React, { useState, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import moment from "moment";
 import {
   Title,
   Input,
@@ -83,6 +84,8 @@ function LoginPage() {
         config,
         response: { status },
       } = error;
+
+      console.log(status);
       if (status === 401) {
         if (error.response.data.code === "TOKEN_VALIDATE_FAILURE") {
           const originalRequest = config;
@@ -117,12 +120,17 @@ function LoginPage() {
           withCredentials: true,
         }
       );
-      console.log(response.data);
-      console.log(response.headers);
+      console.log(response);
+
       const token = response.data.accessToken;
 
       sessionStorage.setItem("accessToken", token);
-
+      //만료기간
+      sessionStorage.setItem(
+        "expiresAt",
+        moment().add(1, "hour").format("yyyy-MM-DD HH:mm:ss")
+      );
+      // Cookie.setItem("refreshToken", response.data.refreshToken); //refresh 저장
       sessionStorage.setItem("email", email);
       sessionStorage.setItem("nickname", response.data.nickname);
 
