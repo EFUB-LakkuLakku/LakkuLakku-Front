@@ -23,7 +23,7 @@ import rootReducer from "../../../modules/index"
 const store = createStore(rootReducer);
 
 
-export default function Canvas({ type, paper, setPaper }) {
+export default function Canvas({ type, paper, setPaper, setShowTextMenu }) {
   // 다이어리 요소들 조회하는 api 요청을 Canvas 내부에서 보내기.
 
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ export default function Canvas({ type, paper, setPaper }) {
 
     const clickedOnEmpty = e.target.attrs.id == "backgroundImage"; // 배경을 클릭했다면
 
-    if (clickedOnEmpty) dispatch(changeSelectedId(null)); //*;
+    if (clickedOnEmpty) dispatch(changeSelectedId(null)); setShowTextMenu(false); //*;
   };
 
   return (    
@@ -85,6 +85,7 @@ export default function Canvas({ type, paper, setPaper }) {
                         image={sticker}
                         onSelect={() => {
                           dispatch(changeSelectedId(sticker.id)); //*
+                          setShowTextMenu(false);
                         }}
                         onChange={(newAttrs) => {
                           // 변경된 크기값으로 적용
@@ -108,6 +109,7 @@ export default function Canvas({ type, paper, setPaper }) {
                         isSelected={image.id === selectedId}
                         onSelect={() => {
                           dispatch(changeSelectedId(image.id)); //*
+                          setShowTextMenu(false);
                         }}
                         onChange={(newAttrs) => {
                           // 변경된 크기값으로 적용
@@ -129,6 +131,7 @@ export default function Canvas({ type, paper, setPaper }) {
                         onChange={(newAttrs) => {
                           dispatch(changeNote(i, newAttrs));
                         }}
+                        setShowTextMenu={setShowTextMenu}
                       />
                     );
                 })}

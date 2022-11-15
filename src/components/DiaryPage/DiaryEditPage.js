@@ -68,11 +68,11 @@ function DiaryEditPage({ setIsEditing, isEditing, diaryInfo }) {
             onlyView={false}
           />
           <Content id={"stage-parent"}>
-            <Canvas paper={paper} setPaper={setPaper} />
+            <Canvas paper={paper} setPaper={setPaper} setShowTextMenu={setShowTextMenu} />
           </Content>
         </ContentWrapper>
       </Container>
-      <DiaryTabbar setsideBarType={setsideBarType}   setShowTextMenu={setShowTextMenu} />
+      <DiaryTabbar setsideBarType={setsideBarType} />
     </View>
   );
 }

@@ -14,7 +14,8 @@ export function EditableText({
   isTransforming,
   setIsEditing,
   setIsTransforming,
-  onToggleTransform
+  onToggleTransform,
+  setShowTextMenu
 }) {
   /*
   function handleEscapeKeys(e) {
@@ -68,6 +69,7 @@ export function EditableText({
       setIsEditing={setIsEditing}
       setIsTransforming={setIsTransforming}
       onChange={onChange}
+      setShowTextMenu={setShowTextMenu}
     />
   );
 }

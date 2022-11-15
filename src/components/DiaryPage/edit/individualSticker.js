@@ -10,6 +10,7 @@ export const IndividualSticker = ({
   isSelected,
   onSelect,
   onChange,
+  setShowTextMenu
 }) => {
   const imageRef = useRef(null);
   const isHovered = useHoverDirty(imageRef);

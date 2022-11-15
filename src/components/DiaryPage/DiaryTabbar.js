@@ -54,7 +54,7 @@ const ImgBox = styled.img.attrs(({ src }) => ({
   height: 24rem;
 `;
 
-export default function DiaryTabbar({ setsideBarType, setShowTextMenu }) {
+export default function DiaryTabbar({ setsideBarType }) {
   const ImgInput = React.useRef();
   const dispatch = useDispatch();
   const onImgUploadBtnClick = (event) => {
@@ -66,7 +66,7 @@ export default function DiaryTabbar({ setsideBarType, setShowTextMenu }) {
   return (
     <Wrapper>
       <BtnWrapper
-        onClick={() => {setsideBarType((prev) => (prev ? null : "paper")); setShowTextMenu(false);}}
+        onClick={() => {setsideBarType((prev) => (prev ? null : "paper")); }}
       >
         <ImgBox src={FileIcon} />
         <BtnName>속지</BtnName>
@@ -74,7 +74,6 @@ export default function DiaryTabbar({ setsideBarType, setShowTextMenu }) {
 
       <BtnWrapper
         onClick={() => {
-        setShowTextMenu(true);
         dispatch(addNoteToPanel());
       }}
      >     
@@ -86,7 +85,6 @@ export default function DiaryTabbar({ setsideBarType, setShowTextMenu }) {
         onClick={() => {
           console.log("file click");
           onImgUploadBtnClick();
-          setShowTextMenu(false);
         }}
       >
         <ImgBox src={ImageIcon} />
@@ -123,7 +121,7 @@ export default function DiaryTabbar({ setsideBarType, setShowTextMenu }) {
       </BtnWrapper>
 
       <BtnWrapper
-        onClick={() => {setsideBarType((prev) => (prev ? null : "sticker")); setShowTextMenu(false);}}
+        onClick={() => {setsideBarType((prev) => (prev ? null : "sticker")); }}
       >
         <ImgBox src={PaperClipIcon} />
         <BtnName>스티커</BtnName>

@@ -20,7 +20,8 @@ export function ResizableText({
   isTransforming,
   onChange,
   setIsEditing,
-  setIsTransforming
+  setIsTransforming,
+  setShowTextMenu
 }) {
 
   const selectedId = useSelector((state) => state.selectedId.selectedId); //*
@@ -72,12 +73,14 @@ export function ResizableText({
           dispatch(changeSelectedId(note.id)); //*
           setIsTransforming(true);
           setIsEditing(false);
+          setShowTextMenu(true);
           console.log(note.id);
         }} 
         onTap={() => {
           dispatch(changeSelectedId(note.id)); //*
           setIsTransforming(true);
           setIsEditing(false);
+          setShowTextMenu(true);
         }}
         onDblClick={() => {
           dispatch(changeSelectedId(note.id)); //*

@@ -5,7 +5,8 @@ export function Note({
   note,
   onDelete,
   isSelected,
-  onChange
+  onChange,
+  setShowTextMenu
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [isTransforming, setIsTransforming] = useState(false);
@@ -28,6 +29,7 @@ export function Note({
       isTransforming={isTransforming}
       setIsEditing={setIsEditing}
       setIsTransforming={setIsTransforming}
+      setShowTextMenu={setShowTextMenu}
     />
   );
 }
