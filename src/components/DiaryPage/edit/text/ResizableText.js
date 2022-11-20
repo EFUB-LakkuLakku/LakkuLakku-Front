@@ -25,6 +25,8 @@ export function ResizableText({
 }) {
 
   const selectedId = useSelector((state) => state.selectedId.selectedId); //*
+  const notes = useSelector((state) => state.note);
+
   const dispatch = useDispatch();
 
   const textRef = useRef(null);
@@ -75,6 +77,8 @@ export function ResizableText({
           setIsEditing(false);
           setShowTextMenu(true);
           console.log(note.id);
+          console.log(selectedId);
+          console.log(notes);
         }} 
         onTap={() => {
           dispatch(changeSelectedId(note.id)); //*

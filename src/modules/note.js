@@ -23,9 +23,9 @@ export const changeNote = (idx, newAttrs) => ({
   newAttrs
 });
 
-export const changeFont = (idx, newAttrs) => ({
+export const changeFont = (id, newAttrs) => ({
   type: CHANGEFONT,
-  idx,
+  id,
   newAttrs
 });
 
@@ -70,14 +70,21 @@ function note(state = initialState, action) {
   
     case CHANGEFONT:
       const afterFont = state.slice(); //배열 복제
-      const selectedNoteIndex = afterFont.map(x => {
-        if (x.id == action.idx) {
+      const selectedNoteIdx = afterFont.findIndex(x => x.id == action.id);
+
+      /*
+      const selectedNoteIdx = afterFont.map(x => {
+        if (x.id === String(action.id)) {
           return afterFont.indexOf(x); 
         }
       });
-      //afterNote.splice(selectedNoteIndex, 1);
-      const newSelectedNote = Object.assign(afterFont[selectedNoteIndex], action.newAttrs); 
-      afterFont.concat(newSelectedNote);
+      */
+    
+      const newSelectedNote = Object.assign({}, afterFont[selectedNoteIdx], action.newAttrs); 
+      console.log(selectedNoteIdx); //정체 확인!!
+      console.log(newSelectedNote);
+      afterFont.splice(selectedNoteIdx,1,newSelectedNote);
+      
       return afterFont;
      
     default:
