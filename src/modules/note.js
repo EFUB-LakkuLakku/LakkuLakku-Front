@@ -50,7 +50,7 @@ function note(state = initialState, action) {
           rotation: 0, //0도부터 시작
           content: default_content,
           //
-          style: "sans-serif",
+          style: "NotoSans-Regular",
           weight: "normal",
           size: 24,
           align: "left",
