@@ -5,18 +5,21 @@ import { Html } from "react-konva-utils";
 function getStyle(x, y, width, height, rotation, textstyle, weight, size, align, color) {
   const isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
   const baseStyle = {
-    width: `${width + 6}px`,
-    height: `${height + 10}px`,
+    width: `${width}px`,
+    height: `${height}px`,
     border: "none",
     padding: "0px",
     margin: "0px",
     background: "none",
     outline: "none",
     resize: "none",
+    lineHeight: "100%", //줄간격 조정!
     //
-    colour: "black",
-    fontSize: "24px",
-    fontFamily: "sans-serif",
+    color: `${color}`,
+    fontSize: `${size}px`,
+    fontFamily: `${textstyle}`,
+    fontWeight: `${weight}`,
+    textAlign: `${align}`,
     //
     top: `${x}px`,
     left: `${y}px`,
