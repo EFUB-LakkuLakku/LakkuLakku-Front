@@ -22,6 +22,10 @@ import DiaryService from "../../../api/DiaryService";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
 
+import { useDispatch, useSelector } from "react-redux";
+import { changeFont } from "../../../modules/note";
+
+
 const Container = styled.div`
   width: 100%;
   height: 61rem;
@@ -156,7 +160,7 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
     const ans = window.confirm("정말로 삭제하시겠습니까?");
     console.log(ans);
     if (ans) {
-      const nickname = localStorage.getItem("nickname");
+      const nickname = sessionStorage.getItem("nickname");
 
       DiaryService.deleteDiary(date)
         .then((res) => {
@@ -186,6 +190,9 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
 
   const [showColorWheel, setShowColorWheel] = useState(false);
 
+  const selectedId = useSelector((state) => state.selectedId.selectedId);
+  const dispatch = useDispatch();
+
   const TextMenu = (
     <TextMenuContainer>
       <TextMenuBox>
@@ -205,11 +212,10 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
 
       <TextMenuBox>
         <MenuName>정렬</MenuName>
-        <AlignIcon src={AlignRight} alt="align-right"></AlignIcon>{" "}
-        {/* onClick={} */}
-        <AlignIcon src={AlignCenter} alt="align-center"></AlignIcon>
-        <AlignIcon src={AlignLeft} alt="align-left"></AlignIcon>
-        <AlignIcon src={AlignJustify} alt="align-justify"></AlignIcon>
+        <AlignIcon src={AlignRight} alt="align-right" onClick={ () => dispatch(changeFont(selectedId, {align:'right'} )) }></AlignIcon>
+        <AlignIcon src={AlignCenter} alt="align-center" onClick={ () => dispatch(changeFont(selectedId, {align:'center'} )) }></AlignIcon>
+        <AlignIcon src={AlignLeft} alt="align-left" onClick={ () => dispatch(changeFont(selectedId, {align:'left'} )) }></AlignIcon>
+        {/* <AlignIcon src={AlignJustify} alt="align-justify"></AlignIcon> */}
       </TextMenuBox>
 
       <TextMenuBox>

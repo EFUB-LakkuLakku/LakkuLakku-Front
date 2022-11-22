@@ -20,7 +20,7 @@
 }
 
 @font-face {
-  font-family: "NotoSansKR-Regular";
+  font-family: "NotoSansKR-Regular"; /*본고딕*/
   src: url("./fonts/NotoSansKR-Regular.otf") format("opentype");
 }
 
@@ -36,7 +36,34 @@
 }
 
 @font-face {
-  font-family: "NotoSans-Regular";
+  font-family: "NotoSans-Regular"; 
   src: url("./fonts/NotoSans-Regular.ttf") format("opentype");
 }
+
+@font-face {
+  font-family: "GamjaFlower-Regular";
+  src: url("./fonts/GamjaFlower-Regular.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "NanumBrush";
+  src: url("./fonts/NanumBrush.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "NanumPen";
+  src: url("./fonts/NanumPen.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "NanumGothicCoding";
+  src: url("./fonts/NanumGothicCoding.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "SourceHanSerifK-Regular"; /*본명조*/
+  src: url("./fonts/SourceHanSerifK-Regular.otf") format("opentype");
+}
+
+
 

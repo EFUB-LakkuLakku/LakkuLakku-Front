@@ -4,15 +4,17 @@ import getToken from "./getToken";
 import { refresh, refreshErrorHandle } from "./refresh";
 
 /*
-로컬 테스트용
-localStorage.setItem(
+//로컬 테스트용
+sessionStorage.setItem(
   "accessToken",
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJmbG93ZXJzYXlvQGdtYWlsLmNvbSIsInJvbGVzIjoiVVNFUiIsImlhdCI6MTY1OTgwNTQ2OSwiZXhwIjoxNjU5ODEyNjY5fQ.g5B2oEj_dOvECKOV0D3QyMM2cxoCu7KE7BhaAyFOjU0"
+  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ajEwMDNAZ21haWwuY29tIiwicm9sZXMiOiJVU0VSIiwiaWF0IjoxNjY5MDM0NzAwLCJleHAiOjE2NjkwNDE5MDB9.1OI3KepOU60mh3QkeBLqkjXa9wYM6SUJPeRr78y9ASs"
 );
+
 
 localStorage.setItem("nickname", "flowersayo");
 */
 const token = getToken();
+
 console.log("현재토큰값", token);
 const nickname = sessionStorage.getItem("nickname");
 

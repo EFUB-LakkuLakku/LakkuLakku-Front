@@ -77,7 +77,7 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsO
         alert("저장되었습니다!");
         
         setIsOpenModal(false);
-    } //api 연결 
+    } //api 연결  //다시 수정해보기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     
 
@@ -118,7 +118,7 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsO
                         style={{display: "none"}}
                     />
                     <UploadedImgBox>
-                        <UploadedImg src={image===null ? DefaultImg : image} ref={uploadedImage} />
+                        <UploadedImg src={(image==null) ? DefaultImg : image} ref={uploadedImage} />
                     </UploadedImgBox>
                     
                     <BtnBox>
@@ -131,7 +131,7 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsO
 
                 <Footer>
                     <BioInput 
-                    onChange={(e) => setBio(e.target.value)}
+                    onChange={(e) => {setBio(e.target.value); console.log(bio);}}
                     value={bio}
                     type="text" />
 
