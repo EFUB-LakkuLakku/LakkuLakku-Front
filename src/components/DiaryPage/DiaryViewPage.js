@@ -11,7 +11,7 @@ import Chat from "./Chat";
 import ChatContainer from "./ChatContainer";
 import DiaryService from "../../api/DiaryService";
 import { useParams, useLocation } from "react-router-dom";
-
+import getNickname from "../../utils/getNickname";
 import API from "../../utils/api";
 
 //flex 설정 덮어씌우기 -> 더 좋은 방법이 있다면 추후에 수정하기
@@ -68,6 +68,7 @@ function DiaryViewPage({ setIsEditing, diaryInfo }) {
     checkLike(); // 좋아요 구하기
   }, []);
 
+  console.log(diaryInfo?.diary.id);
   // 현재 사용자(nickname)가 다이어리 주인(owner)의 다이어리에 좋아요를 눌렀는지 여부
   const checkLike = (nickname, owner) => {
     const { likeList } = diaryInfo;
@@ -106,7 +107,7 @@ function DiaryViewPage({ setIsEditing, diaryInfo }) {
 
           <ChatContainer cntComment={0} />
         </InfoBox>
-        <Comments cntComments={0} />
+        {/**<Comments cntComments={0} diaryInfo={diaryInfo?.diary.id}/> */}
       </Container>
       <DiaryBottomBar />
     </View>
