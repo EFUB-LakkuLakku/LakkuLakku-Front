@@ -9,15 +9,12 @@ export function Note({
   setShowTextMenu
 }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [isTransforming, setIsTransforming] = useState(false);
 
   useEffect(() => {
     if (!isSelected && isEditing) {
       setIsEditing(false);
-    } else if (!isSelected && isTransforming) {
-      setIsTransforming(false);
-    }
-  }, [isSelected, isEditing, isTransforming]);
+    } 
+  }, [isSelected, isEditing]);
 
   return (
     <EditableText
@@ -26,9 +23,7 @@ export function Note({
       isSelected={isSelected}
       onChange={onChange}
       isEditing={isEditing}
-      isTransforming={isTransforming}
       setIsEditing={setIsEditing}
-      setIsTransforming={setIsTransforming}
       setShowTextMenu={setShowTextMenu}
     />
   );

@@ -11,10 +11,7 @@ export function EditableText({
   isSelected,
   onChange,
   isEditing,
-  isTransforming,
   setIsEditing,
-  setIsTransforming,
-  onToggleTransform,
   setShowTextMenu
 }) {
   /*
@@ -65,9 +62,7 @@ export function EditableText({
       //      
       onDelete={onDelete}
       isSelected={isSelected}
-      isTransforming={isTransforming} 
       setIsEditing={setIsEditing}
-      setIsTransforming={setIsTransforming}
       onChange={onChange}
       setShowTextMenu={setShowTextMenu}
     />

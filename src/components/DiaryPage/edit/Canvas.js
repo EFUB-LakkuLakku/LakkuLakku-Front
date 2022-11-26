@@ -38,7 +38,7 @@ export default function Canvas({ type, paper, setPaper, setShowTextMenu }) {
 
   // 빈 땅 클릭했을때 포커스 해제
   const checkDeselect = (e) => {
-    console.log(e.target);
+    //console.log(e.target);
 
     const clickedOnEmpty = e.target.attrs.id == "backgroundImage"; // 배경을 클릭했다면
 
@@ -86,6 +86,8 @@ export default function Canvas({ type, paper, setPaper, setShowTextMenu }) {
                         onSelect={() => {
                           dispatch(changeSelectedId(sticker.id)); //*
                           setShowTextMenu(false);
+                          //console.log(sticker.id);
+                          //console.log(selectedId);
                         }}
                         onChange={(newAttrs) => {
                           // 변경된 크기값으로 적용
