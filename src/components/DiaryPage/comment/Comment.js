@@ -12,7 +12,7 @@ const Comment = ({
   deleteComment,
   addComment,
   parentId = null,
-  currentUserId,
+  currentUserName,
   userProfile,
 }) => {
   const isEditing =
@@ -24,8 +24,8 @@ const Comment = ({
     activeComment.id === comment.id &&
     activeComment.type === "replying";
   const canReply = parentId ? false : true;
-  const canDelete = currentUserId == comment.userId && replies.length === 0;
-  const canEdit = currentUserId == comment.userId;
+  const canDelete = currentUserName == comment.nickname && replies.length === 0;
+  const canEdit = currentUserName == comment.nickname;
   const replyId = parentId ? parentId : comment.id;
   const [isEdited, SetisEdited] = useState(false);
 
@@ -70,7 +70,9 @@ const Comment = ({
           submitLabel="등록"
           hasCancelButton
           initialText={comment.content}
-          handleSubmit={(text) => updateComment(text, comment.id)}
+          handleSubmit={(text, checked) =>
+            updateComment(text, comment.id, checked)
+          }
           handleCancel={() => {
             setActiveComment(null);
           }}
@@ -154,7 +156,7 @@ const Comment = ({
       {isReplying && (
         <CommentForm
           submitLabel="등록"
-          handleSubmit={(text) => addComment(text, replyId)}
+          handleSubmit={(text, checked) => addComment(text, replyId, checked)}
           userProfile={userProfile}
         />
       )}
@@ -171,7 +173,7 @@ const Comment = ({
               addComment={addComment}
               parentId={comment.id}
               replies={[]}
-              currentUserId={currentUserId}
+              currentUserName={currentUserName}
               userProfile={userProfile}
             />
           ))}

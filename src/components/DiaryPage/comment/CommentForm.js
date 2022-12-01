@@ -13,10 +13,14 @@ const CommentForm = ({
   const [cnt, setCnt] = useState(null);
   const [warning, setWarning] = useState("");
   const isTextareaDisabled = text.length === 0 || text.length > 200;
+  const [checked, setChecked] = useState(false);
+
   const onSubmit = (event) => {
     event.preventDefault();
-    handleSubmit(text);
+    console.log(checked);
+    handleSubmit(text, checked);
     setText("");
+    setChecked(false);
   };
 
   useEffect(() => {
@@ -52,6 +56,12 @@ const CommentForm = ({
             <div className="text-cnt-warning">{warning}</div>
           </div>
           <div className="button-wrapper">
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) => setChecked(e.target.checked)}
+            />
+            <div className="secret-text">비밀 댓글</div>
             <button
               className="comment-form-button"
               disabled={isTextareaDisabled}

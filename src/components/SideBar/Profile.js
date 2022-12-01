@@ -6,7 +6,6 @@ import styled from "styled-components";
 import theme from "../../styles/theme";
 import API from "../../utils/api";
 
-
 const Profile = () => {
   const [info, setInfo] = useState({ profileImageUrl: null, bio: "" }); //초기값!!
   const [showModal, setShowModal] = useState(false);
@@ -16,8 +15,8 @@ const Profile = () => {
   const editInfo = () => {
     API.get(`/api/v1/home/user?nickname=${nickname}`)
       .then((res) => {
-        console.log(res.data);
-        
+        //console.log(res.data);
+
         /*
         if (res.status == 200) {
           if (res.data.user === info.user) return; //무한 실행문제 해결
@@ -32,6 +31,7 @@ const Profile = () => {
         sessionStorage.setItem("id", res.data.id); //session strorage로 수정!!
         sessionStorage.setItem("profileImage", res.data.profileImageUrl); //session strorage로 수정!!
 
+        console.log(sessionStorage.getItem("profileImage"));
       })
       .catch((err) => console.log(err));
   };
@@ -40,7 +40,6 @@ const Profile = () => {
     editInfo();
     //console.log(info);
   }, [info]); //, [info]
-
 
   /*
   const editedInfo = async () => {
@@ -58,11 +57,7 @@ const Profile = () => {
   return (
     <ProfileBox>
       <ProfileImg
-        src={
-          info.profileImageUrl == null
-            ? DefaultImg
-            : info.profileImageUrl
-        }
+        src={info.profileImageUrl == null ? DefaultImg : info.profileImageUrl}
       />
 
       <Nickname>
@@ -75,7 +70,9 @@ const Profile = () => {
       </BioBox>
 
       <BtnBox onClick={(e) => e.stopPropagation()}>
-        <ProfileEditBtn onClick={() => setShowModal(true)}> {/*() => setShowModal(true)*/}
+        <ProfileEditBtn onClick={() => setShowModal(true)}>
+          {" "}
+          {/*() => setShowModal(true)*/}
           프로필 수정
         </ProfileEditBtn>
       </BtnBox>

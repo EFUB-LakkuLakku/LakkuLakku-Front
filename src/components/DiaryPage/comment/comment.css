@@ -140,6 +140,14 @@
   display: flex;
   flex-direction: row;
   justify-content: end;
+  align-items: center;
+}
+
+.secret-text {
+  margin-right: 22rem;
+  font-size: 14rem;
+  color: var(--w400);
+  font-family: "NotoSansKR-Light";
 }
 
 .comment-form-button {

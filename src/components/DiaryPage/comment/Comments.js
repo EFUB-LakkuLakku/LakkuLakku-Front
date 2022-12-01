@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { plusComment, minusComment } from "../../../modules/diary";
 
-const Comments = () => {
+const Comments = (diaryId, diaryWritterInfo) => {
   const init = {
     userId: "",
     avatar: "",
@@ -19,9 +19,8 @@ const Comments = () => {
   const rootComments = backendComments.filter(
     (backendComment) => backendComment.parentId == null
   );
-  const [diaryId, setDiaryId] = useState("");
-  const [diaryDate, setDiaryDate] = useState("");
-  const [currentUserId, setCurrentUserId] = useState("");
+
+  const [currentUserName, setCurrentUserName] = useState("");
   const { pathname } = useLocation();
   const params = pathname.split("/");
   const dates = params[4];
@@ -33,37 +32,38 @@ const Comments = () => {
       });
 
       console.log(response.data);
+      setBackendComments(response.data);
 
-      //setDiaryId(response.data.diary.id);
-      //setDiaryDate(response.data.diary.date);
-      //setBackendComments(response.data.commentList);
-      //console.log(response.data.commentList);
+      const name = sessionStorage.getItem("nickname");
+      setCurrentUserName(name);
+      console.log(currentUserName);
 
       const id = sessionStorage.getItem("id");
-      setCurrentUserId(id);
-      console.log(currentUserId);
 
       const user = {
         userId: id,
         avatar: sessionStorage.getItem("profileImage"),
         username: sessionStorage.getItem("nickname"),
       };
-      //console.log(user);
+      console.log(user);
       setUserProfile(user);
     } catch (err) {
       console.error(err);
     }
   }
 
-  async function addComment(text, parentId) {
+  async function addComment(text, parentId, checked) {
     try {
-      const response = await API.post(`/api/v1/diaries/${diaryDate}/comments`, {
-        diaryId: diaryId,
+      console.log(diaryId);
+      console.log(text);
+      console.log(checked);
+      const response = await API.post(`/api/v1/diaries/${dates}/comments`, {
+        diaryId: diaryId.diaryInfo,
         content: text,
-        isSecret: false,
+        isSecret: checked,
         parentId: parentId,
       });
-      //console.log(response.data);
+      console.log(response.data);
       dispatch(plusComment()); // 댓글 수 증가
       //임시 프로필 설정 -> 유진님이 저장해주시면, getcomment 부분으로 옮겨서 조회할때 받아오기
 
@@ -74,16 +74,15 @@ const Comments = () => {
     }
   }
 
-  async function updateComment(text, commentId) {
+  async function updateComment(text, commentId, checked) {
     try {
-      const response = await API.put(
-        `/api/v1/diaries/${diaryDate}/comments/${commentId}`,
-        {
-          diaryId: diaryId,
-          content: text,
-          isSecret: false,
-        }
-      );
+      console.log(checked);
+      const response = await API.put(`/api/v1/diaries/${dates}/comments`, {
+        id: commentId,
+        diaryId: diaryId.diaryInfo,
+        content: text,
+        isSecret: checked,
+      });
 
       const updatedBackendComments = backendComments.map((backendComment) => {
         if (backendComment.id === commentId) {
@@ -100,9 +99,10 @@ const Comments = () => {
 
   async function deleteComment(commentId) {
     try {
-      const response = await API.delete(
-        `/api/v1/diaries/${diaryDate}/comments/${commentId}`
-      );
+      console.log(commentId);
+      const response = await API.delete(`/api/v1/diaries/${dates}/comments`, {
+        id: commentId,
+      });
       dispatch(minusComment()); //댓글 수 감소
       const updatedBackendComments = backendComments.filter(
         (backendComment) => backendComment.id !== commentId
@@ -125,12 +125,12 @@ const Comments = () => {
     getComments();
   }, []);
   const dispatch = useDispatch();
-  //rootComments.map((rootComment) => console.log(rootComment.userId));
+
   return (
     <div className="comments">
       <CommentForm
         submitLabel="등록"
-        handleSubmit={addComment}
+        handleSubmit={(text, checked) => addComment(text, null, checked)}
         userProfile={userProfile}
       />
       <div className="comments-container">
@@ -144,8 +144,9 @@ const Comments = () => {
             addComment={addComment}
             deleteComment={deleteComment}
             updateComment={updateComment}
-            currentUserId={currentUserId}
+            currentUserName={currentUserName}
             userProfile={userProfile}
+            diaryWritterInfo={diaryWritterInfo}
           />
         ))}
       </div>
