@@ -14,6 +14,7 @@ const Comment = ({
   parentId = null,
   currentUserName,
   userProfile,
+  diaryWritterInfo,
 }) => {
   const isEditing =
     activeComment &&
@@ -27,6 +28,7 @@ const Comment = ({
   const canDelete = currentUserName == comment.nickname && replies.length === 0;
   const canEdit = currentUserName == comment.nickname;
   const replyId = parentId ? parentId : comment.id;
+
   const [isEdited, SetisEdited] = useState(false);
 
   const createdAtTime = () => {
