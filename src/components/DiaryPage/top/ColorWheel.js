@@ -5,7 +5,7 @@ import { changeFont } from "../../../modules/note";
 
 
 const ColorWheel = () => {
-    const [hex, setHex] = useState("#fff");
+    const [hex, setHex] = useState("#ffffff");
 
     const selectedId = useSelector((state) => state.selectedId.selectedId);
     const dispatch = useDispatch();

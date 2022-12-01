@@ -8,7 +8,7 @@ import API from "../../utils/api";
 
 
 const Profile = () => {
-  const [info, setInfo] = useState({ profileImageUrl: null, bio: "" }); //초기값!!
+  const [info, setInfo] = useState({ profileImage: null, bio: "" }); //초기값!!
   const [showModal, setShowModal] = useState(false);
 
   const nickname = sessionStorage.getItem("nickname"); //session strorage로 수정!!
@@ -30,7 +30,10 @@ const Profile = () => {
         */
         setInfo(res.data); //** 이거 고쳐보자~~~
         sessionStorage.setItem("id", res.data.id); //session strorage로 수정!!
-        sessionStorage.setItem("profileImage", res.data.profileImageUrl); //session strorage로 수정!!
+        
+        if(res.data.profileImage==null) {
+        sessionStorage.setItem("profileImage", res.data.profileImage); //session strorage로 수정!!
+        } else {sessionStorage.setItem("profileImage", res.data.profileImage.url);}
 
       })
       .catch((err) => console.log(err));
@@ -59,9 +62,9 @@ const Profile = () => {
     <ProfileBox>
       <ProfileImg
         src={
-          info.profileImageUrl == null
+          info.profileImage == null
             ? DefaultImg
-            : info.profileImageUrl
+            : info.profileImage.url
         }
       />
 
@@ -81,7 +84,7 @@ const Profile = () => {
       </BtnBox>
       {showModal && (
         <ProfileEditModal
-          imageInfo={info.profileImageUrl}
+          imageInfo={info.profileImage}
           bioInfo={info.bio}
           nicknameInfo={info.nickname}
           isOpenModal={showModal}

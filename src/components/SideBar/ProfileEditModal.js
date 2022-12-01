@@ -34,11 +34,26 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsO
     }
 
 
-
-    const uploadedImage = React.useRef(null);
-    const imageUploader = React.useRef(null);
+    //여기서부터 수정!
+    const uploadedImage = React.useRef();
+    const imageUploader = React.useRef();
 
     const uploadImage = e => {  //이미지를 업로드
+
+        /*
+        const file = imageUploader.current.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImage(reader.result);
+            console.log(image);
+        };
+
+        console.log(imageUploader.current.files[0]);
+        */
+
+
+        
         const [file] = e.target.files;
         if (file) {
             const reader = new FileReader();
@@ -53,28 +68,51 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsO
 
             console.log(image);
         }
+        
     };
 
 
 
     const sendToServer = async () => {         
+
+        /*
+        const formData = new FormData();
+        const config = {
+            header: {'content-type': 'multipart/form-data'}
+        }
+        formData.append("nickname", nicknameInfo);
+        formData.append("image", imageUploader.current.files[0]);
+        formData.append("bio", bio);
+
+        for (const keyValue of formData) console.log(keyValue);
+
+        await API.put(`/api/v1/profile`, formData, config )
+        .then(res => console.log((res.data)))
+        .catch(err=> console.log(err))
+        */
+
+
         
         const formData = new FormData()
         formData.append("nickname", nicknameInfo);
         formData.append("image", image);
         formData.append("bio", bio);
-        formData.append("url", "");
+        //formData.append("url", "");
 
-        console.log(nicknameInfo);
-        console.log(image); 
-        console.log(bio);
-        console.log(formData); 
+        for (const keyValue of formData) console.log(keyValue);
+
+        //console.log(nicknameInfo);
+        //console.log(image); 
+        //console.log(bio);
+        //console.log(formData); 
 
         await API.put(`/api/v1/profile`, formData )
         .then(res => console.log((res.data)))
         .catch(err=> console.log(err))
         
-        alert("저장되었습니다!");
+        
+        
+        alert("저장되었습니다!");   
         
         setIsOpenModal(false);
     } //api 연결  //다시 수정해보기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -118,7 +156,7 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsO
                         style={{display: "none"}}
                     />
                     <UploadedImgBox>
-                        <UploadedImg src={(image==null) ? DefaultImg : image} ref={uploadedImage} />
+                        <UploadedImg src={(image==null) ? DefaultImg : image.url} ref={uploadedImage} />
                     </UploadedImgBox>
                     
                     <BtnBox>

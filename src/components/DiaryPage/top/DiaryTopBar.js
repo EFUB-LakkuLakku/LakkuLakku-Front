@@ -191,6 +191,13 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
   const [showColorWheel, setShowColorWheel] = useState(false);
 
   const selectedId = useSelector((state) => state.selectedId.selectedId);
+
+  /*
+  const notes = useSelector((state) => state.note);
+  const selectedNoteIdx = notes.findIndex(x => x.id == selectedId);
+  const selectedNoteColor = notes[selectedNoteIdx].color
+  */
+
   const dispatch = useDispatch();
 
   const TextMenu = (
@@ -220,7 +227,7 @@ export default function DiaryTopBar({ setIsEditing, isEditing, showTextMenu }) {
 
       <TextMenuBox>
         <MenuName>색상</MenuName>
-        <ColorBtn onClick={() => setShowColorWheel((prev) => !prev)}>
+        <ColorBtn onClick={() => {setShowColorWheel((prev) => !prev); }}>
           <img src={ColorIcon} alt="coloricon" />
         </ColorBtn>
         {showColorWheel && (
