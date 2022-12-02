@@ -5,7 +5,7 @@ import { BASE_URL } from "../constants/Config";
 //로컬 테스트용
 sessionStorage.setItem(
   "accessToken",
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ajEwMDNAZ21haWwuY29tIiwicm9sZXMiOiJVU0VSIiwiaWF0IjoxNjY5OTE2NTc4LCJleHAiOjE2Njk5MjM3Nzh9.NDyi1Vu-NumSHoy31HX37VYyQxNP4xnY92SZZLJz3vI"
+  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ajEwMDNAZ21haWwuY29tIiwicm9sZXMiOiJVU0VSIiwiaWF0IjoxNjY5OTYzMzk2LCJleHAiOjE2Njk5NzA1OTZ9.Ohm9uvTVs4G3qgHubSgTWKZCccYKH3-S5VXt0JfK8lI"
 );
 
 sessionStorage.setItem("nickname", "유잔");

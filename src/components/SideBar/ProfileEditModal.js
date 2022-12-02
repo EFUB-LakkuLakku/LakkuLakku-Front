@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import theme from '../../styles/theme';
 import API from '../../utils/api';
 
-const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsOpenModal}) => {
+const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, imageUrl, isOpenModal, setIsOpenModal}) => {
     const [image, setImage] = useState(imageInfo); 
     const [bio, setBio] = useState(bioInfo);   
     
@@ -156,7 +156,7 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, isOpenModal, setIsO
                         style={{display: "none"}}
                     />
                     <UploadedImgBox>
-                        <UploadedImg src={(image==null) ? DefaultImg : image.url} ref={uploadedImage} />
+                        <UploadedImg src={(image==null) ? DefaultImg : imageUrl} ref={uploadedImage} />
                     </UploadedImgBox>
                     
                     <BtnBox>

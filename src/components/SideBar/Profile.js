@@ -9,7 +9,20 @@ import API from "../../utils/api";
 
 const Profile = () => {
   const [info, setInfo] = useState({ profileImage: null, bio: "" }); //초기값!!
+  const [currentFile, setCurrentFile] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  const fileName = info.profileImage ? info.profileImage.filename + info.profileImage.filetype : null //TypeError: Cannot read property value of 'null' in JS 해결
+
+  const urlToObject = async()=> {
+    const response = await fetch(info.profileImage.url);
+    const blob = await response.blob();
+    const file = new File([blob], fileName, {type: blob.type});
+    console.log(file);
+    setCurrentFile(file);
+  }
+
+  const imageUrl = info.profileImage ? info.profileImage.url : null
 
   const nickname = sessionStorage.getItem("nickname"); //session strorage로 수정!!
 
@@ -30,7 +43,7 @@ const Profile = () => {
         */
         setInfo(res.data); //** 이거 고쳐보자~~~
         sessionStorage.setItem("id", res.data.id); //session strorage로 수정!!
-        
+
         if(res.data.profileImage==null) {
         sessionStorage.setItem("profileImage", res.data.profileImage); //session strorage로 수정!!
         } else {sessionStorage.setItem("profileImage", res.data.profileImage.url);}
@@ -41,6 +54,8 @@ const Profile = () => {
 
   useEffect(() => {
     editInfo();
+    if(info.profileImage) {urlToObject();} else {setCurrentFile(null)}
+    console.log(fileName);
     //console.log(info);
   }, [info]); //, [info]
 
@@ -84,9 +99,10 @@ const Profile = () => {
       </BtnBox>
       {showModal && (
         <ProfileEditModal
-          imageInfo={info.profileImage}
+          imageInfo={currentFile}
           bioInfo={info.bio}
           nicknameInfo={info.nickname}
+          imageUrl={imageUrl}
           isOpenModal={showModal}
           setIsOpenModal={setShowModal}
         />
