@@ -169,7 +169,7 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, imageUrl, isOpenMod
 
                 <Footer>
                     <BioInput 
-                    onChange={(e) => {setBio(e.target.value); console.log(bio);}}
+                    onChange={(e) => {setBio(e.target.value);}}
                     value={bio}
                     type="text" />
 

@@ -33,6 +33,14 @@ export default function Canvas({ type, paper, setPaper, setShowTextMenu }) {
   const notes = useSelector((state) => state.note); //캔버스에 존재하는 노트들
   const selectedId = useSelector((state) => state.selectedId.selectedId); //*
 
+  const [ draw, setDraw ] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDraw(true);
+    }, 100);
+  }, []);
+
   const [background] = useImage(paper.src); // 속지
 
 
@@ -62,6 +70,7 @@ export default function Canvas({ type, paper, setPaper, setShowTextMenu }) {
             onTouchStart={checkDeselect}
           >
             <Provider store={store}>
+            {draw && (
               <Layer>
 
                 <KonvaImage
@@ -139,6 +148,7 @@ export default function Canvas({ type, paper, setPaper, setShowTextMenu }) {
                 })}
 
               </Layer>
+            )}
             </Provider>
           </Stage>      
         </div>

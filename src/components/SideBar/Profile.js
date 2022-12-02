@@ -18,7 +18,7 @@ const Profile = () => {
     const response = await fetch(info.profileImage.url);
     const blob = await response.blob();
     const file = new File([blob], fileName, {type: blob.type});
-    console.log(file);
+    //console.log(file);
     setCurrentFile(file);
   }
 
@@ -29,7 +29,7 @@ const Profile = () => {
   const editInfo = () => {
     API.get(`/api/v1/home/user?nickname=${nickname}`)
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         
         /*
         if (res.status == 200) {
@@ -41,6 +41,7 @@ const Profile = () => {
           localStorage.setItem("profileImage", res.data.profileImageUrl);
         }
         */
+
         setInfo(res.data); //** 이거 고쳐보자~~~
         sessionStorage.setItem("id", res.data.id); //session strorage로 수정!!
 
@@ -55,7 +56,7 @@ const Profile = () => {
   useEffect(() => {
     editInfo();
     if(info.profileImage) {urlToObject();} else {setCurrentFile(null)}
-    console.log(fileName);
+    //console.log(fileName);
     //console.log(info);
   }, [info]); //, [info]
 
