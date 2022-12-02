@@ -17,10 +17,8 @@ export function ResizableText({
   color,
   onDelete,
   isSelected, 
-  isTransforming,
   onChange,
   setIsEditing,
-  setIsTransforming,
   setShowTextMenu
 }) {
 
@@ -33,14 +31,14 @@ export function ResizableText({
   const transformerRef = useRef(null);
 
   useEffect(() => {
-    if (isTransforming && transformerRef.current !== null) {
+    if (isSelected) {
       transformerRef.current.nodes([textRef.current]);
       transformerRef.current.getLayer().batchDraw();
     }
-  }, [isTransforming]);
+  }, [isSelected]);
 
 
-  const transformer = isTransforming ? (
+  const transformer = isSelected ? (
     <Transformer
       ref={transformerRef}
       rotateEnabled={true}
@@ -73,28 +71,24 @@ export function ResizableText({
         onWheel={onDelete}
         onClick={() => {
           dispatch(changeSelectedId(note.id)); //*
-          setIsTransforming(true);
           setIsEditing(false);
           setShowTextMenu(true);
           console.log(note.id);
           console.log(selectedId);
-          console.log(notes);
+          //console.log(notes);
         }} 
         onTap={() => {
           dispatch(changeSelectedId(note.id)); //*
-          setIsTransforming(true);
           setIsEditing(false);
           setShowTextMenu(true);
         }}
         onDblClick={() => {
           dispatch(changeSelectedId(note.id)); //*
           setIsEditing(true);
-          setIsTransforming(false);
         }} 
         onDblTap={() => {
           dispatch(changeSelectedId(note.id)); //*
           setIsEditing(true);
-          setIsTransforming(false);
         }}
         draggable 
         onDragEnd={(e) => {

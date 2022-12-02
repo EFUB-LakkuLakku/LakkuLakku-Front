@@ -8,7 +8,7 @@ export const EmojiPicker = ({ disabled, titleEmoji }) => {
   const [chosenEmoji, setChosenEmoji] = useState({
     emoji: titleEmoji,
   });
-  console.log(titleEmoji);
+  //console.log(titleEmoji);
   const toggleEmojiPicker = () => togglePicker((prev) => !prev);
   const onEmojiClick = (e, emojiObject) => {
     console.log(emojiObject);
