@@ -97,7 +97,6 @@ const ProfileEditModal = ({imageInfo, bioInfo, nicknameInfo, imageUrl, isOpenMod
         formData.append("nickname", nicknameInfo);
         formData.append("image", image);
         formData.append("bio", bio);
-        //formData.append("url", "");
 
         for (const keyValue of formData) console.log(keyValue);
 
