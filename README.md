@@ -38,8 +38,8 @@
 
 본 프로젝트는 이화여대 커리어 클럽 웹개발 동아리 EFUB의 여름 프로젝트인 🏖SWS(Summer Web Surf)의 일환으로 진행되었음을 밝힙니다.
 
- <img src=https://user-images.githubusercontent.com/86418674/207008478-57ec8ba5-77a4-492b-b917-1cfab83752fc.gif align="left" width="500px"/>
- <img src="https://user-images.githubusercontent.com/86418674/207007558-bfd65741-c3ce-4249-9c3e-c918e582d611.gif" align="right"  width="500px" />
+ <img src=https://user-images.githubusercontent.com/86418674/207008478-57ec8ba5-77a4-492b-b917-1cfab83752fc.gif align="left" width="400px"/>
+ <img src="https://user-images.githubusercontent.com/86418674/207007558-bfd65741-c3ce-4249-9c3e-c918e582d611.gif" align="right"  width="400px" />
 
  
  
